@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gaya C2 · Visual · Atlys</title>
-<meta name="description" content="data publik, satu api. berita terkini, konten media sosial, dan utilitas web dalam satu rest api." />
+<title>Atlys — Data Publik, Satu API</title>
+<meta name="description" content="Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -17,14 +17,15 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{font-family:var(--sans);background:#fff;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;position:relative}
-  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.022;z-index:1;
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.02;z-index:1;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
   header,main,footer{position:relative;z-index:2}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
   a{color:var(--ink);text-decoration:none}
   a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+  .hero>*,.aman>*,.tiers>*,.steps>*,.cards>*,.panel,.diag>*{min-width:0}
 
-  header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;gap:14px;height:62px}
   .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
   .logo .mark{width:27px;height:27px;background:var(--ink);color:#fff;border-radius:7px;display:grid;place-items:center;font-size:13px;font-weight:800}
@@ -40,24 +41,27 @@
   .btn.ghost{border-color:var(--line2);color:var(--ink)}
   .btn.ghost:hover{border-color:var(--ink)}
 
-  /* item grid wajib bisa menyusut, kalau tidak teks mono panjang mendorongnya keluar layar */
-  .hero>*,.aman>*,.tiers>*,.steps>*,.cards>*,.panel{min-width:0}
-
-  /* hero: teks pendek di kiri, panel produk besar di kanan */
-  .hero{display:grid;grid-template-columns:5fr 7fr;gap:54px;padding:66px 0 10px;align-items:start}
+  /* hero dengan latar grid halus */
+  .heroband{position:relative}
+  .heroband::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(to right, rgba(17,17,19,.045) 1px, transparent 1px),linear-gradient(to bottom, rgba(17,17,19,.045) 1px, transparent 1px);
+    background-size:72px 72px;
+    -webkit-mask-image:linear-gradient(to bottom, black 55%, transparent 98%);mask-image:linear-gradient(to bottom, black 55%, transparent 98%)}
+  .hero{display:grid;grid-template-columns:5fr 7fr;gap:54px;padding:66px 0 10px;align-items:start;position:relative}
   .crumb{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-bottom:22px}
   .crumb b{color:var(--ink);font-weight:600}
   h1{font-size:clamp(46px,5vw,68px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin-bottom:16px}
-  .sub{font-size:17px;color:var(--ink2);line-height:1.55;margin-bottom:28px;max-width:24em}
+  .sub{font-size:17px;color:var(--ink2);line-height:1.6;margin-bottom:28px;max-width:27em}
   .cta{display:flex;gap:11px;flex-wrap:wrap}
   .statusline{margin-top:26px;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;gap:8px}
   .statusline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
   .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink)}
 
-  /* panel playground: visual utama */
+  /* panel playground */
   .panel{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 30px 70px rgba(15,15,18,.10);overflow:hidden;transition:transform .35s ease,box-shadow .35s ease}
   .panel:hover{transform:translateY(-4px);box-shadow:0 40px 84px rgba(15,15,18,.13)}
+  .p-strip{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;color:var(--ink3);padding:9px 20px;border-bottom:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;background:#fff}
   .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
   .p-tabs button{font-family:var(--mono);font-size:12px;padding:11px 16px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
   .p-tabs button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
@@ -79,16 +83,30 @@
   .p-foot .bar i{display:block;height:100%;width:21%;background:var(--ink);border-radius:99px}
   .p-foot .n{font-family:var(--mono);font-size:12px;color:var(--ink2);white-space:nowrap}
 
-  /* pita angka */
+  /* strip log aktivitas */
+  .logstrip{margin-top:34px;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+  .logstrip .lh{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;background:var(--soft);border-bottom:1px solid var(--line)}
+  .logstrip .lh .t{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink2);font-weight:600}
+  .logstrip .lh .n{font-size:12px;color:var(--ink3)}
+  .logrows{overflow-x:auto}
+  .logrow{display:flex;align-items:center;gap:16px;padding:10px 18px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;white-space:nowrap;min-width:640px}
+  .logrow:last-child{border-bottom:none}
+  .logrow .tm{color:var(--ink3)}
+  .logrow .mt{font-weight:600;color:#1a7f37}
+  .logrow .pth{color:var(--ink);flex:1}
+  .logrow .st{font-weight:600}
+  .logrow .ms{color:var(--ink3)}
+
   .stats{display:flex;gap:48px;padding:52px 0 8px;flex-wrap:wrap}
   .stats .s .n{font-size:32px;font-weight:800;letter-spacing:-.03em}
   .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
 
   section.blok{padding:76px 0 6px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--ink3);margin-bottom:14px;font-weight:600}
   .blok h2{font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
   .blok .sub2{font-size:15.5px;color:var(--ink2);margin-bottom:30px}
 
-  /* katalog kartu visual */
+  /* katalog */
   .katbar{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
   .saring input{font-family:var(--sans);font-size:14px;padding:11px 16px;border:1px solid var(--line2);border-radius:9px;width:min(320px,100%);margin-bottom:26px}
   .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
@@ -97,10 +115,11 @@
   .card .idx{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.1em}
   .card .nm{font-weight:700;font-size:16px;margin-top:8px;letter-spacing:-.01em}
   .card .ct{font-size:30px;font-weight:800;letter-spacing:-.03em;margin-top:2px}
+  .card .cb{height:5px;border-radius:99px;background:var(--soft);border:1px solid var(--line);margin-top:12px;overflow:hidden}
+  .card .cb i{display:block;height:100%;background:var(--ink);border-radius:99px}
   .card .ex{font-family:var(--mono);font-size:10.5px;color:var(--ink2);margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 8px}
   .kat-kosong{font-size:14px;color:var(--ink2);padding:18px 2px;display:none}
 
-  /* batang proporsi irisan data */
   .prop{margin-top:26px;border:1px solid var(--line);border-radius:13px;padding:22px}
   .prop .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
   .prop .ph .t{font-weight:700;font-size:15px}
@@ -116,26 +135,44 @@
   .seglabel .l1{flex:79999}.seglabel .l2{flex:6890}.seglabel .l3{flex:9011}
   @media(max-width:760px){ .seglabel .l2{display:none} }
 
-  /* langkah ringkas */
+  /* diagram cara kerja */
+  .diag{display:grid;grid-template-columns:1fr 44px 1.15fr 44px 1fr;align-items:stretch;margin-bottom:38px}
+  .dbox{border:1px solid var(--line);border-radius:13px;padding:20px;background:#fff}
+  .dbox.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .dbox .dh{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink3);margin-bottom:14px;font-weight:600}
+  .dbox.dark .dh{color:#a9a9b0}
+  .dbox .item{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;font-weight:600}
+  .dbox .item:last-child{border-bottom:none}
+  .dbox .item span{display:block;font-weight:400;font-size:12.5px;color:var(--ink2);margin-top:1px}
+  .dbox.dark .item{border-color:#2a2a2f}
+  .dbox.dark .item span{color:#a9a9b0}
+  .darrow{display:grid;place-items:center;font-family:var(--mono);color:var(--ink3);font-size:18px}
+  @media(max-width:860px){
+    .diag{grid-template-columns:1fr}
+    .darrow{transform:rotate(90deg);padding:6px 0}
+  }
+
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .step{border:1px solid var(--line);border-radius:13px;padding:20px}
+  .step{border:1px solid var(--line);border-radius:13px;padding:20px;background:#fff}
   .step .no{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink3)}
   .step .t{font-weight:700;font-size:15.5px;margin-top:8px}
-  .step .d{font-size:13.5px;color:var(--ink2);margin-top:3px}
+  .step .d{font-size:13.5px;color:var(--ink2);margin-top:3px;line-height:1.6}
 
-  /* keamanan: daftar pendek + panel spek */
+  /* keamanan di atas pita abu */
+  .band{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:76px}
+  .band .blok{padding-top:64px;padding-bottom:64px}
   .aman{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
   .aman ol{list-style:none;counter-reset:a;margin-top:22px}
-  .aman ol li{counter-increment:a;display:flex;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;font-weight:500}
+  .aman ol li{counter-increment:a;display:flex;gap:16px;padding:13px 0;border-bottom:1px solid var(--line2);font-size:15px;font-weight:500;line-height:1.6}
   .aman ol li::before{content:counter(a,decimal-leading-zero);font-family:var(--mono);font-size:12.5px;color:var(--ink3);padding-top:3px}
-  .spek{border:1px solid var(--ink);border-radius:13px;overflow:hidden}
+  .spek{border:1px solid var(--ink);border-radius:13px;overflow:hidden;background:#fff}
   .spek .sh{padding:13px 20px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;display:flex;justify-content:space-between}
   .spek .row{display:flex;justify-content:space-between;gap:16px;padding:12.5px 20px;border-bottom:1px solid var(--line);font-size:13.5px}
   .spek .row:last-child{border-bottom:none}
   .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.04em;padding-top:1px;white-space:nowrap}
   .spek .row .v{font-weight:600;text-align:right}
 
-  /* tier dengan batang kuota */
+  /* tier */
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .tier{border:1px solid var(--line);border-radius:15px;padding:26px;display:flex;flex-direction:column;background:#fff}
   .tier.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -150,14 +187,13 @@
   .tier.dark .qbar i{background:#fff}
   .tier .ql{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:16px}
   .tier ul{list-style:none;margin-bottom:24px}
-  .tier li{font-size:14px;padding:6px 0;color:var(--ink2);display:flex;gap:9px}
+  .tier li{font-size:14px;padding:6px 0;color:var(--ink2);display:flex;gap:9px;line-height:1.55}
   .tier.dark li{color:#c9c9cf}
   .tier li::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;margin-top:8px;flex:none;opacity:.55}
   .tier .btn{margin-top:auto;text-align:center}
   .tier.dark .btn{border-color:#fff}
   .tier.dark .btn.solid{background:#fff;color:var(--ink)}
 
-  /* gerak masuk halus sekali jalan */
   .rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
   .rv.in{opacity:1;transform:none}
   @media (prefers-reduced-motion: reduce){
@@ -166,12 +202,14 @@
     .statusline .dot{animation:none}
   }
 
-  footer{margin-top:96px;border-top:1px solid var(--line);padding:30px 0 42px}
-  .frow{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
-  .frow .l{font-size:13px;color:var(--ink2)}
-  .frow .links{display:flex;gap:22px}
-  .frow .links a{font-size:13px;color:var(--ink2)}
-  .frow .links a:hover{color:var(--ink)}
+  footer{margin-top:96px;border-top:1px solid var(--line);padding:44px 0 42px}
+  .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+  .fcol .fh{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink3);margin-bottom:14px;font-weight:600}
+  .fcol a{display:block;font-size:13.5px;color:var(--ink2);padding:4px 0}
+  .fcol a:hover{color:var(--ink)}
+  .fbrand .tag{font-size:13.5px;color:var(--ink2);margin-top:12px;line-height:1.6}
+  .fbase{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink3)}
+  @media(max-width:860px){ .fgrid{grid-template-columns:1fr 1fr} }
 
   @media(max-width:1020px){
     .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -201,37 +239,39 @@
   </div>
 </header>
 
-<main class="wrap">
-  <div class="hero">
-    <div>
-      <div class="crumb">atlys / <b>pengenalan</b> / v0.2.0</div>
-      <h1>data publik,<br />satu api.</h1>
-      <p class="sub">Berita, media sosial, dan utilitas web dalam satu rest api.</p>
-      <div class="cta">
-        <a class="btn solid" href="https://api.atlys.my.id/register" style="padding:12px 24px">Minta api key</a>
-        <a class="btn ghost" href="#katalog" style="padding:12px 24px">Jelajahi katalog</a>
+<div class="heroband">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="crumb">Atlys / <b>Pengenalan</b> / v0.2.0</div>
+        <h1>Data publik,<br />satu API.</h1>
+        <p class="sub">Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis.</p>
+        <div class="cta">
+          <a class="btn solid" href="https://api.atlys.my.id/register" style="padding:12px 24px">Minta API Key</a>
+          <a class="btn ghost" href="#katalog" style="padding:12px 24px">Jelajahi Katalog</a>
+        </div>
+        <div class="statusline"><span class="dot"></span>Status saat ini: <a href="https://api.atlys.my.id/status">Live, v0.2.0 operasional penuh</a></div>
       </div>
-      <div class="statusline"><span class="dot"></span>Status saat ini: <a href="https://api.atlys.my.id/status">live, v0.2.0 operasional penuh</a></div>
-    </div>
 
-    <div class="panel">
-      <div class="p-tabs" role="tablist" aria-label="Contoh kode">
-        <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
-        <button data-tab="js" role="tab" aria-selected="false">javascript</button>
-        <button data-tab="py" role="tab" aria-selected="false">python</button>
-        <button class="copy" id="copyBtn" type="button">Salin kode</button>
-      </div>
-      <div class="p-code" data-pane="curl"><span class="cm"># panggil endpoint pertama anda</span>
+      <div class="panel">
+        <div class="p-strip"><span>RUNTIME: CLOUDFLARE WORKERS</span><span>·</span><span>PENYIMPANAN: D1 + KV</span><span>·</span><span>EDGE TERDEKAT DARI LOKASI ANDA</span></div>
+        <div class="p-tabs" role="tablist" aria-label="Contoh kode">
+          <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
+          <button data-tab="js" role="tab" aria-selected="false">javascript</button>
+          <button data-tab="py" role="tab" aria-selected="false">python</button>
+          <button class="copy" id="copyBtn" type="button">Salin Kode</button>
+        </div>
+        <div class="p-code" data-pane="curl"><span class="cm"># Panggil endpoint pertama Anda</span>
 curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
   -H <span class="k">"X-API-Key: atlys_key_anda"</span></div>
-      <div class="p-code" data-pane="js" hidden><span class="cm">// panggil endpoint pertama anda</span>
+        <div class="p-code" data-pane="js" hidden><span class="cm">// Panggil endpoint pertama Anda</span>
 const res = await fetch(
   <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
   { headers: { <span class="k">"X-API-Key"</span>: "atlys_key_anda" } }
 );
 const data = await res.json();
 console.log(data.result.kodepos);</div>
-      <div class="p-code" data-pane="py" hidden><span class="cm"># panggil endpoint pertama anda</span>
+        <div class="p-code" data-pane="py" hidden><span class="cm"># Panggil endpoint pertama Anda</span>
 import requests
 
 r = requests.get(
@@ -239,120 +279,165 @@ r = requests.get(
     headers={<span class="k">"X-API-Key"</span>: "atlys_key_anda"},
 )
 print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</div>
-      <div class="p-resp">
-        <div class="rh"><span>RESPONS</span><span class="ok">200 OK · 12 ms</span></div>
-        <pre>{
+        <div class="p-resp">
+          <div class="rh"><span>RESPONS</span><span class="ok">200 OK · 12 ms</span></div>
+          <pre>{
   <span class="k">"status"</span>: <span class="s">"ok"</span>,
   <span class="k">"result"</span>: { <span class="k">"kodepos"</span>: <span class="s">"10110"</span>, <span class="k">"kecamatan"</span>: <span class="s">"Gambir"</span>, <span class="k">"kota"</span>: <span class="s">"Jakarta Pusat"</span> }
 }</pre>
-      </div>
-      <div class="p-foot">
-        <span class="lb">Kuota tier free</span>
-        <span class="bar"><i></i></span>
-        <span class="n">42 / 200 per hari</span>
+        </div>
+        <div class="p-foot">
+          <span class="lb">Kuota Tier Free</span>
+          <span class="bar"><i></i></span>
+          <span class="n">42 dari 200 request hari ini</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="stats">
-    <div class="s"><div class="n">±100.000</div><div class="l">total endpoint</div></div>
-    <div class="s"><div class="n">4.100</div><div class="l">endpoint komputasi</div></div>
-    <div class="s"><div class="n">±95.900</div><div class="l">irisan data wilayah</div></div>
-    <div class="s"><div class="n">Rp0</div><div class="l">biaya, full free tier</div></div>
-  </div>
+    <div class="logstrip">
+      <div class="lh"><span class="t">LOG AKTIVITAS</span><span class="n">Contoh tampilan dari panel pengguna</span></div>
+      <div class="logrows">
+        <div class="logrow"><span class="tm">14:02:11</span><span class="mt">GET</span><span class="pth">/v1/info/berita/terkini</span><span class="st">200</span><span class="ms">18 ms</span></div>
+        <div class="logrow"><span class="tm">14:02:09</span><span class="mt">GET</span><span class="pth">/v1/data/kodepos/kecamatan/gambir</span><span class="st">200</span><span class="ms">12 ms</span></div>
+        <div class="logrow"><span class="tm">14:01:57</span><span class="mt">GET</span><span class="pth">/v1/tools/base64/encode</span><span class="st">200</span><span class="ms">9 ms</span></div>
+        <div class="logrow"><span class="tm">14:01:44</span><span class="mt">GET</span><span class="pth">/v1/indonesia/hari-libur/2026</span><span class="st">200</span><span class="ms">15 ms</span></div>
+      </div>
+    </div>
 
+    <div class="stats">
+      <div class="s"><div class="n">±100.000</div><div class="l">Total endpoint</div></div>
+      <div class="s"><div class="n">4.100</div><div class="l">Endpoint komputasi</div></div>
+      <div class="s"><div class="n">±95.900</div><div class="l">Irisan data wilayah</div></div>
+      <div class="s"><div class="n">Rp0</div><div class="l">Biaya, full free tier</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
   <section class="blok rv" id="katalog">
+    <div class="eyebrow">01 · KATALOG</div>
     <div class="katbar">
       <div>
-        <h2>Katalog endpoint</h2>
-        <p class="sub2">Sepuluh kategori komputasi, satu pola path yang sama.</p>
+        <h2>Katalog Endpoint</h2>
+        <p class="sub2">Sepuluh kategori komputasi dengan satu pola path yang sama.</p>
       </div>
       <div class="saring"><input type="search" id="katFilter" placeholder="Saring kategori" aria-label="Saring kategori endpoint" /></div>
     </div>
     <div class="cards" id="katCards">
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 01</span><div class="nm">Tools</div><div class="ct">1.319</div><div class="ex">/v1/tools/base64/encode</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 02</span><div class="nm">Math</div><div class="ct">777</div><div class="ex">/v1/math/prima/cek/97</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 03</span><div class="nm">Indonesia</div><div class="ct">648</div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 04</span><div class="nm">Validasi</div><div class="ct">390</div><div class="ex">/v1/validasi/nik/...</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 05</span><div class="nm">Fun</div><div class="ct">255</div><div class="ex">/v1/fun/pantun/acak</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 06</span><div class="nm">Data</div><div class="ct">196</div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 07</span><div class="nm">Info</div><div class="ct">161</div><div class="ex">/v1/info/cuaca/jakarta</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 08</span><div class="nm">Generator</div><div class="ct">142</div><div class="ex">/v1/generator/uuid</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 09</span><div class="nm">Ragam</div><div class="ct">84</div><div class="ex">/v1/ragam/kbbi/halo</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 10</span><div class="nm">Game</div><div class="ct">20</div><div class="ex">/v1/game/tebak-angka</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 01</span><div class="nm">Tools</div><div class="ct">1.319</div><div class="cb"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 02</span><div class="nm">Math</div><div class="ct">777</div><div class="cb"><i style="width:77%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 03</span><div class="nm">Indonesia</div><div class="ct">648</div><div class="cb"><i style="width:70%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 04</span><div class="nm">Validasi</div><div class="ct">390</div><div class="cb"><i style="width:54%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 05</span><div class="nm">Fun</div><div class="ct">255</div><div class="cb"><i style="width:44%"></i></div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 06</span><div class="nm">Data</div><div class="ct">196</div><div class="cb"><i style="width:39%"></i></div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 07</span><div class="nm">Info</div><div class="ct">161</div><div class="cb"><i style="width:35%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 08</span><div class="nm">Generator</div><div class="ct">142</div><div class="cb"><i style="width:33%"></i></div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 09</span><div class="nm">Ragam</div><div class="ct">84</div><div class="cb"><i style="width:25%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 10</span><div class="nm">Game</div><div class="ct">20</div><div class="cb"><i style="width:12%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
     </div>
-    <p class="kat-kosong" id="katEmpty">Tidak ada kategori yang cocok dengan saringan itu.</p>
+    <p class="kat-kosong" id="katEmpty">Tidak ada kategori yang cocok dengan saringan tersebut.</p>
 
     <div class="prop">
-      <div class="ph"><span class="t">Irisan data wilayah Indonesia</span><span class="n">±95.900</span></div>
+      <div class="ph"><span class="t">Irisan Data Wilayah Indonesia</span><span class="n">±95.900</span></div>
       <div class="segbar"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
       <div class="seglabel">
-        <div class="l1"><b>79.999</b>kodepos per kelurahan</div>
-        <div class="l2"><b>6.890</b>per kecamatan</div>
-        <div class="l3"><b>±9.011</b>irisan wilayah lain</div>
+        <div class="l1"><b>79.999</b>Kodepos per kelurahan</div>
+        <div class="l2"><b>6.890</b>Per kecamatan</div>
+        <div class="l3"><b>±9.011</b>Irisan wilayah lain</div>
       </div>
     </div>
   </section>
 
   <section class="blok rv">
-    <h2>Mulai pakai</h2>
-    <p class="sub2">Tiga langkah, tanpa kartu kredit.</p>
+    <div class="eyebrow">02 · CARA KERJA</div>
+    <h2>Satu Key untuk Semua Sumber</h2>
+    <p class="sub2">Data publik dari banyak sumber, distandarkan ke dalam satu format respons.</p>
+    <div class="diag">
+      <div class="dbox">
+        <div class="dh">SUMBER DATA</div>
+        <div class="item">Berita<span>RSS Antara, BBC, dan Hacker News</span></div>
+        <div class="item">Media Sosial<span>TikTok, YouTube, dan platform lain</span></div>
+        <div class="item">Data Wilayah<span>Kodepos dan wilayah administrasi Indonesia</span></div>
+      </div>
+      <div class="darrow">→</div>
+      <div class="dbox dark">
+        <div class="dh">ATLYS API</div>
+        <div class="item">REST API<span>Seluruh endpoint di bawah pola /v1/</span></div>
+        <div class="item">Cloudflare Workers<span>Dijalankan di edge, dekat dengan pengguna</span></div>
+        <div class="item">D1 dan KV<span>Penyimpanan data dan cache terdistribusi</span></div>
+      </div>
+      <div class="darrow">→</div>
+      <div class="dbox">
+        <div class="dh">APLIKASI ANDA</div>
+        <div class="item">Satu API Key<span>Awalan atlys_, berlaku untuk semua endpoint</span></div>
+        <div class="item">Panel Pengguna<span>Kuota, riwayat, dan log setiap permintaan</span></div>
+        <div class="item">SDK Resmi<span>Tersedia untuk Python dan JavaScript</span></div>
+      </div>
+    </div>
     <div class="steps">
-      <div class="step"><div class="no">01</div><div class="t">Isi form pendaftaran</div><div class="d">Email aktif dan tujuan pemakaian.</div></div>
-      <div class="step"><div class="no">02</div><div class="t">Captcha dan review manual</div><div class="d">Bot tersaring, pengajuan dibaca manusia.</div></div>
-      <div class="step"><div class="no">03</div><div class="t">Key tampil satu kali</div><div class="d">Simpan baik baik, langsung bisa dipakai.</div></div>
+      <div class="step"><div class="no">01</div><div class="t">Isi Form Pendaftaran</div><div class="d">Cukup nama, email aktif, dan tujuan pemakaian. Email sekali pakai otomatis ditolak.</div></div>
+      <div class="step"><div class="no">02</div><div class="t">Captcha dan Review Manual</div><div class="d">Captcha proof of work menyaring bot. Setiap pengajuan kemudian ditinjau secara manual.</div></div>
+      <div class="step"><div class="no">03</div><div class="t">Key Ditampilkan Satu Kali</div><div class="d">Simpan key Anda di tempat yang aman. Setelah itu, endpoint pertama dapat langsung dipanggil.</div></div>
     </div>
   </section>
+</main>
 
-  <section class="blok rv">
-    <div class="aman">
-      <div>
-        <h2>Keamanan</h2>
-        <ol>
-          <li>Key tampil satu kali, sesudah itu hanya hash yang disimpan</li>
-          <li>Key bocor bisa dimatikan dari panel admin saat itu juga</li>
-          <li>Setiap permintaan tercatat di log audit berantai</li>
-          <li>Pendaftaran ditinjau manual, bukan asal terima</li>
-        </ol>
+<div class="band">
+  <div class="wrap">
+    <section class="blok rv" style="margin:0">
+      <div class="eyebrow">03 · KEAMANAN</div>
+      <div class="aman">
+        <div>
+          <h2>Keamanan</h2>
+          <ol>
+            <li>API key hanya ditampilkan satu kali. Setelah itu, sistem hanya menyimpan hash-nya.</li>
+            <li>Key yang bocor dapat dicabut dari panel admin dalam hitungan detik.</li>
+            <li>Setiap permintaan tercatat dalam log audit berantai yang tidak dapat diubah diam-diam.</li>
+            <li>Setiap pendaftaran ditinjau secara manual sebelum key diterbitkan.</li>
+          </ol>
+        </div>
+        <div class="spek">
+          <div class="sh"><span>SPESIFIKASI KEAMANAN</span><span>TERUJI</span></div>
+          <div class="row"><span class="k">CAPTCHA</span><span class="v">Proof of work, difficulty 4</span></div>
+          <div class="row"><span class="k">IP ABUSIF</span><span class="v">Difficulty otomatis naik ke 5</span></div>
+          <div class="row"><span class="k">BRUTE FORCE</span><span class="v">Maksimal 20 percobaan per menit, IP dikunci 5 menit</span></div>
+          <div class="row"><span class="k">SSRF GUARD</span><span class="v">8 lapis pemeriksaan</span></div>
+          <div class="row"><span class="k">EMAIL SEKALI PAKAI</span><span class="v">±2.000 domain ditolak, verifikasi MX aktif</span></div>
+          <div class="row"><span class="k">AUDIT</span><span class="v">Hash chain</span></div>
+        </div>
       </div>
-      <div class="spek">
-        <div class="sh"><span>SPESIFIKASI</span><span>TERVERIFIKASI</span></div>
-        <div class="row"><span class="k">CAPTCHA</span><span class="v">proof of work, difficulty 4</span></div>
-        <div class="row"><span class="k">IP ABUSIF</span><span class="v">difficulty naik ke 5</span></div>
-        <div class="row"><span class="k">BRUTE FORCE</span><span class="v">20x per menit, kunci 5 menit</span></div>
-        <div class="row"><span class="k">SSRF GUARD</span><span class="v">8 lapis pemeriksaan</span></div>
-        <div class="row"><span class="k">EMAIL SEKALI PAKAI</span><span class="v">±2.000 domain ditolak + cek MX</span></div>
-        <div class="row"><span class="k">AUDIT</span><span class="v">hash chain, anti ubah diam diam</span></div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
+</div>
 
+<main class="wrap">
   <section class="blok rv">
-    <h2>Tingkat akses</h2>
-    <p class="sub2">Semua gratis. Bedanya di jatah harian.</p>
+    <div class="eyebrow">04 · TINGKAT AKSES</div>
+    <h2>Tingkat Akses</h2>
+    <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada jatah harian.</p>
     <div class="tiers">
       <div class="tier">
         <div class="nm">GUEST</div>
         <div class="q">20<small> /hari</small></div>
         <div class="qbar"><i style="width:2%"></i></div>
-        <div class="ql">TANPA KEY · TANPA DAFTAR</div>
+        <div class="ql">TANPA KEY · TANPA PENDAFTARAN</div>
         <ul>
-          <li>Endpoint demo terbuka</li>
-          <li>Cocok untuk mencoba dulu</li>
+          <li>Akses ke endpoint demo publik.</li>
+          <li>Cocok untuk evaluasi awal.</li>
         </ul>
-        <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba endpoint demo</a>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba Endpoint Demo</a>
       </div>
       <div class="tier dark">
         <div class="nm">FREE</div>
         <div class="q">200<small> /hari</small></div>
         <div class="qbar"><i style="width:20%"></i></div>
-        <div class="ql">KEY VIA FORM + REVIEW</div>
+        <div class="ql">KEY MELALUI FORM DAN REVIEW</div>
         <ul>
-          <li>Semua endpoint komputasi</li>
-          <li>Panel kuota dan riwayat</li>
-          <li>Key bisa diminta ulang</li>
+          <li>Akses ke seluruh endpoint komputasi.</li>
+          <li>Panel kuota dan riwayat penggunaan.</li>
+          <li>Key dapat diterbitkan ulang bila hilang.</li>
         </ul>
-        <a class="btn solid" href="https://api.atlys.my.id/register">Minta api key</a>
+        <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
       </div>
       <div class="tier">
         <div class="nm">TRUSTED</div>
@@ -360,30 +445,50 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         <div class="qbar"><i style="width:100%"></i></div>
         <div class="ql">MELALUI UNDANGAN ADMIN</div>
         <ul>
-          <li>Lima kali jatah tier free</li>
-          <li>Untuk proyek yang terverifikasi</li>
+          <li>Jatah lima kali lipat dari Tier Free.</li>
+          <li>Untuk proyek yang telah terverifikasi.</li>
         </ul>
-        <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca ketentuannya</a>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap frow">
-    <span class="l">© 2026 Atlys · dibangun di atas Cloudflare Workers dan D1</span>
-    <div class="links">
-      <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
-      <a href="https://api.atlys.my.id/status">Status</a>
-      <a href="https://api.atlys.my.id/changelog">Changelog</a>
-      <a href="https://api.atlys.my.id/privacy">Privasi</a>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fcol fbrand">
+        <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
+        <p class="tag">Data publik, satu API.<br />Dibangun dan dikelola secara independen dari Indonesia.</p>
+      </div>
+      <div class="fcol">
+        <div class="fh">PRODUK</div>
+        <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
+        <a href="#katalog">Katalog</a>
+        <a href="https://api.atlys.my.id/status">Status</a>
+        <a href="https://api.atlys.my.id/changelog">Changelog</a>
+      </div>
+      <div class="fcol">
+        <div class="fh">PENGEMBANG</div>
+        <a href="https://github.com/adiprmx/atlys-python">SDK Python</a>
+        <a href="https://github.com/adiprmx/atlys-js">SDK JavaScript</a>
+        <a href="https://github.com/adiprmx">GitHub</a>
+      </div>
+      <div class="fcol">
+        <div class="fh">LEGAL</div>
+        <a href="https://api.atlys.my.id/privacy">Kebijakan Privasi</a>
+        <a href="https://api.atlys.my.id/tos">Ketentuan Layanan</a>
+      </div>
+    </div>
+    <div class="fbase">
+      <span>© 2026 Atlys. Seluruh hak cipta dilindungi.</span>
+      <span>Runtime: Cloudflare Workers · Penyimpanan: D1 dan KV</span>
     </div>
   </div>
 </footer>
 
 <script>
   (function () {
-    // tab contoh kode: beneran berpindah
     var tabs = document.querySelectorAll('.p-tabs [data-tab]');
     var panes = document.querySelectorAll('[data-pane]');
     tabs.forEach(function (btn) {
@@ -393,7 +498,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== btn.getAttribute('data-tab'); });
       });
     });
-    // tombol salin: menyalin kode pada tab aktif
     var copyBtn = document.getElementById('copyBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', function () {
@@ -401,14 +505,13 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         if (!active) return;
         function selesai() {
           copyBtn.textContent = 'Tersalin';
-          setTimeout(function () { copyBtn.textContent = 'Salin kode'; }, 1800);
+          setTimeout(function () { copyBtn.textContent = 'Salin Kode'; }, 1800);
         }
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(active.innerText).then(selesai).catch(selesai);
         } else { selesai(); }
       });
     }
-    // saring kategori: menyaring kartu beneran
     var input = document.getElementById('katFilter');
     var kosong = document.getElementById('katEmpty');
     if (input) {
@@ -424,7 +527,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         if (kosong) kosong.style.display = terlihat === 0 ? 'block' : 'none';
       });
     }
-    // gerak masuk halus sekali jalan
     var els = document.querySelectorAll('.rv');
     if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (entries) {
