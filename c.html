@@ -16,6 +16,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:84px}
   body{font-family:var(--sans);background:#fafaf9;overflow-x:clip;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   a{color:var(--ink);text-decoration:none}
@@ -77,7 +78,7 @@
   .p-resp .s{color:#a5d6a7}
   @media(max-width:860px){ .p-split{grid-template-columns:1fr} }
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:92px;padding:54px 0 58px;position:relative;z-index:0}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:72px;padding:48px 0 52px;position:relative;z-index:0}
   .stats::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(180deg,#1f1f24,#121215);z-index:-1}
   .band-dark .s{border-top-color:rgba(255,255,255,.16)}
   .band-dark .s .n{background:linear-gradient(180deg,#ffffff,#b4b4be);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -87,11 +88,11 @@
   .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
   @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
 
-  section.blok{padding:164px 0 0}
+  section.blok{padding:104px 0 0}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--ink3);margin-bottom:16px;font-weight:600;display:flex;align-items:center;gap:14px}
   .eyebrow::after{content:"";width:56px;height:1px;background:var(--line2)}
   .band-soft{position:relative;z-index:0}
-  .band-soft::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:104px;bottom:-72px;background:#f1f1ed;border-top:1px solid var(--line);border-bottom:1px solid var(--line);z-index:-1}
+  .band-soft::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:64px;bottom:-52px;background:#f1f1ed;border-top:1px solid var(--line);border-bottom:1px solid var(--line);z-index:-1}
   .blok h2{font-size:clamp(36px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-bottom:10px}
   .blok .sub2{font-size:16.5px;color:var(--ink2);margin-bottom:44px}
 
@@ -106,7 +107,7 @@
   @media(max-width:1020px){ .cards{grid-template-columns:repeat(3,minmax(0,1fr))} }
   @media(max-width:760px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
 
-  .prop{margin-top:84px}
+  .prop{margin-top:56px}
   .prop .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
   .prop .ph .t{font-weight:600;font-size:15px;color:var(--ink2)}
   .prop .ph .n{font-size:30px;font-weight:800;letter-spacing:-.03em}
@@ -203,7 +204,10 @@
     .statusline .dot{animation:none}
   }
 
-  footer{margin-top:150px;border-top:1px solid var(--line);padding:34px 0 40px}
+  footer{margin-top:110px;border-top:1px solid var(--line);padding:34px 0 40px}
+  .keatas{position:fixed;right:22px;bottom:22px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid #131316;background:linear-gradient(180deg,#28282e,#131316);color:#fff;font-size:18px;line-height:1;cursor:pointer;box-shadow:0 10px 24px rgba(18,18,21,.22);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+  .keatas.muncul{opacity:1;transform:none;pointer-events:auto}
+  @media (prefers-reduced-motion: reduce){ .keatas{transition:none} }
   .frow{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
   .frow .l{font-size:13px;color:var(--ink2)}
   .frow .links{display:flex;gap:24px;flex-wrap:wrap}
@@ -212,9 +216,13 @@
 
   @media(max-width:760px){
     .nav{gap:8px}
-    .nav .m{gap:14px}
-    .nav .m .btn{padding:8px 14px}
+    .nav .m{gap:9px}
+    .nav .m a{font-size:13px}
+    .nav .m .btn{padding:8px 12px}
+    .nav .m a.btn.ghost{display:none}
     .nav .m a.opt{display:none}
+    .nav .logo{font-size:16px}
+    .nav .logo .mark{width:24px;height:24px}
     section.blok{padding-top:104px}
     .hero{padding-top:72px}
     .p-code{font-size:11.5px}
@@ -261,8 +269,9 @@
     <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
     <div class="m">
       <a href="#katalog">Katalog</a>
+      <a href="#keamanan">Keamanan</a>
+      <a href="#akses">Tingkat Akses</a>
       <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
-      <a class="opt" href="https://api.atlys.my.id/status">Status</a>
       <a class="btn ghost" href="https://api.atlys.my.id/login">Login</a>
       <a class="btn solid" href="https://api.atlys.my.id/register">Daftar</a>
     </div>
@@ -358,7 +367,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     </div>
   </section>
 
-  <section class="blok rv">
+  <section class="blok rv" id="keamanan">
     <div class="eyebrow">02 · KEAMANAN</div>
     <h2>Keamanan</h2>
     <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
@@ -396,7 +405,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     </div>
   </section>
 
-  <section class="blok rv">
+  <section class="blok rv" id="akses">
     <div class="eyebrow">03 · TINGKAT AKSES</div>
     <h2>Tingkat Akses</h2>
     <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
@@ -438,6 +447,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   <div class="wrap frow">
     <span class="l">© 2026 Atlys · Data publik, satu API.</span>
     <div class="links">
+      <a href="https://api.atlys.my.id/login">Login</a>
       <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
       <a href="https://api.atlys.my.id/status">Status</a>
       <a href="https://api.atlys.my.id/changelog">Changelog</a>
@@ -446,6 +456,8 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     </div>
   </div>
 </footer>
+
+<button class="keatas" id="keAtas" type="button" aria-label="Kembali ke atas">↑</button>
 
 <script>
   (function () {
@@ -480,6 +492,18 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       }, { threshold: 0.06 });
       els.forEach(function (e) { io.observe(e); });
       setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
+    }
+
+    /* tombol kembali ke atas */
+    var tombolAtas = document.getElementById('keAtas');
+    if (tombolAtas) {
+      var kurangi = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.addEventListener('scroll', function () {
+        tombolAtas.classList.toggle('muncul', window.scrollY > 700);
+      }, { passive: true });
+      tombolAtas.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: kurangi ? 'auto' : 'smooth' });
+      });
     }
 
     /* ===== motion graphics ===== */
