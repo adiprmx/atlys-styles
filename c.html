@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gaya C · Docs Developer · Atlys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#ffffff; --soft:#f8f8f7; --code:#f4f4f2;
+    --ink:#171716; --ink2:#5c5b57; --ink3:#8f8e88;
+    --line:#e7e6e1; --line2:#d8d7d1;
+    --sans:"Inter",-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
+  .hrow{display:flex;align-items:center;gap:26px;min-height:60px;max-width:1080px;margin:0 auto;padding:0 24px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17.5px;letter-spacing:-.02em}
+  .mark{width:26px;height:26px;border-radius:7px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700}
+  nav.main{display:flex;gap:2px}
+  nav.main a{padding:7px 11px;font-size:13.5px;font-weight:500;color:var(--ink2);border-radius:7px}
+  nav.main a:hover{color:var(--ink);background:var(--soft)}
+  .hactions{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 18px;border-radius:8px;font-weight:600;font-size:13.5px;border:1px solid var(--line2);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+  .btn.p{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.p:hover{background:#333}
+  .btn.s{background:#fff;color:var(--ink)}
+  .btn.s:hover{border-color:var(--ink)}
+
+  .hero{padding:84px 0 0;max-width:720px}
+  .crumb{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:22px}
+  .crumb b{color:var(--ink);font-weight:500}
+  h1{font-size:clamp(44px,5.4vw,68px);font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-bottom:20px}
+  .sub{font-size:18px;color:var(--ink2);line-height:1.65;margin-bottom:30px;max-width:34em}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .cta .btn{min-height:46px;padding:11px 24px;font-size:14.5px}
+  .micro{font-size:13.5px;color:var(--ink3)}
+  .micro a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:4px}
+
+  .quickstart{margin-top:56px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .qs-h{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--soft)}
+  .qs-h span{font-family:var(--mono);font-size:12px;padding:10px 16px;color:var(--ink2);border-right:1px solid var(--line)}
+  .qs-h span.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .quickstart pre{font-family:var(--mono);font-size:13px;line-height:1.8;padding:20px 22px;overflow-x:auto;color:var(--ink2);background:#fff}
+  .quickstart pre .k{color:var(--ink);font-weight:600}
+  .quickstart pre .cm{color:var(--ink3)}
+
+  .fakta{display:flex;flex-wrap:wrap;gap:14px 44px;padding:30px 2px 0;margin-top:44px;border-top:1px solid var(--line)}
+  .fakta .f .n{font-size:22px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .fakta .f .l{font-size:12.5px;color:var(--ink3)}
+
+  section.blok{padding:76px 0 0}
+  .blok h2{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.028em;margin-bottom:10px}
+  .blok .lede{color:var(--ink2);max-width:40em;margin-bottom:30px;font-size:16px}
+
+  .docs-grid{display:grid;grid-template-columns:230px 1fr;gap:44px;align-items:start}
+  .docs-grid > *{min-width:0}
+  .ep{min-width:0}
+  .side{position:sticky;top:84px}
+  .side .sg{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.05em;margin:0 0 10px}
+  .side a{display:flex;justify-content:space-between;padding:7px 10px;font-size:14px;color:var(--ink2);border-radius:7px}
+  .side a:hover{background:var(--soft);color:var(--ink)}
+  .side a .c{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+  .side a.on{background:var(--soft);color:var(--ink);font-weight:600}
+
+  .ep{border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+  .ep-h{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .mget{font-family:var(--mono);font-size:11.5px;font-weight:600;background:var(--ink);color:#fff;padding:3px 9px;border-radius:6px}
+  .ep-h .p{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+  .ep-h .d{margin-left:auto;font-size:13px;color:var(--ink3)}
+  .ep pre{font-family:var(--mono);font-size:12.6px;line-height:1.75;padding:16px 18px;background:var(--code);color:var(--ink2);overflow-x:auto}
+  .ep pre .k{color:var(--ink);font-weight:600}
+
+  .tier{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .t{border:1px solid var(--line);border-radius:12px;padding:26px;background:#fff}
+  .t.hot{border-color:var(--ink);border-width:1.5px}
+  .t .tn{font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:14px}
+  .t .tn span{display:block;font-weight:500;color:var(--ink3);font-size:12.5px;margin-top:2px;letter-spacing:0}
+  .t .tq{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .t .tq small{font-size:15px;color:var(--ink3);font-weight:500}
+  .t .tr{font-size:13px;color:var(--ink2);margin:7px 0 18px}
+  .t ul{list-style:none;margin-bottom:22px}
+  .t li{font-size:14px;color:var(--ink2);padding:5px 0;display:flex;gap:9px}
+  .t li::before{content:"✓";font-weight:700;color:var(--ink)}
+  .t .btn{width:100%}
+
+  .aman{display:grid;grid-template-columns:1fr 1fr;gap:14px 44px}
+  .aman .a{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .aman .n{font-family:var(--mono);font-size:12px;color:var(--ink3);padding-top:3px}
+  .aman h3{font-size:15px;margin-bottom:4px}
+  .aman p{font-size:14px;color:var(--ink2);line-height:1.6}
+
+  footer{margin-top:88px;border-top:1px solid var(--line)}
+  .frow{max-width:1080px;margin:0 auto;padding:34px 24px 26px;display:flex;flex-wrap:wrap;gap:14px 40px;align-items:baseline}
+  .frow .fd{font-size:13.5px;color:var(--ink2);max-width:300px}
+  .flinks{margin-left:auto;display:flex;flex-wrap:wrap;gap:5px 22px}
+  .flinks a{font-size:13.5px;color:var(--ink2);padding:4px 0}
+  .flinks a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+  .fbot{max-width:1080px;margin:0 auto;padding:15px 24px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--ink3)}
+
+  @media(max-width:900px){
+    .docs-grid{grid-template-columns:1fr}
+    .side{position:static}
+    .tier{grid-template-columns:1fr}
+    .aman{grid-template-columns:1fr}
+    nav.main{display:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <a class="brand" href="#"><span class="mark">A</span>Atlys</a>
+    <nav class="main">
+      <a href="#katalog">Katalog</a>
+      <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
+      <a href="https://api.atlys.my.id/status">Status</a>
+      <a href="https://api.atlys.my.id/changelog">Changelog</a>
+    </nav>
+    <div class="hactions">
+      <a class="btn s" href="https://api.atlys.my.id/login">Login</a>
+      <a class="btn p" href="https://api.atlys.my.id/register">Daftar</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="crumb">atlys / <b>pengenalan</b> / v0.2.0</p>
+    <h1>data publik,<br />satu api.</h1>
+    <p class="sub">berita terkini, konten media sosial, dan utilitas web dalam satu rest api. satu key, dokumentasi lengkap, gratis.</p>
+    <div class="cta">
+      <a class="btn p" href="https://api.atlys.my.id/register">Minta api key</a>
+      <a class="btn s" href="#katalog">Jelajahi katalog</a>
+    </div>
+    <p class="micro">Status saat ini: <a href="https://api.atlys.my.id/status">live, v0.2.0 operasional penuh</a></p>
+
+    <div class="quickstart">
+      <div class="qs-h"><span class="on">curl</span><span>respons</span></div>
+      <pre><code><span class="cm"># panggil endpoint pertama anda</span>
+curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
+  -H <span class="k">"X-API-Key: atlys_key_anda"</span></code></pre>
+    </div>
+
+    <div class="fakta">
+      <div class="f"><div class="n">±100.000</div><div class="l">total endpoint</div></div>
+      <div class="f"><div class="n">4.100</div><div class="l">endpoint komputasi</div></div>
+      <div class="f"><div class="n">±95.900</div><div class="l">irisan data wilayah</div></div>
+      <div class="f"><div class="n">Rp0</div><div class="l">biaya marginal</div></div>
+    </div>
+  </div>
+
+  <section class="blok" id="katalog">
+    <h2>Katalog endpoint</h2>
+    <p class="lede">Pilih kategori di kiri, contoh endpointnya tampil di kanan. Semua memakai pola <span style="font-family:var(--mono);font-size:14px">/v1/&lt;kategori&gt;/&lt;endpoint&gt;</span> yang sama.</p>
+    <div class="docs-grid">
+      <aside class="side">
+        <p class="sg">KATEGORI</p>
+        <a class="on" href="https://api.atlys.my.id/docs">Tools <span class="c">1.319</span></a>
+        <a href="https://api.atlys.my.id/docs">Math <span class="c">777</span></a>
+        <a href="https://api.atlys.my.id/docs">Indonesia <span class="c">648</span></a>
+        <a href="https://api.atlys.my.id/docs">Validasi <span class="c">390</span></a>
+        <a href="https://api.atlys.my.id/docs">Fun <span class="c">255</span></a>
+        <a href="https://api.atlys.my.id/docs">Data <span class="c">196</span></a>
+        <a href="https://api.atlys.my.id/docs">Info <span class="c">161</span></a>
+        <a href="https://api.atlys.my.id/docs">Generator <span class="c">142</span></a>
+        <a href="https://api.atlys.my.id/docs">Ragam <span class="c">84</span></a>
+        <a href="https://api.atlys.my.id/docs">Game <span class="c">20</span></a>
+      </aside>
+      <div>
+        <div class="ep">
+          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/data/kodepos/kecamatan/{nama}</span><span class="d">detail kecamatan dan kode pos utama</span></div>
+          <pre><code>{
+  <span class="k">"status"</span>: "ok",
+  <span class="k">"result"</span>: { <span class="k">"kodepos"</span>: "10110", <span class="k">"kecamatan"</span>: "Gambir",
+              <span class="k">"kota"</span>: "Jakarta Pusat", <span class="k">"provinsi"</span>: "DKI Jakarta" },
+  <span class="k">"meta"</span>: { <span class="k">"cached"</span>: false, <span class="k">"ms"</span>: 12 }
+}</code></pre>
+        </div>
+        <div class="ep">
+          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/tools/hash/sha256?teks=halo</span><span class="d">hash sha256 dari teks</span></div>
+          <pre><code>{ <span class="k">"status"</span>: "ok", <span class="k">"result"</span>: { <span class="k">"sha256"</span>: "b8c7…" } }</code></pre>
+        </div>
+        <div class="ep">
+          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/info/gempa</span><span class="d">info gempa terkini</span></div>
+          <pre><code>{ <span class="k">"status"</span>: "ok", <span class="k">"result"</span>: { <span class="k">"sumber"</span>: "data publik", … } }</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>Keamanan</h2>
+    <p class="lede">Empat mekanisme yang paling sering ditanyakan pengguna, semuanya aktif di produksi.</p>
+    <div class="aman">
+      <div class="a"><span class="n">01</span><div><h3>SSRF guard 8 lapis</h3><p>Setiap request keluar melewati 8 lapis validasi sebelum dieksekusi.</p></div></div>
+      <div class="a"><span class="n">02</span><div><h3>Key disimpan sebagai hash</h3><p>Server hanya menyimpan hash sha256. Key utuh tampil satu kali saat dibuat, tidak pernah lewat email.</p></div></div>
+      <div class="a"><span class="n">03</span><div><h3>Captcha dan review manual</h3><p>Proof of work buatan sendiri, lalu antrean tinjauan manusia untuk setiap pengajuan key.</p></div></div>
+      <div class="a"><span class="n">04</span><div><h3>Email sekali pakai ditolak</h3><p>Sekitar 2.000 domain disposable diblokir, ditambah pemeriksaan mx record pendaftar.</p></div></div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>Tingkat akses</h2>
+    <p class="lede">Semua tingkat gratis. Bedanya di kuota dan cara masuknya.</p>
+    <div class="tier">
+      <div class="t">
+        <div class="tn">Guest <span>tanpa akun</span></div>
+        <div class="tq">20<small> / hari</small></div>
+        <div class="tr">5 request per menit · endpoint demo</div>
+        <ul><li>Langsung pakai</li><li>Tanpa pendaftaran</li></ul>
+        <a class="btn s" href="https://api.atlys.my.id/docs">Coba demo</a>
+      </div>
+      <div class="t hot">
+        <div class="tn">Free <span>tier default pendaftar baru</span></div>
+        <div class="tq">200<small> / hari</small></div>
+        <div class="tr">10 request per menit · semua endpoint publik</div>
+        <ul><li>Semua endpoint publik</li><li>Notifikasi kuota lewat email</li></ul>
+        <a class="btn p" href="https://api.atlys.my.id/register">Daftar free</a>
+      </div>
+      <div class="t">
+        <div class="tn">Trusted <span>lewat undangan</span></div>
+        <div class="tq">1.000<small> / hari</small></div>
+        <div class="tr">30 request per menit · semua endpoint publik</div>
+        <ul><li>Kuota 5x tier free</li><li>Kode undangan terverifikasi</li></ul>
+        <a class="btn s" href="https://api.atlys.my.id/invite">Ajukan undangan</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="frow">
+    <a class="brand" href="#"><span class="mark">A</span>Atlys</a>
+    <p class="fd">Api publik buatan indonesia. Data publik dalam satu api, biaya operasional marginal Rp0.</p>
+    <div class="flinks">
+      <a href="#katalog">Katalog endpoint</a>
+      <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
+      <a href="https://api.atlys.my.id/status">Status layanan</a>
+      <a href="https://api.atlys.my.id/changelog">Changelog</a>
+      <a href="https://github.com/adiprmx/atlys-python">SDK Python</a>
+      <a href="https://github.com/adiprmx/atlys-js">SDK JavaScript</a>
+    </div>
+  </div>
+  <div class="fbot"><span>© 2026 Atlys Platform, Jakarta, Indonesia</span><span>ver 0.2.0 · api.atlys.my.id</span></div>
+</footer>
+</body>
+</html>
