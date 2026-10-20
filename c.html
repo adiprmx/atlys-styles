@@ -146,16 +146,6 @@
   .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.05em;padding-top:2px;white-space:nowrap}
   .spek .row .v{font-weight:600;text-align:right}
 
-  /* alur penggunaan: empat langkah berurutan */
-  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-  .fstep{border-top:2px solid var(--ink);padding-top:20px}
-  .fstep .no{font-family:var(--mono);font-size:13px;color:var(--ink3);letter-spacing:.1em;margin-bottom:12px}
-  .fstep h3{font-size:16.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:7px}
-  .fstep p{font-size:14px;color:var(--ink2);line-height:1.65}
-  .fstep p code{font-family:var(--mono);font-size:12px;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
-  @media(max-width:960px){ .flow{grid-template-columns:repeat(2,1fr)} }
-  @media(max-width:560px){ .flow{grid-template-columns:1fr} }
-
   /* tingkat akses sebagai tabel perbandingan */
   .tscroll{overflow-x:auto}
   table.tier{width:100%;border-collapse:collapse;min-width:660px}
@@ -356,19 +346,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv">
-    <div class="eyebrow">02 · ALUR PENGGUNAAN</div>
-    <h2>Dari Pertama Kali sampai Request Pertama</h2>
-    <p class="sub2">Empat langkah, sesuai urutan yang sebenarnya Anda lalui.</p>
-    <div class="flow">
-      <div class="fstep"><div class="no">LANGKAH 01</div><h3>Minta Kode Undangan</h3><p>Isi nama, email, dan keperluan di halaman undangan. Sebagai pengganti captcha, browser Anda menyelesaikan proof-of-work ringan, sekitar 1 detik. Email sekali pakai otomatis ditolak.</p></div>
-      <div class="fstep"><div class="no">LANGKAH 02</div><h3>Peninjauan Manual</h3><p>Setiap permintaan dibaca dan ditinjau oleh admin. Kode undangan yang disetujui dikirim ke email Anda.</p></div>
-      <div class="fstep"><div class="no">LANGKAH 03</div><h3>Daftar dan Terima Key</h3><p>Daftar dengan email, password minimal 8 karakter, dan kode undangan. Akun dan API key dibuat dalam satu langkah. Key ditampilkan satu kali untuk Anda simpan.</p></div>
-      <div class="fstep"><div class="no">LANGKAH 04</div><h3>Panggil Endpoint</h3><p>Sertakan header <code>X-API-Key</code> pada setiap request. Respons berupa JSON, dan sisa kuota terbaca dari header <code>X-RateLimit</code> pada setiap respons.</p></div>
-    </div>
-  </section>
-
-  <section class="blok rv">
-    <div class="eyebrow">03 · KEAMANAN</div>
+    <div class="eyebrow">02 · KEAMANAN</div>
     <div class="aman">
       <div>
         <h2>Keamanan</h2>
@@ -392,7 +370,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv">
-    <div class="eyebrow">04 · TINGKAT AKSES</div>
+    <div class="eyebrow">03 · TINGKAT AKSES</div>
     <h2>Tingkat Akses</h2>
     <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian dan syaratnya.</p>
     <div class="tscroll">
