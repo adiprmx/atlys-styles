@@ -118,6 +118,52 @@
   .spek .row .v{font-weight:600;text-align:right}
   @media(max-width:1020px){ .aman{grid-template-columns:1fr;gap:36px} }
 
+  /* keamanan sebagai diagram alur, bukan paragraf */
+  .pipe{display:grid;grid-template-columns:210px 28px 1fr 28px 210px;gap:6px;align-items:stretch}
+  .pcol{display:flex;flex-direction:column}
+  .pcol .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink3);margin-bottom:12px;font-weight:600}
+  .arr{display:grid;place-items:center;font-size:18px;color:var(--ink3);padding-top:30px}
+  .node{flex:1;border:1px solid var(--line2);border-radius:14px;background:#fff;display:grid;place-items:center;text-align:center;padding:20px 16px}
+  .node .nt{font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+  .node .ns{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.55}
+  .node.dark{background:var(--ink);border-color:var(--ink);color:#fff}
+  .node.dark .ns{color:#a9a9b0}
+  .outc{display:flex;flex-direction:column;gap:10px;flex:1}
+  .outc .node{flex:1}
+  .layers{display:flex;flex-direction:column;gap:8px;flex:1}
+  .layer{flex:1;display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 16px}
+  .layer .lk{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.07em;white-space:nowrap}
+  .layer .lv{font-size:13px;color:var(--ink2);text-align:right}
+  .notes{display:grid;grid-template-columns:1fr 1fr;gap:14px 44px;margin-top:34px}
+  .note{display:flex;gap:11px;font-size:14px;color:var(--ink2);line-height:1.6;align-items:flex-start}
+  .note .sq{width:8px;height:8px;background:var(--ink);border-radius:2px;flex:none;margin-top:7px}
+  @media(max-width:1020px){
+    .pipe{grid-template-columns:1fr}
+    .arr{transform:rotate(90deg);padding:2px 0;justify-self:center}
+    .notes{grid-template-columns:1fr}
+    .node{min-height:104px}
+  }
+
+  /* batang proporsi di kartu katalog dan tier */
+  .card .bar{height:4px;border-radius:2px;background:#e9e9e3;margin-top:14px;overflow:hidden}
+  .card .bar i{display:block;height:100%;background:#26262b;border-radius:2px}
+  body.js .card .bar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.25s cubic-bezier(.22,.8,.24,1)}
+  body.js .blok.in .card .bar i{transform:none}
+  .card:nth-child(2) .bar i{transition-delay:.06s}.card:nth-child(3) .bar i{transition-delay:.12s}
+  .card:nth-child(4) .bar i{transition-delay:.18s}.card:nth-child(5) .bar i{transition-delay:.24s}
+  .card:nth-child(6) .bar i{transition-delay:.3s}.card:nth-child(7) .bar i{transition-delay:.36s}
+  .card:nth-child(8) .bar i{transition-delay:.42s}.card:nth-child(9) .bar i{transition-delay:.48s}
+  .card:nth-child(10) .bar i{transition-delay:.54s}
+  .tier .qbar{height:6px;border-radius:3px;background:#ebebe6;margin-top:16px;overflow:hidden}
+  .tier .qbar i{display:block;height:100%;background:#26262b;border-radius:3px}
+  .tier.dark .qbar{background:rgba(255,255,255,.16)}
+  .tier.dark .qbar i{background:#fff}
+  body.js .tier .qbar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.3s cubic-bezier(.22,.8,.24,1) .1s}
+  body.js .blok.in .tier .qbar i{transform:none}
+  @media (prefers-reduced-motion: reduce){
+    body.js .card .bar i,body.js .tier .qbar i{transform:none;transition:none}
+  }
+
   /* tingkat akses: tiga kolom sederhana */
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
   .tier{padding:28px 4px 4px;border-top:2px solid var(--ink);display:flex;flex-direction:column}
@@ -270,16 +316,16 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     <h2>Katalog Endpoint</h2>
     <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
     <div class="cards">
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="ex">/v1/tools/base64/encode</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="ex">/v1/math/prima/cek/97</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="ex">/v1/validasi/nik/...</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="ex">/v1/fun/pantun/acak</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="ex">/v1/info/cuaca/jakarta</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="ex">/v1/generator/uuid</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="ex">/v1/ragam/kbbi/halo</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="ex">/v1/game/tebak-angka</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="bar"><i style="width:59%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="bar"><i style="width:49%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="bar"><i style="width:30%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="bar"><i style="width:19%"></i></div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="bar"><i style="width:15%"></i></div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="bar"><i style="width:12%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="bar"><i style="width:11%"></i></div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="bar"><i style="width:6%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
     </div>
 
     <div class="prop">
@@ -295,24 +341,39 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
 
   <section class="blok rv">
     <div class="eyebrow">02 · KEAMANAN</div>
-    <div class="aman">
-      <div>
-        <h2>Keamanan</h2>
-        <ol>
-          <li>API key hanya ditampilkan satu kali, pada saat diterbitkan. Setelah itu, sistem hanya menyimpan hash-nya.</li>
-          <li>Key yang bocor dapat dicabut dari panel admin, dan berhenti berlaku pada saat itu juga.</li>
-          <li>Setiap permintaan tercatat dalam log audit dengan rantai hash, sehingga perubahan diam-diam akan terdeteksi.</li>
-          <li>Setiap pendaftaran ditinjau secara manual sebelum key diterbitkan.</li>
-        </ol>
+    <h2>Keamanan</h2>
+    <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
+    <div class="pipe">
+      <div class="pcol">
+        <div class="cap">PENDAFTARAN</div>
+        <div class="node grow1">
+          <div><div class="nt">Request Masuk</div><div class="ns">Dari halaman /invite:<br />nama, email, keperluan</div></div>
+        </div>
       </div>
-      <div class="spek">
-        <div class="row"><span class="k">CAPTCHA</span><span class="v">Proof of work, difficulty 4</span></div>
-        <div class="row"><span class="k">IP ABUSIF</span><span class="v">Difficulty otomatis naik ke 5</span></div>
-        <div class="row"><span class="k">BRUTE FORCE</span><span class="v">20 percobaan per menit, IP dikunci 5 menit</span></div>
-        <div class="row"><span class="k">SSRF GUARD</span><span class="v">8 lapis pemeriksaan pada setiap URL</span></div>
-        <div class="row"><span class="k">EMAIL SEKALI PAKAI</span><span class="v">±2.000 domain ditolak, verifikasi MX aktif</span></div>
-        <div class="row"><span class="k">TANDA TANGAN REQUEST</span><span class="v">HMAC-SHA256 per key, toleransi replay 5 menit</span></div>
+      <div class="arr">→</div>
+      <div class="pcol">
+        <div class="cap">ENAM LAPIS PEMERIKSAAN OTOMATIS</div>
+        <div class="layers">
+          <div class="layer"><span class="lk">POW CAPTCHA</span><span class="lv">Difficulty 4, naik ke 5 untuk IP abusif</span></div>
+          <div class="layer"><span class="lk">EMAIL</span><span class="lv">±2.000 domain sekali pakai ditolak, verifikasi MX</span></div>
+          <div class="layer"><span class="lk">BRUTE FORCE</span><span class="lv">20 percobaan per menit, IP dikunci 5 menit</span></div>
+          <div class="layer"><span class="lk">SSRF GUARD</span><span class="lv">8 lapis pemeriksaan pada setiap URL</span></div>
+          <div class="layer"><span class="lk">TANDA TANGAN</span><span class="lv">HMAC-SHA256 per key, toleransi replay 5 menit</span></div>
+          <div class="layer"><span class="lk">AUDIT</span><span class="lv">Log rantai hash, perubahan terdeteksi</span></div>
+        </div>
       </div>
+      <div class="arr">→</div>
+      <div class="pcol">
+        <div class="cap">KEPUTUSAN ADMIN</div>
+        <div class="outc">
+          <div class="node dark grow2"><div><div class="nt">Key Diterbitkan</div><div class="ns">Setelah peninjauan manual</div></div></div>
+          <div class="node grow3"><div><div class="nt">Ditolak</div><div class="ns">Tanpa key, tanpa akses</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><span class="sq"></span>API key hanya ditampilkan satu kali, saat diterbitkan. Sesudah itu sistem hanya menyimpan hash-nya.</div>
+      <div class="note"><span class="sq"></span>Key yang bocor dicabut dari panel admin dan berhenti berlaku pada saat itu juga.</div>
     </div>
   </section>
 
@@ -323,7 +384,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     <div class="tiers">
       <div class="tier">
         <div class="nm">GUEST</div>
-        <div class="q">20<small> request/hari</small></div>
+        <div class="q">20<small> request/hari</small></div><div class="qbar"><i style="width:2%"></i></div>
         <ul>
           <li>5 request per menit per alamat IP.</li>
           <li>Endpoint demo publik, tanpa pendaftaran.</li>
@@ -332,7 +393,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       </div>
       <div class="tier dark">
         <div class="nm">FREE</div>
-        <div class="q">200<small> request/hari</small></div>
+        <div class="q">200<small> request/hari</small></div><div class="qbar"><i style="width:20%"></i></div>
         <ul>
           <li>10 request per menit per key.</li>
           <li>Seluruh 4.100 endpoint komputasi.</li>
@@ -342,7 +403,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       </div>
       <div class="tier">
         <div class="nm">TRUSTED</div>
-        <div class="q">1.000<small> request/hari</small></div>
+        <div class="q">1.000<small> request/hari</small></div><div class="qbar"><i style="width:100%"></i></div>
         <ul>
           <li>30 request per menit per key.</li>
           <li>Seluruh 4.100 endpoint komputasi.</li>
