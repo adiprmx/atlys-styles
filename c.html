@@ -159,6 +159,34 @@
     .p-tabs button{padding:12px 12px}
     .p-tabs .copy{padding:12px 14px}
   }
+
+  /* ===== motion graphics: gerakan dengan tujuan, bukan dekorasi ===== */
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .hero .crumb{animation:rise .7s ease both}
+  .hero h1{animation:rise .8s ease .08s both}
+  .hero .sub{animation:rise .8s ease .18s both}
+  .hero .cta{animation:rise .8s ease .28s both}
+  .hero .statusline{animation:rise .8s ease .38s both}
+  .panel{animation:rise .9s ease .3s both}
+
+  .caret{display:inline-block;width:7px;height:14px;background:var(--ink);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .p-resp pre .rl{display:block;transition:opacity .35s ease,transform .35s ease}
+  .panel.demo-on .p-resp pre .rl{opacity:0;transform:translateY(5px)}
+  .panel.demo-on .p-resp pre .rl.show{opacity:1;transform:none}
+
+  body.js .segbar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.15s cubic-bezier(.22,.8,.24,1)}
+  body.js .segbar .s2{transition-delay:.15s}
+  body.js .segbar .s3{transition-delay:.3s}
+  body.js .prop.in .segbar i{transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero .crumb,.hero h1,.hero .sub,.hero .cta,.hero .statusline,.panel{animation:none}
+    .caret{animation:none}
+    .p-resp pre .rl{transition:none}
+    body.js .segbar i{transform:none;transition:none}
+  }
 </style>
 </head>
 <body>
@@ -187,7 +215,7 @@
     <div class="statusline"><span class="dot"></span>Status saat ini: <a href="https://api.atlys.my.id/status">Live, v0.2.0 operasional penuh</a></div>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="panelDemo">
     <div class="p-tabs" role="tablist" aria-label="Contoh kode">
       <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
       <button data-tab="js" role="tab" aria-selected="false">javascript</button>
@@ -196,8 +224,8 @@
     </div>
     <div class="p-split">
       <div class="p-code" data-pane="curl"><span class="cm"># Panggil endpoint pertama Anda</span>
-curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
-  -H <span class="k">"X-API-Key: atlys_key_anda"</span></div>
+<span id="typer">curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
+  -H <span class="k">"X-API-Key: atlys_key_anda"</span></span><span class="caret" id="caret" hidden></span></div>
       <div class="p-code" data-pane="js" hidden><span class="cm">// Panggil endpoint pertama Anda</span>
 const res = await fetch(
   <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
@@ -215,24 +243,24 @@ r = requests.get(
 print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</div>
       <div class="p-resp">
         <div class="rh"><span>RESPONS</span><span class="ok">200 OK · 12 ms</span></div>
-        <pre>{
-  <span class="k">"status"</span>: <span class="s">"ok"</span>,
-  <span class="k">"creator"</span>: <span class="s">"Atlys"</span>,
-  <span class="k">"result"</span>: {
-    <span class="k">"kodepos"</span>: <span class="s">"10110"</span>,
-    <span class="k">"kecamatan"</span>: <span class="s">"Gambir"</span>,
-    <span class="k">"kota"</span>: <span class="s">"Jakarta Pusat"</span>
-  },
-  <span class="k">"meta"</span>: { <span class="k">"cached"</span>: false, <span class="k">"ms"</span>: 12 }
-}</pre>
+        <pre><span class="rl">{</span>
+<span class="rl">  <span class="k">"status"</span>: <span class="s">"ok"</span>,</span>
+<span class="rl">  <span class="k">"creator"</span>: <span class="s">"Atlys"</span>,</span>
+<span class="rl">  <span class="k">"result"</span>: {</span>
+<span class="rl">    <span class="k">"kodepos"</span>: <span class="s">"10110"</span>,</span>
+<span class="rl">    <span class="k">"kecamatan"</span>: <span class="s">"Gambir"</span>,</span>
+<span class="rl">    <span class="k">"kota"</span>: <span class="s">"Jakarta Pusat"</span></span>
+<span class="rl">  },</span>
+<span class="rl">  <span class="k">"meta"</span>: { <span class="k">"cached"</span>: false, <span class="k">"ms"</span>: 12 }</span>
+<span class="rl">}</span></pre>
       </div>
     </div>
   </div>
 
   <div class="stats">
-    <div class="s"><div class="n">±100.000</div><div class="l">Total endpoint</div></div>
-    <div class="s"><div class="n">4.100</div><div class="l">Endpoint komputasi</div></div>
-    <div class="s"><div class="n">±95.900</div><div class="l">Endpoint data wilayah</div></div>
+    <div class="s"><div class="n" data-count="100000" data-prefix="±">±100.000</div><div class="l">Total endpoint</div></div>
+    <div class="s"><div class="n" data-count="4100">4.100</div><div class="l">Endpoint komputasi</div></div>
+    <div class="s"><div class="n" data-count="95900" data-prefix="±">±95.900</div><div class="l">Endpoint data wilayah</div></div>
     <div class="s"><div class="n">Rp0</div><div class="l">Biaya penggunaan</div></div>
   </div>
 
@@ -241,16 +269,16 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     <h2>Katalog Endpoint</h2>
     <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
     <div class="cards">
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct">1.319</div><div class="ex">/v1/tools/base64/encode</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct">777</div><div class="ex">/v1/math/prima/cek/97</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct">648</div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct">390</div><div class="ex">/v1/validasi/nik/...</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Fun</div><div class="ct">255</div><div class="ex">/v1/fun/pantun/acak</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Data</div><div class="ct">196</div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct">161</div><div class="ex">/v1/info/cuaca/jakarta</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct">142</div><div class="ex">/v1/generator/uuid</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct">84</div><div class="ex">/v1/ragam/kbbi/halo</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct">20</div><div class="ex">/v1/game/tebak-angka</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="ex">/v1/game/tebak-angka</div></a>
     </div>
 
     <div class="prop">
@@ -364,12 +392,104 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       });
     }
     var els = document.querySelectorAll('.rv');
-    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.06 });
-    els.forEach(function (e) { io.observe(e); });
-    setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); }
+    else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.06 });
+      els.forEach(function (e) { io.observe(e); });
+      setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
+    }
+
+    /* ===== motion graphics ===== */
+    document.body.classList.add('js');
+    var kurangiGerak = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (kurangiGerak || !('IntersectionObserver' in window)) return;
+
+    function formatID(n) { return n.toLocaleString('id-ID'); }
+
+    /* angka menghitung naik saat terlihat */
+    var sudahHitung = new WeakSet();
+    function hitungNaik(el) {
+      if (sudahHitung.has(el)) return; sudahHitung.add(el);
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var prefix = el.getAttribute('data-prefix') || '';
+      var durasi = 1300, mulai = null;
+      function langkah(ts) {
+        if (!mulai) mulai = ts;
+        var p = Math.min((ts - mulai) / durasi, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + formatID(Math.round(target * ease));
+        if (p < 1) requestAnimationFrame(langkah);
+      }
+      requestAnimationFrame(langkah);
+    }
+    var ioHitung = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { hitungNaik(en.target); ioHitung.unobserve(en.target); } });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { ioHitung.observe(el); });
+
+    /* batang proporsi tumbuh saat terlihat */
+    var prop = document.querySelector('.prop');
+    if (prop) {
+      var ioProp = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { prop.classList.add('in'); ioProp.disconnect(); } });
+      }, { threshold: 0.35 });
+      ioProp.observe(prop);
+    }
+
+    /* panel demo: request diketik sendiri, respons muncul baris demi baris, lalu berulang.
+       interaksi apa pun dari pengguna menghentikan demo secara permanen. */
+    var panel = document.getElementById('panelDemo');
+    var typer = document.getElementById('typer');
+    var caret = document.getElementById('caret');
+    if (panel && typer) {
+      var snapshotHTML = typer.innerHTML;
+      var teksPenuh = typer.textContent;
+      var baris = panel.querySelectorAll('.p-resp pre .rl');
+      var timerDemo = [];
+      var demoAktif = false;
+      function jadwal(fn, t) { timerDemo.push(setTimeout(fn, t)); }
+      function hentikanDemo() {
+        if (!demoAktif) return;
+        demoAktif = false;
+        timerDemo.forEach(clearTimeout); timerDemo = [];
+        panel.classList.remove('demo-on');
+        typer.innerHTML = snapshotHTML;
+        if (caret) caret.hidden = true;
+        baris.forEach(function (l) { l.classList.add('show'); });
+      }
+      document.querySelectorAll('.p-tabs button').forEach(function (b) {
+        b.addEventListener('click', hentikanDemo);
+      });
+      function putaran() {
+        if (!demoAktif) return;
+        panel.classList.add('demo-on');
+        baris.forEach(function (l) { l.classList.remove('show'); });
+        typer.textContent = '';
+        if (caret) caret.hidden = false;
+        var i = 0;
+        (function ketik() {
+          if (!demoAktif) return;
+          i++;
+          typer.textContent = teksPenuh.slice(0, i);
+          if (i < teksPenuh.length) { jadwal(ketik, 30); return; }
+          jadwal(function () {
+            if (!demoAktif) return;
+            typer.innerHTML = snapshotHTML;
+            if (caret) caret.hidden = true;
+            baris.forEach(function (l, idx) { jadwal(function () { l.classList.add('show'); }, idx * 130); });
+            jadwal(putaran, baris.length * 130 + 4200);
+          }, 550);
+        })();
+      }
+      var ioPanel = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !demoAktif) { demoAktif = true; putaran(); ioPanel.disconnect(); }
+        });
+      }, { threshold: 0.35 });
+      ioPanel.observe(panel);
+    }
   })();
 </script>
 </body>
