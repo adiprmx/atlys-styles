@@ -15,7 +15,10 @@
     --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;position:relative}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+  header,main,footer{position:relative;z-index:2}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
   :focus-visible{outline:2px solid #f4f4f5;outline-offset:3px;border-radius:4px}
@@ -38,7 +41,9 @@
 
   .hero{display:grid;grid-template-columns:1fr 1fr;gap:54px;padding:76px 0 34px;align-items:center}
   .hmeta{font-family:var(--mono);font-size:12px;color:var(--tx3);letter-spacing:.05em;margin-bottom:24px;display:flex;gap:10px;align-items:center}
-  .hmeta .dot{width:7px;height:7px;border-radius:50%;background:#34d399;display:inline-block}
+  .hmeta .dot{width:7px;height:7px;border-radius:50%;background:#34d399;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion: reduce){ .hmeta .dot{animation:none} }
   h1{font-size:clamp(46px,5.8vw,76px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin-bottom:22px}
   h1 .thin{color:var(--tx3)}
   .sub{font-size:17.5px;color:var(--tx2);max-width:28em;line-height:1.65;margin-bottom:32px}
@@ -58,8 +63,13 @@
   .chart{padding:18px;border-bottom:1px solid var(--line)}
   .chart .cl{display:flex;justify-content:space-between;font-size:12px;color:var(--tx3);margin-bottom:12px;font-family:var(--mono)}
   .bars{display:flex;align-items:flex-end;gap:5px;height:74px}
-  .bars i{flex:1;background:#2c2c34;border-radius:3px 3px 0 0;display:block}
+  .bars i{flex:1;background:#2c2c34;border-radius:3px 3px 0 0;display:block;transform:scaleY(0);transform-origin:bottom;transition:transform .9s cubic-bezier(.22,.8,.3,1)}
+  .bars.go i{transform:scaleY(1)}
   .bars i.hi{background:#f4f4f5}
+  .days{display:flex;gap:5px;margin-top:8px}
+  .days span{flex:1;text-align:center;font-family:var(--mono);font-size:10px;color:var(--tx3)}
+  .dash .foot{padding:11px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--tx3);background:var(--panel)}
+  @media (prefers-reduced-motion: reduce){ .bars i{transform:none;transition:none} }
   .dash pre{font-family:var(--mono);font-size:12.3px;line-height:1.7;color:var(--tx2);padding:16px 18px;overflow-x:auto;background:var(--panel2)}
   .dash pre .k{color:#fff;font-weight:600}
   .dash pre .g{color:#34d399}
@@ -95,7 +105,8 @@
   .aman p{font-size:14.5px;color:var(--tx2);line-height:1.65}
 
   .tier{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .t{border:1px solid var(--line);border-radius:14px;padding:28px;background:var(--panel);display:flex;flex-direction:column}
+  .t{border:1px solid var(--line);border-radius:14px;padding:28px;background:var(--panel);display:flex;flex-direction:column;transition:border-color .25s ease,transform .25s ease}
+  .t:hover{border-color:var(--line2);transform:translateY(-3px)}
   .t.hot{border-color:#f4f4f5;background:var(--panel2)}
   .t .tn{font-family:var(--mono);font-size:12px;letter-spacing:.07em;color:var(--tx2);margin-bottom:14px}
   .t .tq{font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
@@ -114,6 +125,11 @@
   .flinks a{font-size:13.5px;color:var(--tx2);padding:5px 0}
   .flinks a:hover{color:var(--tx)}
   .fbot{max-width:1180px;margin:0 auto;padding:16px 24px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--tx3);font-family:var(--mono)}
+
+  /* gerak masuk sangat halus, khusus panel data */
+  .rv{opacity:0;transition:opacity .8s ease}
+  .rv.in{opacity:1}
+  @media (prefers-reduced-motion: reduce){ .rv{opacity:1;transition:none} .t:hover{transform:none} }
 
   @media(max-width:960px){
     .hero{grid-template-columns:1fr;gap:36px;padding-top:50px}
@@ -164,14 +180,16 @@
       </div>
       <div class="chart">
         <div class="cl"><span>REQUEST 7 HARI</span><span>TIER FREE</span></div>
-        <div class="bars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i style="height:58%"></i><i style="height:82%"></i><i class="hi" style="height:96%"></i></div>
+        <div class="bars" id="bars"><i style="height:34%;transition-delay:.05s"></i><i style="height:52%;transition-delay:.12s"></i><i style="height:44%;transition-delay:.19s"></i><i style="height:66%;transition-delay:.26s"></i><i style="height:58%;transition-delay:.33s"></i><i style="height:82%;transition-delay:.40s"></i><i class="hi" style="height:96%;transition-delay:.47s"></i></div>
+        <div class="days"><span>SEN</span><span>SEL</span><span>RAB</span><span>KAM</span><span>JUM</span><span>SAB</span><span>MIN</span></div>
       </div>
       <pre><code><span class="k">"status"</span>: <span class="g">"ok"</span>,
 <span class="k">"result"</span>: { <span class="k">"kodepos"</span>: "10110", <span class="k">"kecamatan"</span>: "Gambir" }</code></pre>
+      <div class="foot">PANEL CONTOH UNTUK TIER FREE · ANGKA SESUAI CONTOH DI DOKUMENTASI</div>
     </div>
   </div>
 
-  <div class="fakta">
+  <div class="fakta rv">
     <div class="f"><div class="n">±100.000</div><div class="l">TOTAL ENDPOINT</div></div>
     <div class="f"><div class="n">4.100</div><div class="l">ENDPOINT KOMPUTASI</div></div>
     <div class="f"><div class="n">±95.900</div><div class="l">IRISAN DATA WILAYAH</div></div>
@@ -252,5 +270,18 @@
   </div>
   <div class="fbot"><span>© 2026 ATLYS PLATFORM · JAKARTA</span><span>VER 0.2.0 · API.ATLYS.MY.ID</span></div>
 </footer>
+<script>
+  (function () {
+    var bars = document.getElementById('bars');
+    if (bars) setTimeout(function () { bars.classList.add('go'); }, 250);
+    var els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(function (e) { io.observe(e); });
+    setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
+  })();
+</script>
 </body>
 </html>
