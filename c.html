@@ -3,294 +3,383 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gaya C · Docs Developer · Atlys</title>
+<title>Gaya C2 · Visual · Atlys</title>
+<meta name="description" content="data publik, satu api. berita terkini, konten media sosial, dan utilitas web dalam satu rest api." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#ffffff; --soft:#f8f8f7; --code:#f4f4f2;
-    --ink:#171716; --ink2:#5c5b57; --ink3:#8f8e88;
-    --line:#e7e6e1; --line2:#d8d7d1;
-    --sans:"Inter",-apple-system,"Segoe UI",sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --ink:#111113; --ink2:#55555c; --ink3:#8b8b93;
+    --line:#e6e6e3; --line2:#cfcfc9; --soft:#f6f6f3; --code:#101012;
+    --sans:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:#fff;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;position:relative}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.022;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+  header,main,footer{position:relative;z-index:2}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  a{color:var(--ink);text-decoration:none}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
 
-  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
-  .hrow{display:flex;align-items:center;gap:26px;min-height:60px;max-width:1080px;margin:0 auto;padding:0 24px}
-  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17.5px;letter-spacing:-.02em}
-  .mark{width:26px;height:26px;border-radius:7px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700}
-  nav.main{display:flex;gap:2px}
-  nav.main a{padding:7px 11px;font-size:13.5px;font-weight:500;color:var(--ink2);border-radius:7px}
-  nav.main a:hover{color:var(--ink);background:var(--soft)}
-  .hactions{margin-left:auto;display:flex;gap:8px;align-items:center}
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 18px;border-radius:8px;font-weight:600;font-size:13.5px;border:1px solid var(--line2);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
-  .btn.p{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .btn.p:hover{background:#333}
-  .btn.s{background:#fff;color:var(--ink)}
-  .btn.s:hover{border-color:var(--ink)}
+  header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:14px;height:62px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+  .logo .mark{width:27px;height:27px;background:var(--ink);color:#fff;border-radius:7px;display:grid;place-items:center;font-size:13px;font-weight:800}
+  .nav .m{margin-left:auto;display:flex;align-items:center;gap:26px}
+  .nav .m a{font-size:14px;color:var(--ink2);font-weight:500}
+  .nav .m a:hover{color:var(--ink)}
+  .btn{font-weight:600;font-size:14px;border-radius:9px;padding:9px 18px;border:1px solid var(--ink);display:inline-block;transition:background .18s ease,color .18s ease,transform .12s ease}
+  .btn:active{transform:scale(.98)}
+  .btn.solid{background:var(--ink);color:#fff}
+  .btn.solid:hover{background:#2b2b2e}
+  .btn.ghost{border-color:var(--line2);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--ink)}
 
-  .hero{padding:84px 0 0;max-width:720px}
-  .crumb{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:22px}
-  .crumb b{color:var(--ink);font-weight:500}
-  h1{font-size:clamp(44px,5.4vw,68px);font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-bottom:20px}
-  .sub{font-size:18px;color:var(--ink2);line-height:1.65;margin-bottom:30px;max-width:34em}
-  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-  .cta .btn{min-height:46px;padding:11px 24px;font-size:14.5px}
-  .micro{font-size:13.5px;color:var(--ink3)}
-  .micro a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:4px}
+  /* hero: teks pendek di kiri, panel produk besar di kanan */
+  .hero{display:grid;grid-template-columns:5fr 7fr;gap:54px;padding:66px 0 10px;align-items:start}
+  .crumb{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-bottom:22px}
+  .crumb b{color:var(--ink);font-weight:600}
+  h1{font-size:clamp(46px,5vw,68px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin-bottom:16px}
+  .sub{font-size:17px;color:var(--ink2);line-height:1.55;margin-bottom:28px;max-width:24em}
+  .cta{display:flex;gap:11px;flex-wrap:wrap}
+  .statusline{margin-top:26px;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;gap:8px}
+  .statusline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
+  .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink)}
 
-  .quickstart{margin-top:56px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .qs-h{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--soft);align-items:stretch}
-  .qs-h button{font-family:var(--mono);font-size:12px;padding:10px 16px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
-  .qs-h button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
-  .qs-h .copy{margin-left:auto;border-right:none;border-left:1px solid var(--line);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:10px 18px}
-  .qs-h .copy:hover{background:#fff;color:var(--ink)}
-  .quickstart pre{font-family:var(--mono);font-size:13px;line-height:1.8;padding:20px 22px;overflow-x:auto;color:var(--ink2);background:#fff}
-  .quickstart pre[hidden]{display:none}
-  .quickstart pre .k{color:var(--ink);font-weight:600}
-  .quickstart pre .cm{color:var(--ink3)}
+  /* panel playground: visual utama */
+  .panel{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 30px 70px rgba(15,15,18,.10);overflow:hidden;transition:transform .35s ease,box-shadow .35s ease}
+  .panel:hover{transform:translateY(-4px);box-shadow:0 40px 84px rgba(15,15,18,.13)}
+  .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
+  .p-tabs button{font-family:var(--mono);font-size:12px;padding:11px 16px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
+  .p-tabs button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .p-tabs .copy{margin-left:auto;border-right:none;border-left:1px solid var(--line);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:11px 18px;color:var(--ink2)}
+  .p-tabs .copy:hover{background:#fff;color:var(--ink)}
+  .p-code{font-family:var(--mono);font-size:12.5px;line-height:1.75;padding:18px 20px;overflow-x:auto;color:var(--ink2);white-space:pre}
+  .p-code[hidden]{display:none}
+  .p-code .k{color:var(--ink);font-weight:600}
+  .p-code .cm{color:var(--ink3)}
+  .p-resp{border-top:1px solid var(--line);background:var(--code);color:#d8d8dc}
+  .p-resp .rh{display:flex;justify-content:space-between;padding:10px 20px;border-bottom:1px solid #26262a;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#8b8b93}
+  .p-resp .rh .ok{color:#4ade80;font-weight:600}
+  .p-resp pre{font-family:var(--mono);font-size:12.5px;line-height:1.75;padding:16px 20px;overflow-x:auto}
+  .p-resp .k{color:#fff;font-weight:600}
+  .p-resp .s{color:#a5d6a7}
+  .p-foot{padding:14px 20px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px}
+  .p-foot .lb{font-size:12.5px;font-weight:600;white-space:nowrap}
+  .p-foot .bar{flex:1;height:7px;background:var(--soft);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+  .p-foot .bar i{display:block;height:100%;width:21%;background:var(--ink);border-radius:99px}
+  .p-foot .n{font-family:var(--mono);font-size:12px;color:var(--ink2);white-space:nowrap}
 
-  .fakta{display:flex;flex-wrap:wrap;gap:14px 44px;padding:30px 2px 0;margin-top:44px;border-top:1px solid var(--line)}
-  .fakta .f .n{font-size:22px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-  .fakta .f .l{font-size:12.5px;color:var(--ink3)}
+  /* pita angka */
+  .stats{display:flex;gap:48px;padding:52px 0 8px;flex-wrap:wrap}
+  .stats .s .n{font-size:32px;font-weight:800;letter-spacing:-.03em}
+  .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
 
-  section.blok{padding:76px 0 0}
-  .blok h2{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.028em;margin-bottom:10px}
-  .blok .lede{color:var(--ink2);max-width:40em;margin-bottom:30px;font-size:16px}
+  section.blok{padding:76px 0 6px}
+  .blok h2{font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
+  .blok .sub2{font-size:15.5px;color:var(--ink2);margin-bottom:30px}
 
-  .callout{border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:8px;background:var(--soft);padding:16px 20px;font-size:14.5px;color:var(--ink2);margin-bottom:30px;max-width:46em}
-  .callout b{color:var(--ink)}
-  .saring{margin-bottom:22px}
-  .saring input{width:100%;max-width:420px;font-family:var(--sans);font-size:14.5px;padding:12px 16px;border:1px solid var(--line2);border-radius:9px;background:#fff;color:var(--ink)}
-  .saring input:focus{outline:2px solid var(--ink);outline-offset:2px}
-  .kat-kosong{font-size:14px;color:var(--ink2);padding:14px 2px}
+  /* katalog kartu visual */
+  .katbar{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+  .saring input{font-family:var(--sans);font-size:14px;padding:11px 16px;border:1px solid var(--line2);border-radius:9px;width:min(320px,100%);margin-bottom:26px}
+  .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .card{border:1px solid var(--line);border-radius:13px;padding:18px;display:block;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;background:#fff}
+  .card:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,15,18,.08)}
+  .card .idx{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.1em}
+  .card .nm{font-weight:700;font-size:16px;margin-top:8px;letter-spacing:-.01em}
+  .card .ct{font-size:30px;font-weight:800;letter-spacing:-.03em;margin-top:2px}
+  .card .ex{font-family:var(--mono);font-size:10.5px;color:var(--ink2);margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 8px}
+  .kat-kosong{font-size:14px;color:var(--ink2);padding:18px 2px;display:none}
 
-  .docs-grid{display:grid;grid-template-columns:230px 1fr;gap:44px;align-items:start}
-  .docs-grid > *{min-width:0}
-  .ep{min-width:0}
-  .side{position:sticky;top:84px}
-  .side .sg{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.05em;margin:0 0 10px}
-  .side a{display:flex;justify-content:space-between;padding:7px 10px;font-size:14px;color:var(--ink2);border-radius:7px}
-  .side a:hover{background:var(--soft);color:var(--ink)}
-  .side a .c{font-family:var(--mono);font-size:12px;color:var(--ink3)}
-  .side a.on{background:var(--soft);color:var(--ink);font-weight:600}
+  /* batang proporsi irisan data */
+  .prop{margin-top:26px;border:1px solid var(--line);border-radius:13px;padding:22px}
+  .prop .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+  .prop .ph .t{font-weight:700;font-size:15px}
+  .prop .ph .n{font-size:24px;font-weight:800;letter-spacing:-.03em}
+  .segbar{display:flex;height:38px;border-radius:8px;overflow:hidden;gap:2px}
+  .segbar i{display:block;height:100%}
+  .segbar .s1{flex:79999;background:var(--ink)}
+  .segbar .s2{flex:6890;background:#5a5a61}
+  .segbar .s3{flex:9011;background:#c9c9c2}
+  .seglabel{display:flex;gap:2px;margin-top:10px}
+  .seglabel div{font-size:12px;color:var(--ink2);line-height:1.45}
+  .seglabel div b{display:block;color:var(--ink);font-size:13px}
+  .seglabel .l1{flex:79999}.seglabel .l2{flex:6890}.seglabel .l3{flex:9011}
+  @media(max-width:760px){ .seglabel .l2{display:none} }
 
-  .ep{border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
-  .ep-h{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-  .mget{font-family:var(--mono);font-size:11.5px;font-weight:600;background:var(--ink);color:#fff;padding:3px 9px;border-radius:6px}
-  .ep-h .p{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
-  .ep-h .d{margin-left:auto;font-size:13px;color:var(--ink3)}
-  .ep pre{font-family:var(--mono);font-size:12.6px;line-height:1.75;padding:16px 18px;background:var(--code);color:var(--ink2);overflow-x:auto}
-  .ep pre .k{color:var(--ink);font-weight:600}
+  /* langkah ringkas */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .step{border:1px solid var(--line);border-radius:13px;padding:20px}
+  .step .no{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink3)}
+  .step .t{font-weight:700;font-size:15.5px;margin-top:8px}
+  .step .d{font-size:13.5px;color:var(--ink2);margin-top:3px}
 
-  .tier{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .t{border:1px solid var(--line);border-radius:12px;padding:26px;background:#fff}
-  .t.hot{border-color:var(--ink);border-width:1.5px}
-  .t .tn{font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:14px}
-  .t .tn span{display:block;font-weight:500;color:var(--ink3);font-size:12.5px;margin-top:2px;letter-spacing:0}
-  .t .tq{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1}
-  .t .tq small{font-size:15px;color:var(--ink3);font-weight:500}
-  .t .tr{font-size:13px;color:var(--ink2);margin:7px 0 18px}
-  .t ul{list-style:none;margin-bottom:22px}
-  .t li{font-size:14px;color:var(--ink2);padding:5px 0;display:flex;gap:9px}
-  .t li::before{content:"✓";font-weight:700;color:var(--ink)}
-  .t .btn{width:100%}
+  /* keamanan: daftar pendek + panel spek */
+  .aman{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+  .aman ol{list-style:none;counter-reset:a;margin-top:22px}
+  .aman ol li{counter-increment:a;display:flex;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;font-weight:500}
+  .aman ol li::before{content:counter(a,decimal-leading-zero);font-family:var(--mono);font-size:12.5px;color:var(--ink3);padding-top:3px}
+  .spek{border:1px solid var(--ink);border-radius:13px;overflow:hidden}
+  .spek .sh{padding:13px 20px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;display:flex;justify-content:space-between}
+  .spek .row{display:flex;justify-content:space-between;gap:16px;padding:12.5px 20px;border-bottom:1px solid var(--line);font-size:13.5px}
+  .spek .row:last-child{border-bottom:none}
+  .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.04em;padding-top:1px;white-space:nowrap}
+  .spek .row .v{font-weight:600;text-align:right}
 
-  .aman{display:grid;grid-template-columns:1fr 1fr;gap:14px 44px}
-  .aman .a{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .aman .n{font-family:var(--mono);font-size:12px;color:var(--ink3);padding-top:3px}
-  .aman h3{font-size:15px;margin-bottom:4px}
-  .aman p{font-size:14px;color:var(--ink2);line-height:1.6}
+  /* tier dengan batang kuota */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tier{border:1px solid var(--line);border-radius:15px;padding:26px;display:flex;flex-direction:column;background:#fff}
+  .tier.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tier .nm{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3)}
+  .tier.dark .nm{color:#a9a9b0}
+  .tier .q{font-size:34px;font-weight:800;letter-spacing:-.03em;margin-top:10px}
+  .tier .q small{font-size:14px;font-weight:500;color:var(--ink2)}
+  .tier.dark .q small{color:#a9a9b0}
+  .tier .qbar{height:7px;border-radius:99px;background:var(--soft);border:1px solid var(--line);margin:16px 0 6px;overflow:hidden}
+  .tier.dark .qbar{background:#26262a;border-color:#333338}
+  .tier .qbar i{display:block;height:100%;background:var(--ink);border-radius:99px}
+  .tier.dark .qbar i{background:#fff}
+  .tier .ql{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:16px}
+  .tier ul{list-style:none;margin-bottom:24px}
+  .tier li{font-size:14px;padding:6px 0;color:var(--ink2);display:flex;gap:9px}
+  .tier.dark li{color:#c9c9cf}
+  .tier li::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;margin-top:8px;flex:none;opacity:.55}
+  .tier .btn{margin-top:auto;text-align:center}
+  .tier.dark .btn{border-color:#fff}
+  .tier.dark .btn.solid{background:#fff;color:var(--ink)}
 
-  footer{margin-top:88px;border-top:1px solid var(--line)}
-  .frow{max-width:1080px;margin:0 auto;padding:34px 24px 26px;display:flex;flex-wrap:wrap;gap:14px 40px;align-items:baseline}
-  .frow .fd{font-size:13.5px;color:var(--ink2);max-width:300px}
-  .flinks{margin-left:auto;display:flex;flex-wrap:wrap;gap:5px 22px}
-  .flinks a{font-size:13.5px;color:var(--ink2);padding:4px 0}
-  .flinks a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
-  .fbot{max-width:1080px;margin:0 auto;padding:15px 24px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--ink3)}
+  /* gerak masuk halus sekali jalan */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .rv{opacity:1;transform:none;transition:none}
+    .panel:hover,.card:hover{transform:none}
+    .statusline .dot{animation:none}
+  }
 
-  @media(max-width:900px){
-    .docs-grid{grid-template-columns:1fr}
-    .side{position:static}
-    .tier{grid-template-columns:1fr}
-    .aman{grid-template-columns:1fr}
-    nav.main{display:none}
+  footer{margin-top:96px;border-top:1px solid var(--line);padding:30px 0 42px}
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .frow .l{font-size:13px;color:var(--ink2)}
+  .frow .links{display:flex;gap:22px}
+  .frow .links a{font-size:13px;color:var(--ink2)}
+  .frow .links a:hover{color:var(--ink)}
+
+  @media(max-width:1020px){
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .hero{grid-template-columns:1fr;gap:38px;padding-top:48px}
+    .aman{grid-template-columns:1fr;gap:32px}
+  }
+  @media(max-width:760px){
+    .nav .m a.opt{display:none}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .tiers,.steps{grid-template-columns:1fr}
+    .stats{gap:30px}
+    .p-code{font-size:11.5px}
   }
 </style>
 </head>
 <body>
-<header>
-  <div class="hrow">
-    <a class="brand" href="#"><span class="mark">A</span>Atlys</a>
-    <nav class="main">
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
+    <div class="m">
       <a href="#katalog">Katalog</a>
-      <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
-      <a href="https://api.atlys.my.id/status">Status</a>
-      <a href="https://api.atlys.my.id/changelog">Changelog</a>
-    </nav>
-    <div class="hactions">
-      <a class="btn s" href="https://api.atlys.my.id/login">Login</a>
-      <a class="btn p" href="https://api.atlys.my.id/register">Daftar</a>
+      <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
+      <a class="opt" href="https://api.atlys.my.id/status">Status</a>
+      <a class="btn ghost" href="https://api.atlys.my.id/login">Login</a>
+      <a class="btn solid" href="https://api.atlys.my.id/register">Daftar</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
   <div class="hero">
-    <p class="crumb">atlys / <b>pengenalan</b> / v0.2.0</p>
-    <h1>data publik,<br />satu api.</h1>
-    <p class="sub">berita terkini, konten media sosial, dan utilitas web dalam satu rest api. satu key, dokumentasi lengkap, gratis.</p>
-    <div class="cta">
-      <a class="btn p" href="https://api.atlys.my.id/register">Minta api key</a>
-      <a class="btn s" href="#katalog">Jelajahi katalog</a>
+    <div>
+      <div class="crumb">atlys / <b>pengenalan</b> / v0.2.0</div>
+      <h1>data publik,<br />satu api.</h1>
+      <p class="sub">Berita, media sosial, dan utilitas web dalam satu rest api.</p>
+      <div class="cta">
+        <a class="btn solid" href="https://api.atlys.my.id/register" style="padding:12px 24px">Minta api key</a>
+        <a class="btn ghost" href="#katalog" style="padding:12px 24px">Jelajahi katalog</a>
+      </div>
+      <div class="statusline"><span class="dot"></span>Status saat ini: <a href="https://api.atlys.my.id/status">live, v0.2.0 operasional penuh</a></div>
     </div>
-    <p class="micro">Status saat ini: <a href="https://api.atlys.my.id/status">live, v0.2.0 operasional penuh</a></p>
 
-    <div class="quickstart">
-      <div class="qs-h" role="tablist" aria-label="Contoh kode">
+    <div class="panel">
+      <div class="p-tabs" role="tablist" aria-label="Contoh kode">
         <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
         <button data-tab="js" role="tab" aria-selected="false">javascript</button>
         <button data-tab="py" role="tab" aria-selected="false">python</button>
         <button class="copy" id="copyBtn" type="button">Salin kode</button>
       </div>
-      <pre data-pane="curl"><code><span class="cm"># panggil endpoint pertama anda</span>
+      <div class="p-code" data-pane="curl"><span class="cm"># panggil endpoint pertama anda</span>
 curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
-  -H <span class="k">"X-API-Key: atlys_key_anda"</span></code></pre>
-      <pre data-pane="js" hidden><code><span class="cm">// panggil endpoint pertama anda</span>
+  -H <span class="k">"X-API-Key: atlys_key_anda"</span></div>
+      <div class="p-code" data-pane="js" hidden><span class="cm">// panggil endpoint pertama anda</span>
 const res = await fetch(
   <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
   { headers: { <span class="k">"X-API-Key"</span>: "atlys_key_anda" } }
 );
 const data = await res.json();
-console.log(data.result.kodepos);</code></pre>
-      <pre data-pane="py" hidden><code><span class="cm"># panggil endpoint pertama anda</span>
+console.log(data.result.kodepos);</div>
+      <div class="p-code" data-pane="py" hidden><span class="cm"># panggil endpoint pertama anda</span>
 import requests
 
 r = requests.get(
     <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
     headers={<span class="k">"X-API-Key"</span>: "atlys_key_anda"},
 )
-print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</code></pre>
-    </div>
-
-    <div class="fakta">
-      <div class="f"><div class="n">±100.000</div><div class="l">total endpoint</div></div>
-      <div class="f"><div class="n">4.100</div><div class="l">endpoint komputasi</div></div>
-      <div class="f"><div class="n">±95.900</div><div class="l">irisan data wilayah</div></div>
-      <div class="f"><div class="n">Rp0</div><div class="l">biaya marginal</div></div>
+print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</div>
+      <div class="p-resp">
+        <div class="rh"><span>RESPONS</span><span class="ok">200 OK · 12 ms</span></div>
+        <pre>{
+  <span class="k">"status"</span>: <span class="s">"ok"</span>,
+  <span class="k">"result"</span>: { <span class="k">"kodepos"</span>: <span class="s">"10110"</span>, <span class="k">"kecamatan"</span>: <span class="s">"Gambir"</span>, <span class="k">"kota"</span>: <span class="s">"Jakarta Pusat"</span> }
+}</pre>
+      </div>
+      <div class="p-foot">
+        <span class="lb">Kuota tier free</span>
+        <span class="bar"><i></i></span>
+        <span class="n">42 / 200 per hari</span>
+      </div>
     </div>
   </div>
 
-  <section class="blok" id="katalog">
-    <h2>Katalog endpoint</h2>
-    <p class="lede">Pilih kategori di kiri, contoh endpointnya tampil di kanan. Semua memakai pola <span style="font-family:var(--mono);font-size:14px">/v1/&lt;kategori&gt;/&lt;endpoint&gt;</span> yang sama.</p>
-    <div class="callout"><b>Tanpa key pun bisa mencoba.</b> Endpoint demo terbuka untuk tier guest, 20 request per hari per alamat ip, tanpa pendaftaran sama sekali.</div>
-    <div class="saring">
-      <input type="search" id="katFilter" placeholder="Saring kategori, misalnya: validasi" aria-label="Saring kategori endpoint" />
-    </div>
-    <div class="docs-grid">
-      <aside class="side">
-        <p class="sg">KATEGORI</p>
-        <a class="on" href="https://api.atlys.my.id/docs">Tools <span class="c">1.319</span></a>
-        <a href="https://api.atlys.my.id/docs">Math <span class="c">777</span></a>
-        <a href="https://api.atlys.my.id/docs">Indonesia <span class="c">648</span></a>
-        <a href="https://api.atlys.my.id/docs">Validasi <span class="c">390</span></a>
-        <a href="https://api.atlys.my.id/docs">Fun <span class="c">255</span></a>
-        <a href="https://api.atlys.my.id/docs">Data <span class="c">196</span></a>
-        <a href="https://api.atlys.my.id/docs">Info <span class="c">161</span></a>
-        <a href="https://api.atlys.my.id/docs">Generator <span class="c">142</span></a>
-        <a href="https://api.atlys.my.id/docs">Ragam <span class="c">84</span></a>
-        <a href="https://api.atlys.my.id/docs">Game <span class="c">20</span></a>
-        <p class="kat-kosong" id="katEmpty" hidden>Tidak ada kategori yang cocok. Coba kata lain, atau buka daftar lengkapnya di dokumentasi.</p>
-      </aside>
+  <div class="stats">
+    <div class="s"><div class="n">±100.000</div><div class="l">total endpoint</div></div>
+    <div class="s"><div class="n">4.100</div><div class="l">endpoint komputasi</div></div>
+    <div class="s"><div class="n">±95.900</div><div class="l">irisan data wilayah</div></div>
+    <div class="s"><div class="n">Rp0</div><div class="l">biaya, full free tier</div></div>
+  </div>
+
+  <section class="blok rv" id="katalog">
+    <div class="katbar">
       <div>
-        <div class="ep">
-          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/data/kodepos/kecamatan/{nama}</span><span class="d">detail kecamatan dan kode pos utama</span></div>
-          <pre><code>{
-  <span class="k">"status"</span>: "ok",
-  <span class="k">"result"</span>: { <span class="k">"kodepos"</span>: "10110", <span class="k">"kecamatan"</span>: "Gambir",
-              <span class="k">"kota"</span>: "Jakarta Pusat", <span class="k">"provinsi"</span>: "DKI Jakarta" },
-  <span class="k">"meta"</span>: { <span class="k">"cached"</span>: false, <span class="k">"ms"</span>: 12 }
-}</code></pre>
-        </div>
-        <div class="ep">
-          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/tools/hash/sha256?teks=halo</span><span class="d">hash sha256 dari teks</span></div>
-          <pre><code>{ <span class="k">"status"</span>: "ok", <span class="k">"result"</span>: { <span class="k">"sha256"</span>: "b8c7…" } }</code></pre>
-        </div>
-        <div class="ep">
-          <div class="ep-h"><span class="mget">GET</span><span class="p">/v1/info/gempa</span><span class="d">info gempa terkini</span></div>
-          <pre><code>{ <span class="k">"status"</span>: "ok", <span class="k">"result"</span>: { <span class="k">"sumber"</span>: "data publik", … } }</code></pre>
-        </div>
+        <h2>Katalog endpoint</h2>
+        <p class="sub2">Sepuluh kategori komputasi, satu pola path yang sama.</p>
+      </div>
+      <div class="saring"><input type="search" id="katFilter" placeholder="Saring kategori" aria-label="Saring kategori endpoint" /></div>
+    </div>
+    <div class="cards" id="katCards">
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 01</span><div class="nm">Tools</div><div class="ct">1.319</div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 02</span><div class="nm">Math</div><div class="ct">777</div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 03</span><div class="nm">Indonesia</div><div class="ct">648</div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 04</span><div class="nm">Validasi</div><div class="ct">390</div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 05</span><div class="nm">Fun</div><div class="ct">255</div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 06</span><div class="nm">Data</div><div class="ct">196</div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 07</span><div class="nm">Info</div><div class="ct">161</div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 08</span><div class="nm">Generator</div><div class="ct">142</div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 09</span><div class="nm">Ragam</div><div class="ct">84</div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="idx">KAT 10</span><div class="nm">Game</div><div class="ct">20</div><div class="ex">/v1/game/tebak-angka</div></a>
+    </div>
+    <p class="kat-kosong" id="katEmpty">Tidak ada kategori yang cocok dengan saringan itu.</p>
+
+    <div class="prop">
+      <div class="ph"><span class="t">Irisan data wilayah Indonesia</span><span class="n">±95.900</span></div>
+      <div class="segbar"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
+      <div class="seglabel">
+        <div class="l1"><b>79.999</b>kodepos per kelurahan</div>
+        <div class="l2"><b>6.890</b>per kecamatan</div>
+        <div class="l3"><b>±9.011</b>irisan wilayah lain</div>
       </div>
     </div>
   </section>
 
-  <section class="blok">
-    <h2>Keamanan</h2>
-    <p class="lede">Empat mekanisme yang paling sering ditanyakan pengguna, semuanya aktif di produksi.</p>
+  <section class="blok rv">
+    <h2>Mulai pakai</h2>
+    <p class="sub2">Tiga langkah, tanpa kartu kredit.</p>
+    <div class="steps">
+      <div class="step"><div class="no">01</div><div class="t">Isi form pendaftaran</div><div class="d">Email aktif dan tujuan pemakaian.</div></div>
+      <div class="step"><div class="no">02</div><div class="t">Captcha dan review manual</div><div class="d">Bot tersaring, pengajuan dibaca manusia.</div></div>
+      <div class="step"><div class="no">03</div><div class="t">Key tampil satu kali</div><div class="d">Simpan baik baik, langsung bisa dipakai.</div></div>
+    </div>
+  </section>
+
+  <section class="blok rv">
     <div class="aman">
-      <div class="a"><span class="n">01</span><div><h3>SSRF guard 8 lapis</h3><p>Setiap request keluar melewati 8 lapis validasi sebelum dieksekusi.</p></div></div>
-      <div class="a"><span class="n">02</span><div><h3>Key disimpan sebagai hash</h3><p>Server hanya menyimpan hash sha256. Key utuh tampil satu kali saat dibuat, tidak pernah lewat email.</p></div></div>
-      <div class="a"><span class="n">03</span><div><h3>Captcha dan review manual</h3><p>Proof of work buatan sendiri, lalu antrean tinjauan manusia untuk setiap pengajuan key.</p></div></div>
-      <div class="a"><span class="n">04</span><div><h3>Email sekali pakai ditolak</h3><p>Sekitar 2.000 domain disposable diblokir, ditambah pemeriksaan mx record pendaftar.</p></div></div>
+      <div>
+        <h2>Keamanan</h2>
+        <ol>
+          <li>Key tampil satu kali, sesudah itu hanya hash yang disimpan</li>
+          <li>Key bocor bisa dimatikan dari panel admin saat itu juga</li>
+          <li>Setiap permintaan tercatat di log audit berantai</li>
+          <li>Pendaftaran ditinjau manual, bukan asal terima</li>
+        </ol>
+      </div>
+      <div class="spek">
+        <div class="sh"><span>SPESIFIKASI</span><span>TERVERIFIKASI</span></div>
+        <div class="row"><span class="k">CAPTCHA</span><span class="v">proof of work, difficulty 4</span></div>
+        <div class="row"><span class="k">IP ABUSIF</span><span class="v">difficulty naik ke 5</span></div>
+        <div class="row"><span class="k">BRUTE FORCE</span><span class="v">20x per menit, kunci 5 menit</span></div>
+        <div class="row"><span class="k">SSRF GUARD</span><span class="v">8 lapis pemeriksaan</span></div>
+        <div class="row"><span class="k">EMAIL SEKALI PAKAI</span><span class="v">±2.000 domain ditolak + cek MX</span></div>
+        <div class="row"><span class="k">AUDIT</span><span class="v">hash chain, anti ubah diam diam</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="blok">
+  <section class="blok rv">
     <h2>Tingkat akses</h2>
-    <p class="lede">Semua tingkat gratis. Bedanya di kuota dan cara masuknya.</p>
-    <div class="tier">
-      <div class="t">
-        <div class="tn">Guest <span>tanpa akun</span></div>
-        <div class="tq">20<small> / hari</small></div>
-        <div class="tr">5 request per menit · endpoint demo</div>
-        <ul><li>Langsung pakai</li><li>Tanpa pendaftaran</li></ul>
-        <a class="btn s" href="https://api.atlys.my.id/docs">Coba demo</a>
+    <p class="sub2">Semua gratis. Bedanya di jatah harian.</p>
+    <div class="tiers">
+      <div class="tier">
+        <div class="nm">GUEST</div>
+        <div class="q">20<small> /hari</small></div>
+        <div class="qbar"><i style="width:2%"></i></div>
+        <div class="ql">TANPA KEY · TANPA DAFTAR</div>
+        <ul>
+          <li>Endpoint demo terbuka</li>
+          <li>Cocok untuk mencoba dulu</li>
+        </ul>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba endpoint demo</a>
       </div>
-      <div class="t hot">
-        <div class="tn">Free <span>tier default pendaftar baru</span></div>
-        <div class="tq">200<small> / hari</small></div>
-        <div class="tr">10 request per menit · semua endpoint publik</div>
-        <ul><li>Semua endpoint publik</li><li>Notifikasi kuota lewat email</li></ul>
-        <a class="btn p" href="https://api.atlys.my.id/register">Daftar free</a>
+      <div class="tier dark">
+        <div class="nm">FREE</div>
+        <div class="q">200<small> /hari</small></div>
+        <div class="qbar"><i style="width:20%"></i></div>
+        <div class="ql">KEY VIA FORM + REVIEW</div>
+        <ul>
+          <li>Semua endpoint komputasi</li>
+          <li>Panel kuota dan riwayat</li>
+          <li>Key bisa diminta ulang</li>
+        </ul>
+        <a class="btn solid" href="https://api.atlys.my.id/register">Minta api key</a>
       </div>
-      <div class="t">
-        <div class="tn">Trusted <span>lewat undangan</span></div>
-        <div class="tq">1.000<small> / hari</small></div>
-        <div class="tr">30 request per menit · semua endpoint publik</div>
-        <ul><li>Kuota 5x tier free</li><li>Kode undangan terverifikasi</li></ul>
-        <a class="btn s" href="https://api.atlys.my.id/invite">Ajukan undangan</a>
+      <div class="tier">
+        <div class="nm">TRUSTED</div>
+        <div class="q">1.000<small> /hari</small></div>
+        <div class="qbar"><i style="width:100%"></i></div>
+        <div class="ql">MELALUI UNDANGAN ADMIN</div>
+        <ul>
+          <li>Lima kali jatah tier free</li>
+          <li>Untuk proyek yang terverifikasi</li>
+        </ul>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca ketentuannya</a>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="frow">
-    <a class="brand" href="#"><span class="mark">A</span>Atlys</a>
-    <p class="fd">Api publik buatan indonesia. Data publik dalam satu api, biaya operasional marginal Rp0.</p>
-    <div class="flinks">
-      <a href="#katalog">Katalog endpoint</a>
+  <div class="wrap frow">
+    <span class="l">© 2026 Atlys · dibangun di atas Cloudflare Workers dan D1</span>
+    <div class="links">
       <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
-      <a href="https://api.atlys.my.id/status">Status layanan</a>
+      <a href="https://api.atlys.my.id/status">Status</a>
       <a href="https://api.atlys.my.id/changelog">Changelog</a>
-      <a href="https://github.com/adiprmx/atlys-python">SDK Python</a>
-      <a href="https://github.com/adiprmx/atlys-js">SDK JavaScript</a>
+      <a href="https://api.atlys.my.id/privacy">Privasi</a>
     </div>
   </div>
-  <div class="fbot"><span>© 2026 Atlys Platform, Jakarta, Indonesia</span><span>ver 0.2.0 · api.atlys.my.id</span></div>
 </footer>
+
 <script>
   (function () {
     // tab contoh kode: beneran berpindah
-    var tabs = document.querySelectorAll('.qs-h [data-tab]');
+    var tabs = document.querySelectorAll('.p-tabs [data-tab]');
     var panes = document.querySelectorAll('[data-pane]');
     tabs.forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -299,38 +388,45 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== btn.getAttribute('data-tab'); });
       });
     });
-    // tombol salin: menyalin kode pada tab yang aktif
+    // tombol salin: menyalin kode pada tab aktif
     var copyBtn = document.getElementById('copyBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', function () {
-        var active = document.querySelector('[data-pane]:not([hidden]) code');
+        var active = document.querySelector('[data-pane]:not([hidden])');
         if (!active) return;
-        var teks = active.innerText;
         function selesai() {
           copyBtn.textContent = 'Tersalin';
           setTimeout(function () { copyBtn.textContent = 'Salin kode'; }, 1800);
         }
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(teks).then(selesai).catch(selesai);
+          navigator.clipboard.writeText(active.innerText).then(selesai).catch(selesai);
         } else { selesai(); }
       });
     }
-    // saring kategori: menyaring daftar beneran
+    // saring kategori: menyaring kartu beneran
     var input = document.getElementById('katFilter');
     var kosong = document.getElementById('katEmpty');
     if (input) {
-      var links = document.querySelectorAll('.side a');
+      var cards = document.querySelectorAll('#katCards .card');
       input.addEventListener('input', function () {
         var q = input.value.trim().toLowerCase();
         var terlihat = 0;
-        links.forEach(function (a) {
-          var cocok = a.textContent.toLowerCase().indexOf(q) !== -1;
-          a.style.display = cocok ? '' : 'none';
+        cards.forEach(function (c) {
+          var cocok = c.textContent.toLowerCase().indexOf(q) !== -1;
+          c.style.display = cocok ? '' : 'none';
           if (cocok) terlihat++;
         });
-        if (kosong) kosong.hidden = terlihat !== 0;
+        if (kosong) kosong.style.display = terlihat === 0 ? 'block' : 'none';
       });
     }
+    // gerak masuk halus sekali jalan
+    var els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(function (e) { io.observe(e); });
+    setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
   })();
 </script>
 </body>
