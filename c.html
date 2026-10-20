@@ -46,10 +46,13 @@
   .micro a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:4px}
 
   .quickstart{margin-top:56px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .qs-h{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--soft)}
-  .qs-h span{font-family:var(--mono);font-size:12px;padding:10px 16px;color:var(--ink2);border-right:1px solid var(--line)}
-  .qs-h span.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .qs-h{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--soft);align-items:stretch}
+  .qs-h button{font-family:var(--mono);font-size:12px;padding:10px 16px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
+  .qs-h button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .qs-h .copy{margin-left:auto;border-right:none;border-left:1px solid var(--line);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:10px 18px}
+  .qs-h .copy:hover{background:#fff;color:var(--ink)}
   .quickstart pre{font-family:var(--mono);font-size:13px;line-height:1.8;padding:20px 22px;overflow-x:auto;color:var(--ink2);background:#fff}
+  .quickstart pre[hidden]{display:none}
   .quickstart pre .k{color:var(--ink);font-weight:600}
   .quickstart pre .cm{color:var(--ink3)}
 
@@ -60,6 +63,13 @@
   section.blok{padding:76px 0 0}
   .blok h2{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.028em;margin-bottom:10px}
   .blok .lede{color:var(--ink2);max-width:40em;margin-bottom:30px;font-size:16px}
+
+  .callout{border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:8px;background:var(--soft);padding:16px 20px;font-size:14.5px;color:var(--ink2);margin-bottom:30px;max-width:46em}
+  .callout b{color:var(--ink)}
+  .saring{margin-bottom:22px}
+  .saring input{width:100%;max-width:420px;font-family:var(--sans);font-size:14.5px;padding:12px 16px;border:1px solid var(--line2);border-radius:9px;background:#fff;color:var(--ink)}
+  .saring input:focus{outline:2px solid var(--ink);outline-offset:2px}
+  .kat-kosong{font-size:14px;color:var(--ink2);padding:14px 2px}
 
   .docs-grid{display:grid;grid-template-columns:230px 1fr;gap:44px;align-items:start}
   .docs-grid > *{min-width:0}
@@ -144,10 +154,30 @@
     <p class="micro">Status saat ini: <a href="https://api.atlys.my.id/status">live, v0.2.0 operasional penuh</a></p>
 
     <div class="quickstart">
-      <div class="qs-h"><span class="on">curl</span><span>respons</span></div>
-      <pre><code><span class="cm"># panggil endpoint pertama anda</span>
+      <div class="qs-h" role="tablist" aria-label="Contoh kode">
+        <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
+        <button data-tab="js" role="tab" aria-selected="false">javascript</button>
+        <button data-tab="py" role="tab" aria-selected="false">python</button>
+        <button class="copy" id="copyBtn" type="button">Salin kode</button>
+      </div>
+      <pre data-pane="curl"><code><span class="cm"># panggil endpoint pertama anda</span>
 curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
   -H <span class="k">"X-API-Key: atlys_key_anda"</span></code></pre>
+      <pre data-pane="js" hidden><code><span class="cm">// panggil endpoint pertama anda</span>
+const res = await fetch(
+  <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
+  { headers: { <span class="k">"X-API-Key"</span>: "atlys_key_anda" } }
+);
+const data = await res.json();
+console.log(data.result.kodepos);</code></pre>
+      <pre data-pane="py" hidden><code><span class="cm"># panggil endpoint pertama anda</span>
+import requests
+
+r = requests.get(
+    <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
+    headers={<span class="k">"X-API-Key"</span>: "atlys_key_anda"},
+)
+print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</code></pre>
     </div>
 
     <div class="fakta">
@@ -161,6 +191,10 @@ curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
   <section class="blok" id="katalog">
     <h2>Katalog endpoint</h2>
     <p class="lede">Pilih kategori di kiri, contoh endpointnya tampil di kanan. Semua memakai pola <span style="font-family:var(--mono);font-size:14px">/v1/&lt;kategori&gt;/&lt;endpoint&gt;</span> yang sama.</p>
+    <div class="callout"><b>Tanpa key pun bisa mencoba.</b> Endpoint demo terbuka untuk tier guest, 20 request per hari per alamat ip, tanpa pendaftaran sama sekali.</div>
+    <div class="saring">
+      <input type="search" id="katFilter" placeholder="Saring kategori, misalnya: validasi" aria-label="Saring kategori endpoint" />
+    </div>
     <div class="docs-grid">
       <aside class="side">
         <p class="sg">KATEGORI</p>
@@ -174,6 +208,7 @@ curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
         <a href="https://api.atlys.my.id/docs">Generator <span class="c">142</span></a>
         <a href="https://api.atlys.my.id/docs">Ragam <span class="c">84</span></a>
         <a href="https://api.atlys.my.id/docs">Game <span class="c">20</span></a>
+        <p class="kat-kosong" id="katEmpty" hidden>Tidak ada kategori yang cocok. Coba kata lain, atau buka daftar lengkapnya di dokumentasi.</p>
       </aside>
       <div>
         <div class="ep">
@@ -252,5 +287,51 @@ curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
   </div>
   <div class="fbot"><span>© 2026 Atlys Platform, Jakarta, Indonesia</span><span>ver 0.2.0 · api.atlys.my.id</span></div>
 </footer>
+<script>
+  (function () {
+    // tab contoh kode: beneran berpindah
+    var tabs = document.querySelectorAll('.qs-h [data-tab]');
+    var panes = document.querySelectorAll('[data-pane]');
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        tabs.forEach(function (b) { b.classList.remove('on'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('on'); btn.setAttribute('aria-selected', 'true');
+        panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== btn.getAttribute('data-tab'); });
+      });
+    });
+    // tombol salin: menyalin kode pada tab yang aktif
+    var copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var active = document.querySelector('[data-pane]:not([hidden]) code');
+        if (!active) return;
+        var teks = active.innerText;
+        function selesai() {
+          copyBtn.textContent = 'Tersalin';
+          setTimeout(function () { copyBtn.textContent = 'Salin kode'; }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(teks).then(selesai).catch(selesai);
+        } else { selesai(); }
+      });
+    }
+    // saring kategori: menyaring daftar beneran
+    var input = document.getElementById('katFilter');
+    var kosong = document.getElementById('katEmpty');
+    if (input) {
+      var links = document.querySelectorAll('.side a');
+      input.addEventListener('input', function () {
+        var q = input.value.trim().toLowerCase();
+        var terlihat = 0;
+        links.forEach(function (a) {
+          var cocok = a.textContent.toLowerCase().indexOf(q) !== -1;
+          a.style.display = cocok ? '' : 'none';
+          if (cocok) terlihat++;
+        });
+        if (kosong) kosong.hidden = terlihat !== 0;
+      });
+    }
+  })();
+</script>
 </body>
 </html>
