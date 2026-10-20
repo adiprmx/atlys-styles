@@ -40,22 +40,22 @@
   .btn.ghost{border-color:var(--line2);color:var(--ink)}
   .btn.ghost:hover{border-color:var(--ink)}
 
-  .hero{text-align:center;padding:110px 0 0;position:relative;z-index:0}
+  .hero{text-align:left;padding:110px 0 0;position:relative;z-index:0}
   .hero::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:-30px;height:600px;background-image:radial-gradient(#e1e1da 1.1px,transparent 1.2px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000 25%,transparent 92%);mask-image:linear-gradient(180deg,#000 25%,transparent 92%);z-index:-1;pointer-events:none}
   .crumb{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-bottom:26px}
   .crumb b{color:var(--ink);font-weight:600}
-  h1{font-size:clamp(54px,7.2vw,88px);font-weight:800;letter-spacing:-.045em;line-height:1.0;margin-bottom:22px}
-  .sub{font-size:18px;color:var(--ink2);line-height:1.65;max-width:36em;margin:0 auto 34px}
-  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  h1{font-size:clamp(58px,8vw,104px);font-weight:800;letter-spacing:-.045em;line-height:.99;margin-bottom:22px}
+  .sub{font-size:18px;color:var(--ink2);line-height:1.65;max-width:34em;margin:0 0 34px}
+  .cta{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap}
   .cta .btn{padding:13px 28px;font-size:15px}
-  .statusline{margin:30px auto 0;width:fit-content;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;box-shadow:0 1px 3px rgba(23,23,28,.05)}
+  .statusline{margin:30px 0 0;width:fit-content;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;box-shadow:0 1px 3px rgba(23,23,28,.05)}
   .statusline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
   .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink)}
   h1 .grad{background:linear-gradient(94deg,#131316 15%,#63636d 52%,#131316 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
 
   /* satu panel produk: contoh request dan respons */
-  .panel{max-width:980px;margin:76px auto 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
+  .panel{margin:72px 0 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
   .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
   .p-tabs .dots{display:flex;align-items:center;gap:6px;padding:0 4px 0 16px}
   .p-tabs .dots i{width:8px;height:8px;border-radius:50%;background:#c9c9c2}
@@ -78,6 +78,12 @@
   .p-resp .s{color:#a5d6a7}
   @media(max-width:860px){ .p-split{grid-template-columns:1fr} }
 
+  .ticker{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden}
+  .ttrack{display:flex;width:max-content;animation:tick 46s linear infinite}
+  .ttrack span{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:.03em;white-space:nowrap}
+  .ticker:hover .ttrack{animation-play-state:paused}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){ .ttrack{animation:none} }
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:72px;padding:48px 0 52px;position:relative;z-index:0}
   .stats::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(180deg,#1f1f24,#121215);z-index:-1}
   .band-dark .s{border-top-color:rgba(255,255,255,.16)}
@@ -97,15 +103,21 @@
   .blok .sub2{font-size:16.5px;color:var(--ink2);margin-bottom:44px}
 
   /* katalog: daftar bersih, tanpa widget */
-  .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 28px}
+  .kgrid{display:grid;grid-template-columns:320px 1fr;gap:72px;align-items:start}
+  .khead{position:sticky;top:96px}
+  .khead .sub2{margin-bottom:0}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px}
+  .card.feat{grid-column:span 2}
+  .card.feat .ct{font-size:52px}
+  .card.wide{grid-column:span 2}
+  @media(max-width:1020px){ .kgrid{grid-template-columns:1fr;gap:8px} .khead{position:static} }
   .card{display:block;padding:20px 2px 24px;border-top:1px solid var(--line2);transition:transform .25s ease}
   .card:hover{transform:translateY(-3px)}
   .card:hover .nm{color:var(--ink)}
   .card .nm{font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--ink2)}
   .card .ct{font-size:34px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
   .card .ex{font-family:var(--mono);font-size:10.5px;color:var(--ink3);margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  @media(max-width:1020px){ .cards{grid-template-columns:repeat(3,minmax(0,1fr))} }
-  @media(max-width:760px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media(max-width:760px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} .card.feat .ct{font-size:40px} }
 
   .prop{margin-top:56px}
   .prop .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
@@ -133,6 +145,11 @@
   .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.05em;padding-top:2px;white-space:nowrap}
   .spek .row .v{font-weight:600;text-align:right}
   @media(max-width:1020px){ .aman{grid-template-columns:1fr;gap:36px} }
+
+  /* nomor bayangan editorial */
+  .hwrap{position:relative;isolation:isolate}
+  .bignum{position:absolute;right:-6px;top:-52px;font-size:170px;font-weight:800;letter-spacing:-.05em;line-height:1;color:transparent;-webkit-text-stroke:1.5px #e2e2da;z-index:-1;user-select:none}
+  @media(max-width:760px){ .bignum{font-size:104px;top:-30px} }
 
   /* keamanan sebagai diagram alur, bukan paragraf */
   .pipe{display:grid;grid-template-columns:210px 28px 1fr 28px 210px;gap:6px;align-items:stretch}
@@ -204,6 +221,11 @@
     .statusline .dot{animation:none}
   }
 
+  .maker .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px 72px;align-items:start}
+  .maker .mh{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
+  .maker p{font-size:15.5px;color:var(--ink2);line-height:1.75}
+  .maker .msig{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-top:16px;letter-spacing:.04em}
+  @media(max-width:760px){ .maker .mgrid{grid-template-columns:1fr} }
   footer{margin-top:110px;border-top:1px solid var(--line);padding:34px 0 40px}
   .keatas{position:fixed;right:22px;bottom:22px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid #131316;background:linear-gradient(180deg,#28282e,#131316);color:#fff;font-size:18px;line-height:1;cursor:pointer;box-shadow:0 10px 24px rgba(18,18,21,.22);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
   .keatas.muncul{opacity:1;transform:none;pointer-events:auto}
@@ -332,6 +354,8 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
     </div>
   </div>
 
+  <div class="ticker" aria-hidden="true"><div class="ttrack"><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
+
   <div class="stats band-dark">
     <div class="s"><div class="n" data-count="100000" data-prefix="±">±100.000</div><div class="l">Total endpoint</div></div>
     <div class="s"><div class="n" data-count="4100">4.100</div><div class="l">Endpoint komputasi</div></div>
@@ -340,11 +364,14 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </div>
 
   <section class="blok rv band-soft" id="katalog">
-    <div class="eyebrow">01 · KATALOG</div>
-    <h2>Katalog Endpoint</h2>
-    <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
-    <div class="cards">
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
+    <div class="kgrid">
+      <div class="khead">
+        <div class="eyebrow">01 · KATALOG</div>
+        <h2>Katalog Endpoint</h2>
+        <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
+      </div>
+      <div class="cards">
+      <a class="card feat" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="bar"><i style="width:59%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="bar"><i style="width:49%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="bar"><i style="width:30%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
@@ -353,7 +380,8 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="bar"><i style="width:12%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="bar"><i style="width:11%"></i></div><div class="ex">/v1/generator/uuid</div></a>
       <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="bar"><i style="width:6%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
+      <a class="card wide" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
+      </div>
     </div>
 
     <div class="prop">
@@ -368,9 +396,11 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv" id="keamanan">
-    <div class="eyebrow">02 · KEAMANAN</div>
-    <h2>Keamanan</h2>
-    <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
+    <div class="hwrap"><span class="bignum" aria-hidden="true">02</span>
+      <div class="eyebrow">02 · KEAMANAN</div>
+      <h2>Keamanan</h2>
+      <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
+    </div>
     <div class="pipe">
       <div class="pcol">
         <div class="cap">PENDAFTARAN</div>
@@ -406,9 +436,11 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv" id="akses">
-    <div class="eyebrow">03 · TINGKAT AKSES</div>
-    <h2>Tingkat Akses</h2>
-    <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
+    <div class="hwrap"><span class="bignum" aria-hidden="true">03</span>
+      <div class="eyebrow">03 · TINGKAT AKSES</div>
+      <h2>Tingkat Akses</h2>
+      <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
+    </div>
     <div class="tiers">
       <div class="tier">
         <div class="nm">GUEST</div>
@@ -438,6 +470,16 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
           <li>Undangan admin, proyek terverifikasi.</li>
         </ul>
         <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
+      </div>
+    </div>
+  </section>
+  <section class="blok rv maker">
+    <div class="eyebrow">CATATAN PEMBUAT</div>
+    <div class="mgrid">
+      <h2 class="mh">Dibangun dan dirawat oleh developer independen.</h2>
+      <div>
+        <p>Atlys dirancang, dibangun, dan dirawat secara mandiri dari Indonesia, tanpa tim besar dan tanpa pendanaan dari luar. Prinsipnya sederhana: data yang memang publik seharusnya mudah diakses, terdokumentasi dengan baik, dan gratis. Seluruh infrastruktur layanan ini berjalan di free tier dan dirawat setiap hari.</p>
+        <p class="msig">Adip — Pengelola Atlys · adipmusic.my.id</p>
       </div>
     </div>
   </section>
