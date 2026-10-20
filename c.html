@@ -87,9 +87,11 @@
   .edgeviz .cap{margin-top:14px;font-size:13.5px;color:var(--ink2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .edgeviz .cap b{color:var(--ink)}
 
-  .stats{display:flex;justify-content:center;gap:64px;padding:84px 0 0;flex-wrap:wrap;text-align:left}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:84px 0 0}
+  .stats .s{border-top:1px solid var(--line2);padding-top:18px}
   .stats .s .n{font-size:34px;font-weight:800;letter-spacing:-.03em}
   .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
+  @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
 
   section.blok{padding:150px 0 0}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--ink3);margin-bottom:16px;font-weight:600}
@@ -107,6 +109,14 @@
   .crow .track i{display:block;height:100%;background:var(--ink);border-radius:6px;transition:width 1s cubic-bezier(.22,.8,.3,1)}
   .crow .cv{font-family:var(--mono);font-size:14px;font-weight:600;text-align:right}
   .chartnote{font-size:12.5px;color:var(--ink3);margin-top:12px}
+  .axis{display:grid;grid-template-columns:215px 1fr 70px;gap:20px;margin-top:10px}
+  .axis .ax{position:relative;height:20px;font-family:var(--mono);font-size:11px;color:var(--ink3)}
+  .axis .ax span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+  .axis .ax span:first-child{transform:none}
+  .axis .ax span:last-child{transform:translateX(-100%)}
+  .axis .ax::before{content:"";position:absolute;left:0;right:0;top:-4px;height:5px;
+    background-image:linear-gradient(to right, var(--line2) 1px, transparent 1px);background-size:19% 100%}
+  @media(max-width:760px){ .axis{grid-template-columns:120px 1fr 52px;gap:12px} }
   .kat-kosong{font-size:14px;color:var(--ink2);padding:18px 2px;display:none}
   @media(max-width:760px){ .crow{grid-template-columns:120px 1fr 52px;gap:12px} .crow .cn .ex{display:none} }
 
@@ -136,22 +146,27 @@
   .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.05em;padding-top:2px;white-space:nowrap}
   .spek .row .v{font-weight:600;text-align:right}
 
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
-  .tier{padding:28px 4px 4px;border-top:2px solid var(--ink);display:flex;flex-direction:column}
-  .tier.dark{background:var(--ink);color:#fff;border-top:none;border-radius:16px;padding:28px}
-  .tier .nm{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3)}
-  .tier.dark .nm{color:#a9a9b0}
-  .tier .q{font-size:38px;font-weight:800;letter-spacing:-.03em;margin-top:12px}
-  .tier .q small{font-size:14px;font-weight:500;color:var(--ink2)}
-  .tier.dark .q small{color:#a9a9b0}
-  .tier .ql{font-size:13px;color:var(--ink2);margin:4px 0 18px;line-height:1.6}
-  .tier.dark .ql{color:#a9a9b0}
-  .tier ul{list-style:none;margin-bottom:28px}
-  .tier li{font-size:14.5px;padding:7px 0;color:var(--ink2);line-height:1.55}
-  .tier.dark li{color:#c9c9cf}
-  .tier .btn{margin-top:auto;text-align:center}
-  .tier.dark .btn{border-color:#fff}
-  .tier.dark .btn.solid{background:#fff;color:var(--ink)}
+  /* alur penggunaan: empat langkah berurutan */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+  .fstep{border-top:2px solid var(--ink);padding-top:20px}
+  .fstep .no{font-family:var(--mono);font-size:13px;color:var(--ink3);letter-spacing:.1em;margin-bottom:12px}
+  .fstep h3{font-size:16.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:7px}
+  .fstep p{font-size:14px;color:var(--ink2);line-height:1.65}
+  .fstep p code{font-family:var(--mono);font-size:12px;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+  @media(max-width:960px){ .flow{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:560px){ .flow{grid-template-columns:1fr} }
+
+  /* tingkat akses sebagai tabel perbandingan */
+  .tscroll{overflow-x:auto}
+  table.tier{width:100%;border-collapse:collapse;min-width:660px}
+  table.tier th,table.tier td{padding:16px 18px;border-bottom:1px solid var(--line);font-size:14.5px;text-align:left;vertical-align:top}
+  table.tier thead th{font-family:var(--mono);font-size:12px;letter-spacing:.12em;border-bottom:2px solid var(--ink);padding-top:4px}
+  table.tier th.rl{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink2);font-weight:600;white-space:nowrap;width:190px}
+  table.tier td.free,table.tier th.free{background:var(--soft)}
+  table.tier thead th.free{box-shadow:inset 0 2px 0 var(--ink)}
+  table.tier td b{font-weight:700}
+  table.tier tr.cta td{border-bottom:none;padding-top:22px}
+  table.tier tr.cta .btn{white-space:nowrap}
 
   .rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
   .rv.in{opacity:1;transform:none}
@@ -176,8 +191,7 @@
     .nav .m{gap:14px}
     .nav .m .btn{padding:8px 14px}
     .nav .m a.opt{display:none}
-    .tiers{grid-template-columns:1fr;gap:36px}
-    .stats{gap:34px;justify-content:flex-start}
+    .stats{gap:34px}
     section.blok{padding-top:104px}
     .hero{padding-top:72px}
     .p-code{font-size:11.5px}
@@ -326,6 +340,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       <div class="crow"><div class="cn"><div class="nm">Ragam</div><div class="ex">/v1/ragam/kbbi/halo</div></div><div class="track"><i data-w="6.4" style="width:0%"></i></div><div class="cv">84</div></div>
       <div class="crow"><div class="cn"><div class="nm">Game</div><div class="ex">/v1/game/tebak-angka</div></div><div class="track"><i data-w="1.5" style="width:0%"></i></div><div class="cv">20</div></div>
     </div>
+    <div class="axis"><div></div><div class="ax"><span style="left:0">0</span><span style="left:19%">250</span><span style="left:38%">500</span><span style="left:57%">750</span><span style="left:76%">1.000</span><span style="left:100%">1.319</span></div><div></div></div>
     <p class="chartnote">Jumlah endpoint per kategori, skala linear. Daftar lengkap beserta contoh respons tersedia di dokumentasi.</p>
     <p class="kat-kosong" id="katEmpty">Tidak ada kategori yang cocok dengan saringan tersebut.</p>
 
@@ -341,7 +356,19 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv">
-    <div class="eyebrow">02 · KEAMANAN</div>
+    <div class="eyebrow">02 · ALUR PENGGUNAAN</div>
+    <h2>Dari Pertama Kali sampai Request Pertama</h2>
+    <p class="sub2">Empat langkah, sesuai urutan yang sebenarnya Anda lalui.</p>
+    <div class="flow">
+      <div class="fstep"><div class="no">LANGKAH 01</div><h3>Minta Kode Undangan</h3><p>Isi nama, email, dan keperluan di halaman undangan. Sebagai pengganti captcha, browser Anda menyelesaikan proof-of-work ringan, sekitar 1 detik. Email sekali pakai otomatis ditolak.</p></div>
+      <div class="fstep"><div class="no">LANGKAH 02</div><h3>Peninjauan Manual</h3><p>Setiap permintaan dibaca dan ditinjau oleh admin. Kode undangan yang disetujui dikirim ke email Anda.</p></div>
+      <div class="fstep"><div class="no">LANGKAH 03</div><h3>Daftar dan Terima Key</h3><p>Daftar dengan email, password minimal 8 karakter, dan kode undangan. Akun dan API key dibuat dalam satu langkah. Key ditampilkan satu kali untuk Anda simpan.</p></div>
+      <div class="fstep"><div class="no">LANGKAH 04</div><h3>Panggil Endpoint</h3><p>Sertakan header <code>X-API-Key</code> pada setiap request. Respons berupa JSON, dan sisa kuota terbaca dari header <code>X-RateLimit</code> pada setiap respons.</p></div>
+    </div>
+  </section>
+
+  <section class="blok rv">
+    <div class="eyebrow">03 · KEAMANAN</div>
     <div class="aman">
       <div>
         <h2>Keamanan</h2>
@@ -365,41 +392,22 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
   </section>
 
   <section class="blok rv">
-    <div class="eyebrow">03 · TINGKAT AKSES</div>
+    <div class="eyebrow">04 · TINGKAT AKSES</div>
     <h2>Tingkat Akses</h2>
-    <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
-    <div class="tiers">
-      <div class="tier">
-        <div class="nm">GUEST</div>
-        <div class="q">20<small> request/hari</small></div>
-        <div class="ql">Tanpa key dan tanpa pendaftaran. Dibatasi per alamat IP.</div>
-        <ul>
-          <li>Batas tambahan: 5 request per menit per alamat IP.</li>
-          <li>Hanya berlaku untuk endpoint demo yang terbuka untuk publik.</li>
-        </ul>
-        <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba Endpoint Demo</a>
-      </div>
-      <div class="tier dark">
-        <div class="nm">FREE</div>
-        <div class="q">200<small> request/hari</small></div>
-        <div class="ql">Pendaftaran memerlukan kode undangan dan ditinjau secara manual.</div>
-        <ul>
-          <li>Batas tambahan: 10 request per menit per key.</li>
-          <li>Akses ke seluruh 4.100 endpoint komputasi.</li>
-          <li>Sisa kuota terbaca dari header X-RateLimit pada setiap respons.</li>
-        </ul>
-        <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
-      </div>
-      <div class="tier">
-        <div class="nm">TRUSTED</div>
-        <div class="q">1.000<small> request/hari</small></div>
-        <div class="ql">Diterbitkan melalui undangan admin untuk proyek yang terverifikasi.</div>
-        <ul>
-          <li>Batas tambahan: 30 request per menit per key.</li>
-          <li>Seluruh fasilitas Tier Free, dengan batas lima kali lebih besar.</li>
-        </ul>
-        <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
-      </div>
+    <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian dan syaratnya.</p>
+    <div class="tscroll">
+      <table class="tier">
+        <thead>
+          <tr><th></th><th>GUEST</th><th class="free">FREE</th><th>TRUSTED</th></tr>
+        </thead>
+        <tbody>
+          <tr><th class="rl">BATAS HARIAN</th><td><b>20</b> request</td><td class="free"><b>200</b> request</td><td><b>1.000</b> request</td></tr>
+          <tr><th class="rl">BATAS PER MENIT</th><td>5 request per alamat IP</td><td class="free">10 request per key</td><td>30 request per key</td></tr>
+          <tr><th class="rl">AKSES ENDPOINT</th><td>Endpoint demo publik</td><td class="free">Seluruh 4.100 endpoint komputasi</td><td>Seluruh 4.100 endpoint komputasi</td></tr>
+          <tr><th class="rl">SYARAT</th><td>Tanpa pendaftaran</td><td class="free">Kode undangan dan peninjauan manual</td><td>Undangan admin, proyek terverifikasi</td></tr>
+          <tr class="cta"><td></td><td><a class="btn ghost" href="https://api.atlys.my.id/docs">Coba Endpoint Demo</a></td><td class="free"><a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a></td><td><a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </main>
