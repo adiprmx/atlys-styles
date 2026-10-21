@@ -412,6 +412,53 @@
     .card:hover .ic{color:#f2f2ee}
     .pa-note{color:#a9a9b0}
   }
+  /* C24b: putaran kedua — fitur tier jadi grid 2 kolom, padding pita rapat */
+  @media(max-width:760px){
+    .blok h2{font-size:30px}
+    .stats{padding:32px 0 36px}
+    .layer{padding:10px 14px}
+  }
+
+  /* C24: layout hp ringkas — potong scroll tanpa buang isi.
+     Yang dipangkas: ruang kosong antar bagian, path contoh di kartu hp
+     (lengkapnya ada di docs), dan kerapatan ubin. Yang dipertahankan:
+     ikon, angka, batang proporsi, diagram, demo live. */
+  @media(max-width:760px){
+    section.blok{padding-top:56px}
+    .blok .sub2{margin-bottom:28px}
+    .hero{padding-top:56px}
+    .ticker{margin-top:40px}
+    .stats{margin-top:48px}
+    .cards{gap:12px}
+    .card.feat,.card.wide{grid-column:auto}
+    .card{padding:16px 2px 18px}
+    .card .ic{width:24px;height:24px;margin-bottom:8px}
+    .card .nm{font-size:14px}
+    .card .ct{font-size:26px}
+    .card.feat .ct{font-size:26px}
+    .card .bar{margin-top:10px}
+    .card .ex{display:none}
+    .prop{margin-top:36px}
+    .segbar{height:32px}
+    .seglabel{margin-top:8px}
+    .layers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .layer{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 14px}
+    .layer .lv{text-align:left;font-size:12px}
+    .node{min-height:0;padding:16px 12px}
+    .node .nt{font-size:14px}
+    .outc{flex-direction:row;gap:12px}
+    .notes{margin-top:20px}
+    .tiers{gap:24px}
+    .tier{padding-top:20px}
+    .tier.dark{padding-top:20px}
+    .tier .q{font-size:32px}
+    .tier .qbar{margin-top:12px}
+    .tier ul{margin:12px 0 20px}
+    .tier li{padding:5px 0}
+    .band-maker{padding-bottom:48px}
+    footer{margin-top:56px;padding:24px 0 32px}
+  }
+
 </style>
 </head>
 <body>
