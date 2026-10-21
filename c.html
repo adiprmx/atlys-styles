@@ -36,6 +36,7 @@
   .nav .m a{font-size:14px;color:var(--ink2);font-weight:500}
   .nav .m a:hover{color:var(--ink)}
   .nav .m a.btn.solid{color:#fff}
+  .nav-daftar{margin-left:14px}
   .nav .m a.btn.ghost{color:var(--ink)}
   .btn{font-weight:600;font-size:14.5px;border-radius:12px;padding:11px 22px;border:1px solid var(--ink);display:inline-block;transition:background .18s ease,color .18s ease,transform .12s ease}
   .btn:active{transform:scale(.98)}
@@ -55,7 +56,8 @@
   .statusline{margin:30px 0 0;width:fit-content;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;box-shadow:0 1px 3px rgba(23,23,28,.05)}
   .statusline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
-  .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink)}
+  .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+  .statusline .sl-label{white-space:nowrap}
   h1 .grad{color:var(--ink)}
 
   /* satu panel produk: contoh request dan respons */
@@ -95,6 +97,7 @@
   .band-dark .s .l{color:#a3a3ab}
   .stats .s{border-top:1px solid var(--line2);padding-top:18px}
   .stats .s .n{font-size:34px;font-weight:800;letter-spacing:-.03em}
+  @media(min-width:761px){ .stats .s .n{font-size:40px} }
   .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
   @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
 
@@ -182,7 +185,7 @@
   }
 
   /* batang proporsi di kartu katalog dan tier */
-  .card .bar{height:4px;border-radius:2px;background:var(--track);margin-top:14px;overflow:hidden}
+  .card .bar{height:6px;border-radius:3px;background:var(--track);margin-top:14px;overflow:hidden}
   .card .bar i{display:block;height:100%;background:var(--bar);border-radius:2px}
   body.js .card .bar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.25s cubic-bezier(.22,.8,.24,1)}
   body.js .blok.in .card .bar i{transform:none}
@@ -227,6 +230,13 @@
     .statusline .dot{animation:none}
   }
 
+  .band-maker{position:relative;z-index:0;padding-bottom:72px}
+  .band-maker::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:0;bottom:0;background:linear-gradient(180deg,var(--dark1),var(--dark2));z-index:-1}
+  .band-maker .eyebrow{color:#7c7c85}
+  .band-maker .eyebrow::after{background:#3a3a40}
+  .band-maker .mh{color:#fff}
+  .band-maker p{color:#a9a9b0}
+  .band-maker .msig{color:#7c7c85}
   .maker .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px 72px;align-items:start}
   .maker .mh{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
   .maker p{font-size:15.5px;color:var(--ink2);line-height:1.75}
@@ -243,9 +253,15 @@
   .frow .links a:hover{color:var(--ink)}
 
   @media(max-width:760px){
-    .nav{gap:8px}
+    .nav{height:auto;flex-wrap:wrap;gap:10px 14px;padding:10px 0 12px}
+    .nav .logo{flex:none}
+    .nav .m{order:3;width:100%;margin-left:0;gap:0;justify-content:space-between}
+    .nav .m a{white-space:nowrap}
+    .nav-daftar{margin-left:auto;padding:8px 14px;font-size:13px}
+    section[id]{scroll-margin-top:108px}
     .nav .m{gap:9px}
     .nav .m a{font-size:13px}
+    .statusline{font-size:13px;padding:8px 14px}
     .nav .m .btn{padding:8px 12px}
     .nav .m a.btn.ghost{display:none}
     .nav .m a.opt{display:none}
@@ -395,8 +411,8 @@
       <a href="#akses">Tingkat Akses</a>
       <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
       <a class="btn ghost" href="https://api.atlys.my.id/login">Login</a>
-      <a class="btn solid" href="https://api.atlys.my.id/register">Daftar</a>
     </div>
+    <a class="btn solid nav-daftar" href="https://api.atlys.my.id/register">Daftar</a>
   </div>
 </header>
 
@@ -409,7 +425,7 @@
       <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
       <a class="btn ghost" href="#katalog">Jelajahi Katalog</a>
     </div>
-    <div class="statusline"><span class="dot"></span>Status saat ini: <a href="https://api.atlys.my.id/status">Live, v0.2.0 operasional penuh</a></div>
+    <div class="statusline"><span class="dot"></span><span class="sl-label">Status saat ini:</span><a href="https://api.atlys.my.id/status">Live, v0.2.0 operasional penuh</a></div>
   </div>
 
   <div class="panel" id="panelDemo">
@@ -573,7 +589,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       </div>
     </div>
   </section>
-  <section class="blok rv maker">
+  <section class="blok rv maker band-maker">
     <div class="eyebrow">CATATAN PEMBUAT</div>
     <div class="mgrid">
       <h2 class="mh">Dibangun dan dirawat oleh developer independen.</h2>
