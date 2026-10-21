@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf9" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131316" />
-<title>Atlys — Data Publik, Satu API</title>
+<title>Atlys: Data Publik, Satu API</title>
 <meta name="description" content="Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,20 +54,15 @@
   .sub{font-size:18px;color:var(--ink2);line-height:1.65;max-width:34em;margin:0 0 34px}
   .cta{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap}
   .cta .btn{padding:13px 28px;font-size:15px}
-  .statusline{margin:30px 0 0;width:fit-content;font-size:13.5px;color:var(--ink2);display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;box-shadow:0 1px 3px rgba(23,23,28,.05)}
-  .statusline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;display:inline-block;animation:pulse-dot 2.6s ease-in-out infinite}
-  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
-  .statusline a{font-weight:600;border-bottom:1.5px solid var(--ink);white-space:nowrap}
-  .statusline .sl-label{white-space:nowrap}
+  .cta .clink{font-weight:600;font-size:15px;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:2px;align-self:center}
+  .statline{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--ink2);display:flex;align-items:center;gap:8px;margin-bottom:22px}
+  .statline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;flex:none}
+  .statline a{color:var(--ink);font-weight:600;border-bottom:1px solid var(--line2)}
   h1 .grad{color:var(--ink)}
 
   /* satu panel produk: contoh request dan respons */
   .panel{margin:72px 0 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
   .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
-  .p-tabs .dots{display:flex;align-items:center;gap:6px;padding:0 4px 0 16px}
-  .p-tabs .dots i{width:8px;height:8px;border-radius:50%;background:#c9c9c2}
-  .p-tabs .dots i:nth-child(2){background:#bdbdb5}
-  .p-tabs .dots i:nth-child(3){background:#aeaea6}
   .p-tabs button{font-family:var(--mono);font-size:12px;padding:12px 18px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
   .p-tabs button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
   .p-tabs .copy{margin-left:auto;border-right:none;border-left:1px solid var(--line);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:12px 20px;color:var(--ink2);white-space:nowrap}
@@ -109,8 +104,6 @@
   @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
 
   section.blok{padding:104px 0 0}
-  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--ink3);margin-bottom:16px;font-weight:600;display:flex;align-items:center;gap:14px}
-  .eyebrow::after{content:"";width:56px;height:1px;background:var(--line2)}
   .band-soft{position:relative;z-index:0}
   .band-soft::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:64px;bottom:-52px;background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);z-index:-1}
   .blok h2{font-size:clamp(36px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-bottom:10px}
@@ -237,13 +230,10 @@
   .rv.in{opacity:1;transform:none}
   @media (prefers-reduced-motion: reduce){
     .rv{opacity:1;transform:none;transition:none}
-    .statusline .dot{animation:none}
   }
 
   .band-maker{position:relative;z-index:0;padding-bottom:72px}
   .band-maker::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:0;bottom:0;background:linear-gradient(180deg,var(--dark1),var(--dark2));z-index:-1}
-  .band-maker .eyebrow{color:#7c7c85}
-  .band-maker .eyebrow::after{background:#3a3a40}
   .band-maker .mh{color:#fff}
   .band-maker p{color:#a9a9b0}
   .band-maker .msig{color:#7c7c85}
@@ -272,7 +262,6 @@
     section[id]{scroll-margin-top:108px}
     .nav .m{gap:9px}
     .nav .m a{font-size:13px}
-    .statusline{font-size:13px;padding:8px 14px}
     .nav .m .btn{padding:8px 12px}
     .nav .m a.opt{display:none}
     .nav .logo{font-size:16px}
@@ -290,11 +279,10 @@
 
   /* ===== motion graphics: gerakan dengan tujuan, bukan dekorasi ===== */
   @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-  .hero .crumb{animation:rise .7s ease both}
+  .hero .statline{animation:rise .7s ease both}
   .hero h1{animation:rise .8s ease .08s both}
   .hero .sub{animation:rise .8s ease .18s both}
   .hero .cta{animation:rise .8s ease .28s both}
-  .hero .statusline{animation:rise .8s ease .38s both}
   .panel{animation:rise .9s ease .3s both}
 
   .caret{display:inline-block;width:7px;height:14px;background:var(--ink);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
@@ -310,7 +298,7 @@
   body.js .prop.in .segbar i{transform:none}
 
   @media (prefers-reduced-motion: reduce){
-    .hero .crumb,.hero h1,.hero .sub,.hero .cta,.hero .statusline,.panel{animation:none}
+    .hero .statline,.hero h1,.hero .sub,.hero .cta,.panel{animation:none}
     .caret{animation:none}
     .p-resp pre .rl{transition:none}
     body.js .segbar i{transform:none;transition:none}
@@ -337,13 +325,10 @@
     .crumb b{color:#f2f2ee}
     h1 .grad{color:#f2f2ee}
     .sub{color:#a9a9b0}
-    .statusline{background:#1d1d21;border-color:#2c2c31;color:#a9a9b0;box-shadow:0 1px 3px rgba(0,0,0,.4)}
-    .statusline a{color:#f2f2ee;border-bottom-color:#f2f2ee}
+    .statline{color:#a9a9b0}
+    .statline a{color:#f2f2ee;border-bottom-color:#3a3a40}
     .panel{background:#1d1d21;border-color:#2c2c31;box-shadow:0 2px 6px rgba(0,0,0,.4),0 28px 64px rgba(0,0,0,.5)}
     .p-tabs{background:#17171a;border-bottom-color:#2c2c31}
-    .p-tabs .dots i{background:#3a3a40}
-    .p-tabs .dots i:nth-child(2){background:#33333a}
-    .p-tabs .dots i:nth-child(3){background:#2c2c31}
     .p-tabs button{color:#a9a9b0;border-right-color:#2c2c31}
     .p-tabs button.on{background:#1d1d21;color:#f2f2ee;box-shadow:inset 0 -2px 0 #f2f2ee}
     .p-tabs .copy{border-left-color:#2c2c31;color:#a9a9b0}
@@ -353,8 +338,6 @@
     .p-code .cm{color:#7c7c85}
     .ticker{border-top-color:#2c2c31;border-bottom-color:#2c2c31}
     .ttrack span{color:#7c7c85}
-    .eyebrow{color:#7c7c85}
-    .eyebrow::after{background:#3a3a40}
     .band-soft::before{background:#1d1d21;border-top-color:#2c2c31;border-bottom-color:#2c2c31}
     .blok .sub2{color:#a9a9b0}
     .card{border-top-color:#3a3a40}
@@ -459,9 +442,49 @@
     footer{margin-top:56px;padding:24px 0 32px}
   }
 
+  /* C25: tier jadi lajur, bukan tiga menara */
+  .tiers{display:flex;flex-direction:column;gap:0}
+  .tier{display:grid;grid-template-columns:150px 190px 1fr 170px;gap:28px;align-items:center;padding:26px 0;border-top:1px solid var(--line2)}
+  .tier .btn{margin-top:0}
+  .tier ul{margin:0}
+  .tier .qbar{margin-top:10px}
+  .tier.dark{border-top:none;border-radius:20px;padding:26px 28px;margin:14px 0}
+  @media(max-width:900px){
+    .tier{grid-template-columns:1fr;gap:8px}
+  }
+  @media(max-width:760px){
+    .tiers{gap:0}
+    .tier{padding:22px 0}
+    .tier.dark{padding:22px 20px;margin:12px 0}
+    .tier ul{margin:6px 0 16px}
+    .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card.feat{grid-column:1/-1}
+    .card.feat .ct{font-size:32px}
+    .card.feat .ex{display:block}
+    .card .ic{width:22px;height:22px}
+    .card .nm{font-size:13px}
+    .card .ct{font-size:22px}
+    .nav{padding:8px 0 10px}
+    .nav .m a{padding:12px 4px}
+    .nav .logo{padding:8px 0}
+    .nav-login{padding:12px 0}
+    .nav-daftar{padding:12px 18px}
+    section[id]{scroll-margin-top:130px}
+    .frow .links a{padding:12px 0}
+  }
+
 </style>
 </head>
 <body>
+<!-- C25, keputusan desain dan alasan satu baris:
+- panel tanpa titik lampu: jendela terminal palsu adalah kostum, panel ini alat asli yang jalan live.
+- demo ketik sekali jalan: gerak tanpa henti adalah kebisingan, bukan tujuan.
+- status jadi baris polos di atas judul: titik menandai keadaan nyata tanpa denyut tanpa henti, satu label kecil di hero bukan pil di bawah tombol.
+- tanpa eyebrow di tiap bagian: satu label kecil per tiga bagian, judul dan nomor bayangan sudah cukup.
+- tombol kedua hero jadi tautan teks: dua tombol berdampingan adalah template, tautan tenang mengurangi kebisingan.
+- tier jadi lajur, bukan tiga menara: tiga kolom sama adalah pola bawaan, lajur menaik menceritakan jalur guest ke trusted.
+- katalog hp: tools unggulan penuh ditambah sembilan kategori grid tiga kolom: hierarki dari isi, bukan kartu seragam.
+- font tetap inter dan ibm plex mono: keputusan eksplisit adip 2026-10-20, mengalahkan bawaan skill. -->
 <header class="site">
   <div class="wrap nav">
     <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
@@ -478,18 +501,17 @@
 
 <main class="wrap">
   <div class="hero">
-    <div class="crumb">Atlys / <b>Pengenalan</b> / v0.2.0</div>
+    <div class="statline"><span class="dot"></span><a href="https://api.atlys.my.id/status">Live · v0.2.0 operasional penuh</a></div>
     <h1>Data publik,<br /><span class="grad">satu API.</span></h1>
     <p class="sub">Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis.</p>
     <div class="cta">
       <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
-      <a class="btn ghost" href="#katalog">Jelajahi Katalog</a>
+      <a class="clink" href="#katalog">Jelajahi Katalog</a>
     </div>
-    <div class="statusline"><span class="dot"></span><span class="sl-label">Status saat ini:</span><a href="https://api.atlys.my.id/status">Live, v0.2.0 operasional penuh</a></div>
   </div>
 
   <div class="panel" id="panelDemo">
-    <div class="p-tabs" role="tablist" aria-label="Contoh kode"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="p-tabs" role="tablist" aria-label="Contoh kode">
       <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
       <button data-tab="js" role="tab" aria-selected="false">javascript</button>
       <button data-tab="py" role="tab" aria-selected="false">python</button>
@@ -545,7 +567,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
   <section class="blok rv band-soft" id="katalog">
     <div class="kgrid">
       <div class="khead">
-        <div class="eyebrow">01 · KATALOG</div>
         <h2>Katalog Endpoint</h2>
         <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
       </div>
@@ -576,7 +597,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
 
   <section class="blok rv" id="keamanan">
     <div class="hwrap"><span class="bignum" aria-hidden="true">02</span>
-      <div class="eyebrow">02 · KEAMANAN</div>
       <h2>Keamanan</h2>
       <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
     </div>
@@ -616,14 +636,13 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
 
   <section class="blok rv" id="akses">
     <div class="hwrap"><span class="bignum" aria-hidden="true">03</span>
-      <div class="eyebrow">03 · TINGKAT AKSES</div>
       <h2>Tingkat Akses</h2>
       <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
     </div>
     <div class="tiers">
       <div class="tier">
         <div class="nm">GUEST</div>
-        <div class="q">20<small> request/hari</small></div><div class="qbar"><i style="width:2%"></i></div>
+        <div class="qq"><div class="q">20<small> request/hari</small></div><div class="qbar"><i style="width:2%"></i></div></div>
         <ul>
           <li>5 request per menit per alamat IP.</li>
           <li>Endpoint demo publik, tanpa pendaftaran.</li>
@@ -632,7 +651,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       </div>
       <div class="tier dark">
         <div class="nm">FREE</div>
-        <div class="q">200<small> request/hari</small></div><div class="qbar"><i style="width:20%"></i></div>
+        <div class="qq"><div class="q">200<small> request/hari</small></div><div class="qbar"><i style="width:20%"></i></div></div>
         <ul>
           <li>10 request per menit per key.</li>
           <li>Seluruh 4.100 endpoint komputasi.</li>
@@ -642,7 +661,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       </div>
       <div class="tier">
         <div class="nm">TRUSTED</div>
-        <div class="q">1.000<small> request/hari</small></div><div class="qbar"><i style="width:100%"></i></div>
+        <div class="qq"><div class="q">1.000<small> request/hari</small></div><div class="qbar"><i style="width:100%"></i></div></div>
         <ul>
           <li>30 request per menit per key.</li>
           <li>Seluruh 4.100 endpoint komputasi.</li>
@@ -653,12 +672,11 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
     </div>
   </section>
   <section class="blok rv maker band-maker">
-    <div class="eyebrow">CATATAN PEMBUAT</div>
     <div class="mgrid">
       <h2 class="mh">Dibangun dan dirawat oleh developer independen.</h2>
       <div>
         <p>Atlys dirancang, dibangun, dan dirawat secara mandiri dari Indonesia, tanpa tim besar dan tanpa pendanaan dari luar. Prinsipnya sederhana: data yang memang publik seharusnya mudah diakses, terdokumentasi dengan baik, dan gratis. Seluruh infrastruktur layanan ini berjalan di free tier dan dirawat setiap hari.</p>
-        <p class="msig">Adip — Pengelola Atlys · adipmusic.my.id</p>
+        <p class="msig">Adip, Pengelola Atlys · adipmusic.my.id</p>
       </div>
     </div>
   </section>
@@ -807,7 +825,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
             typer.innerHTML = snapshotHTML;
             if (caret) caret.hidden = true;
             baris.forEach(function (l, idx) { jadwal(function () { l.classList.add('show'); }, idx * 130); });
-            jadwal(putaran, baris.length * 130 + 4200);
           }, 550);
         })();
       }
