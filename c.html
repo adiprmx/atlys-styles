@@ -42,11 +42,12 @@
   .btn{font-weight:600;font-size:14.5px;border-radius:12px;padding:11px 22px;border:1px solid var(--ink);display:inline-block;transition:background .18s ease,color .18s ease,transform .12s ease}
   .btn:active{transform:scale(.98)}
   .btn.solid{background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;box-shadow:0 1px 2px rgba(20,20,25,.07),0 10px 24px rgba(20,20,25,.12)}
-  .btn.solid:hover{background:linear-gradient(180deg,#2d2d34,#17171a)}
+  .btn.solid:hover{background:linear-gradient(180deg,#2d2d34,#17171a);box-shadow:0 2px 4px rgba(20,20,25,.08),0 16px 32px rgba(20,20,25,.16)}
+  .btn:hover:not(:active){transform:translateY(-1px)}
   .btn.ghost{border-color:var(--line2);color:var(--ink)}
   .btn.ghost:hover{border-color:var(--ink)}
 
-  .hero{text-align:left;padding:110px 0 0;position:relative;z-index:0}
+  .hero{text-align:left;padding:88px 0 0;position:relative;z-index:0}
   .hero::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:-30px;height:600px;background-image:radial-gradient(#e1e1da 1.1px,transparent 1.2px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000 25%,transparent 92%);mask-image:linear-gradient(180deg,#000 25%,transparent 92%);z-index:-1;pointer-events:none}
   .crumb{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-bottom:26px}
   .crumb b{color:var(--ink);font-weight:600}
@@ -61,7 +62,7 @@
   h1 .grad{color:var(--ink)}
 
   /* satu panel produk: contoh request dan respons */
-  .panel{margin:72px 0 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
+  .panel{margin:48px 0 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
   .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
   .p-tabs button{font-family:var(--mono);font-size:12px;padding:12px 18px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
   .p-tabs button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
@@ -114,12 +115,19 @@
   .khead{position:sticky;top:96px}
   .khead .sub2{margin-bottom:0}
   .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px}
-  .card.feat{grid-column:span 2}
+  .card.feat{grid-column:span 2;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;border-top:none;padding:24px 20px 26px;box-shadow:0 20px 44px rgba(18,18,21,.18)}
+  .card.feat .nm{color:#a9a9b0}
+  .card.feat .ct{color:#fff}
+  .card.feat .ex{color:#7c7c85}
+  .card.feat .ic{color:#a9a9b0}
+  .card.feat .bar{background:rgba(255,255,255,.16)}
+  .card.feat .bar i{background:#fff}
+  @media (hover:hover){ .card.feat:hover{background:linear-gradient(180deg,#2d2d34,#17171a)} .card.feat:hover .nm{color:#fff} }
   .card.feat .ct{font-size:52px}
   .card.wide{grid-column:span 2}
   @media(max-width:1020px){ .kgrid{grid-template-columns:1fr;gap:8px} .khead{position:static} }
-  .card{display:block;padding:20px 2px 24px;border-top:1px solid var(--line2);transition:transform .25s ease}
-  .card:hover{transform:translateY(-3px)}
+  .card{display:block;padding:20px 16px 24px;border-top:1px solid var(--line2);border-radius:16px;transition:transform .25s ease,background .25s ease,box-shadow .25s ease}
+  @media (hover:hover){ .card:hover{transform:translateY(-3px);background:var(--soft);box-shadow:0 10px 28px rgba(23,23,28,.07)} }
   .card:hover .nm{color:var(--ink)}
   .card .nm{font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--ink2)}
   .card .ct{font-size:34px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
@@ -162,7 +170,8 @@
   .pipe{display:grid;grid-template-columns:210px 28px 1fr 28px 210px;gap:6px;align-items:stretch}
   .pcol{display:flex;flex-direction:column}
   .pcol .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink3);margin-bottom:12px;font-weight:600}
-  .arr{display:grid;place-items:center;font-size:18px;color:var(--ink3);padding-top:30px}
+  .arr{display:grid;place-items:center;padding-top:30px}
+  .arr span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--dark1);color:#fff;font-size:15px}
   .node{flex:1;border:1px solid var(--line2);border-radius:16px;background:#fff;display:grid;place-items:center;text-align:center;padding:20px 16px}
   .node .nt{font-weight:700;font-size:15.5px;letter-spacing:-.01em}
   .node .ns{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.55}
@@ -185,7 +194,7 @@
   }
 
   /* batang proporsi di kartu katalog dan tier */
-  .card .ic{display:block;width:28px;height:28px;color:var(--ink2);margin-bottom:12px}
+  .card .ic{display:block;width:32px;height:32px;color:var(--ink2);margin-bottom:12px}
   .card .ic svg{width:100%;height:100%;display:block}
   .card:hover .ic{color:var(--ink)}
   .card .bar{height:6px;border-radius:3px;background:var(--track);margin-top:14px;overflow:hidden}
@@ -197,7 +206,7 @@
   .card:nth-child(6) .bar i{transition-delay:.3s}.card:nth-child(7) .bar i{transition-delay:.36s}
   .card:nth-child(8) .bar i{transition-delay:.42s}.card:nth-child(9) .bar i{transition-delay:.48s}
   .card:nth-child(10) .bar i{transition-delay:.54s}
-  .tier .qbar{height:6px;border-radius:3px;background:var(--track);margin-top:16px;overflow:hidden}
+  .tier .qbar{height:8px;border-radius:3px;background:var(--track);margin-top:16px;overflow:hidden}
   .tier .qbar i{display:block;height:100%;background:var(--bar);border-radius:3px}
   .tier.dark .qbar{background:rgba(255,255,255,.16)}
   .tier.dark .qbar i{background:linear-gradient(90deg,#ffffff,#c6c6cf)}
@@ -327,6 +336,7 @@
     .sub{color:#a9a9b0}
     .statline{color:#a9a9b0}
     .statline a{color:#f2f2ee;border-bottom-color:#3a3a40}
+    .cta .clink{color:#f2f2ee;border-bottom-color:#f2f2ee}
     .panel{background:#1d1d21;border-color:#2c2c31;box-shadow:0 2px 6px rgba(0,0,0,.4),0 28px 64px rgba(0,0,0,.5)}
     .p-tabs{background:#17171a;border-bottom-color:#2c2c31}
     .p-tabs button{color:#a9a9b0;border-right-color:#2c2c31}
@@ -392,6 +402,10 @@
     .keatas{background:#2e2e34;border-color:#3a3a40;color:#f2f2ee;box-shadow:0 10px 24px rgba(0,0,0,.5)}
     .caret{background:#f2f2ee}
     .card .ic{color:#a9a9b0}
+    .card.feat{background:linear-gradient(180deg,#232329,#1d1d21);border:1px solid #3a3a40;box-shadow:0 20px 44px rgba(0,0,0,.5)}
+    .card.feat .bar{background:#2c2c31}
+    .card.feat .bar i{background:#e8e8e2}
+    .arr span{background:#f2f2ee;color:#131316}
     .card:hover .ic{color:#f2f2ee}
     .pa-note{color:#a9a9b0}
   }
@@ -481,7 +495,9 @@
   .card:hover .ex{color:var(--ink2)}
   @media (hover:hover){
     .tier:not(.dark):hover{background:var(--soft)}
+    .tier.dark:hover{transform:translateY(-2px);box-shadow:0 28px 56px rgba(18,18,21,.24)}
   }
+  .tier.dark{transition:transform .25s ease,box-shadow .25s ease}
   @media (min-width:1021px){
     .panel,.panel-actions{margin-left:96px}
   }
@@ -505,6 +521,13 @@
 - tier jadi lajur, bukan tiga menara: tiga kolom sama adalah pola bawaan, lajur menaik menceritakan jalur guest ke trusted.
 - katalog hp: tools unggulan penuh ditambah sembilan kategori grid tiga kolom: hierarki dari isi, bukan kartu seragam.
 - font tetap inter dan ibm plex mono: keputusan eksplisit adip 2026-10-20, mengalahkan bawaan skill. -->
+<!-- C27, keputusan poles dan alasan satu baris:
+- hero dan panel dirapatkan: panel produk adalah visual utama, makin cepat terlihat makin cepat dipercaya.
+- kartu katalog punya permukaan saat disorot: daftar garis saja terasa tabel, permukaan lunak terasa produk.
+- kartu tools unggulan jadi gelap: satu jangkar visual memecah katalog yang seragam tanpa warna baru.
+- panah keamanan jadi lingkaran gelap: alur tiga langkah terbaca sebagai urutan, bukan teks mengambang.
+- batang tier lebih tebal dan kartu trusted naik saat disorot: angka kuota adalah isi, bukan hiasan tipis.
+- tanpa foto stok dan tanpa warna baru: visualnya panel live, ticker endpoint asli, dan batang proporsi nyata. -->
 <!-- C26, keputusan poles dan alasan satu baris:
 - butir halus seluruh halaman: permukaan digital yang terlalu rata terasa cetakan, butir tipis membuatnya terasa bahan.
 - label pemakaian di tiap tier: lajur yang hanya angka terasa katalog, satu baris pemakaian memberi rekomendasi seperti penjaga toko.
@@ -633,7 +656,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
           <div><div class="nt">Request Masuk</div><div class="ns">Dari halaman /invite:<br />nama, email, keperluan</div></div>
         </div>
       </div>
-      <div class="arr">→</div>
+      <div class="arr"><span>→</span></div>
       <div class="pcol">
         <div class="cap">ENAM LAPIS PEMERIKSAAN OTOMATIS</div>
         <div class="layers">
@@ -645,7 +668,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
           <div class="layer"><span class="lk">AUDIT</span><span class="lv">Log rantai hash, perubahan terdeteksi</span></div>
         </div>
       </div>
-      <div class="arr">→</div>
+      <div class="arr"><span>→</span></div>
       <div class="pcol">
         <div class="cap">KEPUTUSAN ADMIN</div>
         <div class="outc">
