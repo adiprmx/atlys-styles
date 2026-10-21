@@ -717,6 +717,53 @@
     .an-labels,.ka-labels{grid-template-columns:1fr;gap:10px}
     .wf-grid{gap:6px}
   }
+
+  /* ===== ML4 2026-10-21: seimbang + pendek (tata ulang, bukan tambah) ===== */
+  .hero{padding:88px 0 0}
+  section.blok{padding:88px 0 0}
+  .ticker{margin-top:48px}
+  .stats{padding:24px 28px;margin-top:56px}
+  .chart{margin-top:40px}
+  .waffle{margin-top:40px}
+  .quotachart{margin-top:40px}
+  .keyanat{margin-top:40px}
+  .anatomy{margin-top:48px}
+  .ch-row{padding:5px 0}
+  .ch-track{height:18px}
+  .ch-rows{border-bottom:1px solid var(--line)}
+  .ch-rows .ch-row:last-of-type{border-bottom:none}
+  .fl-stage{padding:16px}
+  .fl-cap{margin-bottom:12px}
+  .fl-layer{padding:8px 0}
+  .fl-lv{font-size:12px}
+  .q-row{padding:8px 0}
+  .q-track{height:22px}
+  .tier{padding:20px 4px 4px}
+  .tier.dark{padding:20px}
+  .tier li{padding:5px 0}
+  @media (min-width:1021px){
+    .hero-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:start}
+    .hero-grid .hero{grid-column:1;grid-row:1;padding:88px 0 0}
+    .hero-grid .panel{grid-column:2;grid-row:1;margin:88px 0 0}
+    .hero-grid .panel-actions{grid-column:2;grid-row:2}
+    .hero-grid h1{font-size:clamp(52px,5vw,76px)}
+    .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .wf-grid{grid-template-columns:repeat(20,1fr);max-width:640px}
+    .ch-rows{display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(5,auto);gap:0 36px}
+  }
+  @media(max-width:760px){
+    .hero{padding:64px 0 0}
+    section.blok{padding:64px 0 0}
+    .stats{padding:20px 16px}
+    .ch-label{font-size:11px}
+  }
+
+  /* ===== ML5 2026-10-21: kurasi + perbaikan panel =====
+     Baris kosong ganda di <pre> respons: span .rl display:block ditambah
+     newline antar span di dalam <pre> ikut dirender jadi baris kosong.
+     font-size 0 di pre mematikan baris kosong itu; .rl tetap 12,5px. */
+  .p-resp pre{font-size:0}
+  .p-resp pre .rl{font-size:12.5px}
 </style>
 </head>
 <body>
@@ -765,6 +812,7 @@
 </header>
 
 <main class="wrap">
+  <div class="hero-grid">
   <div class="hero">
     <div class="statline"><span class="dot"></span><a href="https://api.atlys.my.id/status">Live · v0.2.0 operasional penuh</a></div>
     <h1>Data publik,<br /><span class="grad">satu API.</span></h1>
@@ -819,6 +867,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
     <span class="pa-note">Contoh di atas statis (1 dari 3 item demo). Jalankan untuk respons live lengkap dari endpoint demo, tanpa key.</span>
     <button class="btn solid pa-run" id="runBtn" type="button">Jalankan</button>
   </div>
+  </div>
 
     <div class="anatomy">
       <div class="an-head">POLA PATH: SATU BENTUK UNTUK SEMUA ENDPOINT</div>
@@ -859,20 +908,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       </div>
     </div>
 
-    <div class="chart" role="img" aria-label="Sebaran 4.100 endpoint komputasi per kategori">
-      <div class="ch-head">SEBARAN 4.100 ENDPOINT KOMPUTASI</div>
-      <div class="ch-row"><span class="ch-label">Tools</span><span class="ch-track"><i class="ch-fill" style="width:100%"></i></span><span class="ch-count">1.319</span></div>
-      <div class="ch-row"><span class="ch-label">Math</span><span class="ch-track"><i class="ch-fill" style="width:58.9%"></i></span><span class="ch-count">777</span></div>
-      <div class="ch-row"><span class="ch-label">Indonesia</span><span class="ch-track"><i class="ch-fill" style="width:49.1%"></i></span><span class="ch-count">648</span></div>
-      <div class="ch-row"><span class="ch-label">Validasi</span><span class="ch-track"><i class="ch-fill" style="width:29.6%"></i></span><span class="ch-count">390</span></div>
-      <div class="ch-row"><span class="ch-label">Fun</span><span class="ch-track"><i class="ch-fill" style="width:19.3%"></i></span><span class="ch-count">255</span></div>
-      <div class="ch-row"><span class="ch-label">Data</span><span class="ch-track"><i class="ch-fill" style="width:14.9%"></i></span><span class="ch-count">196</span></div>
-      <div class="ch-row"><span class="ch-label">Info</span><span class="ch-track"><i class="ch-fill" style="width:12.2%"></i></span><span class="ch-count">161</span></div>
-      <div class="ch-row"><span class="ch-label">Generator</span><span class="ch-track"><i class="ch-fill" style="width:10.8%"></i></span><span class="ch-count">142</span></div>
-      <div class="ch-row"><span class="ch-label">Ragam</span><span class="ch-track"><i class="ch-fill" style="width:6.4%"></i></span><span class="ch-count">84</span></div>
-      <div class="ch-row"><span class="ch-label">Game</span><span class="ch-track"><i class="ch-fill" style="width:1.5%"></i></span><span class="ch-count">20</span></div>
-      <p class="ch-note">Batang proporsional terhadap kategori terbesar (Tools, 1.319). Angka sama dengan kartu di atas, divisualkan.</p>
-    </div>
     <div class="waffle">
       <div class="wf-head">100.000 ENDPOINT, DIBAGI 100 KOTAK</div>
       <div class="wf-grid"><i class="wc on"></i><i class="wc on"></i><i class="wc on"></i><i class="wc on"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i><i class="wc"></i></div>
@@ -953,13 +988,6 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
         </ul>
         <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
       </div>
-    </div>
-    <div class="quotachart" role="img" aria-label="Perbandingan kuota harian guest, free, trusted">
-      <div class="q-head">PERBANDINGAN KUOTA HARIAN</div>
-      <div class="q-row"><div class="q-tier"><b>GUEST</b><span>mencoba tanpa daftar</span></div><span class="q-track"><i class="q-fill" style="width:2%"></i></span><span class="q-count">20/hari</span></div>
-      <div class="q-row"><div class="q-tier"><b>FREE</b><span>pemakaian harian</span></div><span class="q-track"><i class="q-fill" style="width:20%"></i></span><span class="q-count">200/hari</span></div>
-      <div class="q-row"><div class="q-tier"><b>TRUSTED</b><span>proyek produksi</span></div><span class="q-track"><i class="q-fill" style="width:100%"></i></span><span class="q-count">1.000/hari</span></div>
-      <p class="q-note">Skala linear terhadap trusted (1.000). Batang guest memang kecil, itu faktanya, bukan kesalahan gambar.</p>
     </div>
     <div class="keyanat">
       <div class="ka-head">BENTUK API KEY</div>
