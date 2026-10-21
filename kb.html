@@ -3,74 +3,65 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="color-scheme" content="dark light" />
 <title>Atlys API — Data publik, satu API.</title>
 <meta name="description" content="Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#0a0a0a; --surface:#111111; --surface2:#171717; --ink:#ffffff; --ink2:#a1a1aa;
-    --mut:#71717a; --line:#262626; --line2:#1f1f1f; --blue:#3b82f6; --blue2:#06b6d4;
-    --chip:#1f2937; --btn-p-bg:#ffffff; --btn-p-c:#0a0a0a; --btn-g-b:#333333; --btn-g-c:#ffffff;
+    --bg:#f8fafc; --surface:#ffffff; --surface2:#f6f8fb; --ink:#0f172a; --ink2:#475569;
+    --mut:#64748b; --line:#e2e8f0; --line2:#eef2f7;
+    --blue:#2563eb; --blue2:#1d4ed8; --blue-soft:#eff6ff; --blue-glow:rgba(37,99,235,.14);
+    --dark-bg:#0b1220; --dark-surface:#111c2e; --dark-line:#1e293b;
     --sans:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
   }
-  html.light{
-    --bg:#f8fafc; --surface:#ffffff; --surface2:#f1f5f9; --ink:#0f172a; --ink2:#475569;
-    --mut:#64748b; --line:#e2e8f0; --line2:#eef2f7; --blue:#2563eb; --blue2:#06b6d4;
-    --chip:#f1f5f9; --btn-p-bg:#0f172a; --btn-p-c:#ffffff; --btn-g-b:#e2e8f0; --btn-g-c:#0f172a;
+  html.dark{
+    --bg:#0b1220; --surface:#111c2e; --surface2:#0f1a2c; --ink:#e2e8f0; --ink2:#94a3b8;
+    --mut:#7d8ca3; --line:#1e293b; --line2:#16213a; --blue-soft:#12294d; --blue-glow:rgba(37,99,235,.25);
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  section[id]{scroll-margin-top:84px}
   /* ===== header ===== */
   header.site{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;gap:28px;height:64px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;text-decoration:none;flex:none}
-  .logo .mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;display:grid;place-items:center;font-size:17px}
+  .logo .mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;display:grid;place-items:center;font-size:17px}
   .logo small{font-weight:600;color:var(--mut);font-size:12px;letter-spacing:.12em}
   .nav .m{margin-left:auto;display:flex;align-items:center;gap:28px}
-  .nav .m a{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;min-height:44px;display:flex;align-items:center}
+  .nav .m a{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none}
   .nav .m a:hover{color:var(--ink)}
-  .acts{margin-left:auto;display:flex;align-items:center;gap:12px;flex:none}
-  .nav .m + .acts{margin-left:0}
-  .login-link{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;min-height:44px;display:flex;align-items:center}
-  .login-link:hover{color:var(--ink)}
-  .theme-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px}
-  .burger{display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
-  .menu{display:none;border-top:1px solid var(--line);padding:8px 24px 20px}
-  header.menu-open .menu{display:block}
-  .menu a.mlink{display:block;font-size:15px;font-weight:500;color:var(--ink2);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--line2)}
-  .menu a.mlink:hover{color:var(--ink)}
-  .menu .btn{width:100%;margin-top:16px}
+  .theme-btn{margin-left:8px;flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px}
   /* ===== hero ===== */
-  .hero{padding:72px 0 0}
-  .hero h1{font-size:clamp(38px,5.4vw,60px);line-height:1.08;letter-spacing:-.02em;margin:0;max-width:20em}
-  .hero .sub{font-size:17px;color:var(--ink2);max-width:36em;margin:18px 0 0}
-  .cta{display:flex;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+  .hero{position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(640px 380px at 85% 0%, var(--blue-glow), transparent 70%);pointer-events:none}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:88px 0 72px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--blue);background:var(--blue-soft);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:500}
+  h1{font-size:clamp(42px,5.4vw,64px);line-height:1.05;letter-spacing:-.02em;margin:20px 0 0}
+  .sub{font-size:18px;color:var(--ink2);max-width:34em;margin:18px 0 0}
+  .cta{display:flex;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none}
-  .btn.solid{background:var(--btn-p-bg);color:var(--btn-p-c)}
-  .btn.ghost{border:1px solid var(--btn-g-b);color:var(--btn-g-c);background:transparent}
-  .checks{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:28px;font-size:14px;color:var(--ink2)}
-  .checks span b{color:var(--ink);font-weight:600}
-  .stats{margin-top:56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
-  .stat{padding:28px 24px 28px 0}
-  .stat + .stat{border-left:1px solid var(--line);padding-left:24px}
-  .stat b{display:block;font-size:32px;font-weight:800;letter-spacing:-.02em}
-  .stat span{font-size:13px;color:var(--mut)}
+  .btn.solid{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;box-shadow:0 8px 24px rgba(37,99,235,.35)}
+  .btn.ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+  .qo{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 12px 40px rgba(15,23,42,.08)}
+  .qo h2{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 4px}
+  .qo p{font-size:13px;color:var(--mut);margin:0 0 20px}
+  .qo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .qo-item{background:var(--surface2);border:1px solid var(--line2);border-radius:14px;padding:16px}
+  .qo-item b{display:block;font-size:20px;font-weight:800;color:var(--blue)}
+  .qo-item span{font-size:13px;color:var(--ink2)}
   /* ===== sections ===== */
   section.blok{padding:72px 0 0}
   .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .feat{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px}
-  .feat .ic{width:48px;height:48px;border-radius:14px;background:var(--chip);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:15px;margin-bottom:16px}
+  .feat .ic{width:48px;height:48px;border-radius:14px;background:#f1f5f9;color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:15px;margin-bottom:16px}
   .feat h3{font-size:19px;margin:0 0 8px}
   .feat p{font-size:15px;color:var(--ink2);margin:0}
   .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
   .about-grid h2{font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px}
   .about-grid p{font-size:16px;color:var(--ink2);margin:0 0 14px}
-  .path-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px}
+  .path-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 12px 40px rgba(15,23,42,.08)}
   .path-card .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mut);margin-bottom:14px}
   .path{font-family:var(--mono);font-size:clamp(20px,3vw,30px);font-weight:600;line-height:1.4;word-break:break-word}
   .path .cat{background:var(--ink);color:var(--bg);border-radius:8px;padding:2px 10px}
@@ -83,43 +74,43 @@
   .sec-head h2{font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:8px 0 0}
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column}
-  .card .ic{width:52px;height:52px;border-radius:14px;background:var(--chip);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:20px;margin-bottom:16px}
+  .card .ic{width:52px;height:52px;border-radius:14px;background:#f1f5f9;color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:20px;margin-bottom:16px}
   .card h3{font-size:19px;margin:0 0 8px}
   .card p{font-size:15px;color:var(--ink2);margin:0 0 20px;flex:1}
-  .card .btn.ghost{color:var(--blue);border-color:var(--line)}
+  .card .btn{justify-content:center}
   /* ===== footer ===== */
-  footer{background:#0a0a0a;color:#a1a1aa;margin-top:88px;border-top:1px solid #262626}
+  footer{background:var(--dark-bg);color:#cbd5e1;margin-top:88px}
   .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px;padding:56px 0 40px}
   .foot-grid h4{color:#fff;font-size:15px;margin:0 0 14px}
-  .foot-grid a{display:block;color:#71717a;text-decoration:none;font-size:14px;padding:4px 0}
+  .foot-grid a{display:block;color:#94a3b8;text-decoration:none;font-size:14px;padding:4px 0}
   .foot-grid a:hover{color:#fff}
-  .foot-brand p{font-size:14px;color:#71717a;margin:8px 0 0;max-width:26em}
-  .foot-bottom{border-top:1px solid #262626;padding:20px 0;font-size:13px;color:#52525b}
+  .foot-brand p{font-size:14px;color:#94a3b8;margin:8px 0 0;max-width:26em}
+  .foot-bottom{border-top:1px solid #1e293b;padding:20px 0;font-size:13px;color:#64748b}
   @media(max-width:1020px){
+    .hero-grid{grid-template-columns:1fr;padding:64px 0 56px}
     .about-grid{grid-template-columns:1fr}
     .feat-grid,.cards{grid-template-columns:1fr 1fr}
     .foot-grid{grid-template-columns:1fr 1fr}
   }
   @media(max-width:760px){
-    .nav .m,.d-only{display:none}
-    .burger{display:grid;place-items:center}
-    .acts{margin-left:auto}
-    .hero{padding:48px 0 0}
-    .cta .btn{padding:10px 18px;font-size:14px}
-    .stats{grid-template-columns:1fr 1fr}
-    .stat{padding:20px 0}
-    .stat:nth-child(2n){border-left:1px solid var(--line);padding-left:20px}
-    .stat:nth-child(n+3){border-top:1px solid var(--line)}
-    .stat:nth-child(3){border-left:none;padding-left:0}
+    .nav{height:auto;flex-wrap:wrap;gap:10px 14px;padding:12px 0}
+    .nav .m{order:3;width:100%;margin-left:0;overflow-x:auto;scrollbar-width:none;gap:24px}
+    .nav .m::-webkit-scrollbar{display:none}
+    .nav .m a{flex:none;white-space:nowrap;min-height:44px;display:flex;align-items:center}
+    .theme-btn{margin-left:auto}
     .feat-grid,.cards{grid-template-columns:1fr}
+    .qo-grid{grid-template-columns:1fr 1fr}
     section.blok{padding:56px 0 0}
     footer{margin-top:64px}
     .foot-grid{grid-template-columns:1fr}
+    .hero-grid{padding:48px 0 40px}
   }
+  .card .btn.ghost{color:var(--blue)}
+  html.dark .feat .ic,html.dark .card .ic{background:#1e293b}
 </style>
 </head>
 <body>
-<header class="site" id="siteHeader">
+<header class="site">
   <div class="wrap nav">
     <a class="logo" href="#top"><span class="mark">A</span>Atlys <small>API</small></a>
     <nav class="m" aria-label="Navigasi utama">
@@ -127,40 +118,32 @@
       <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
       <a href="#tentang">Tentang</a>
     </nav>
-    <div class="acts">
-      <a class="login-link d-only" href="https://api.atlys.my.id/login">Login</a>
-      <a class="btn solid d-only" style="min-height:44px;padding:10px 20px" href="https://api.atlys.my.id/invite">Minta API Key</a>
-      <button class="theme-btn" id="themeBtn" type="button">Terang</button>
-      <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false">☰</button>
-    </div>
+    <button class="theme-btn" id="themeBtn" type="button">Gelap</button>
   </div>
-  <nav class="menu" id="menuPanel" aria-label="Menu hp">
-    <a class="mlink" href="#top">Beranda</a>
-    <a class="mlink" href="https://api.atlys.my.id/docs">Dokumentasi</a>
-    <a class="mlink" href="#tentang">Tentang</a>
-    <a class="mlink" href="https://api.atlys.my.id/login">Login</a>
-    <a class="btn solid" href="https://api.atlys.my.id/invite">Minta API Key</a>
-  </nav>
 </header>
 
 <main class="wrap" id="top">
   <section class="hero">
-    <h1>Data publik,<br />satu API.</h1>
-    <p class="sub">Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis.</p>
-    <div class="cta">
-      <a class="btn solid" href="https://api.atlys.my.id/invite">Minta API Key</a>
-      <a class="btn ghost" href="https://api.atlys.my.id/docs">Lihat Dokumentasi</a>
-    </div>
-    <div class="checks">
-      <span><b>✓</b> Gratis selamanya</span>
-      <span><b>✓</b> Tanpa kartu kredit</span>
-      <span><b>✓</b> Satu key, semua endpoint</span>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>±100.000</b><span>Total endpoint</span></div>
-      <div class="stat"><b>4.100</b><span>Endpoint komputasi</span></div>
-      <div class="stat"><b>±95.900</b><span>Data wilayah</span></div>
-      <div class="stat"><b>10</b><span>Kategori</span></div>
+    <div class="hero-grid">
+      <div>
+        <span class="tag">API Gratis • Cepat • Stabil</span>
+        <h1>Data publik,<br />satu API.</h1>
+        <p class="sub">Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis.</p>
+        <div class="cta">
+          <a class="btn solid" href="https://api.atlys.my.id/docs">Buka Docs</a>
+          <a class="btn ghost" href="https://api.atlys.my.id/invite">Daftar</a>
+        </div>
+      </div>
+      <aside class="qo" aria-label="Ringkasan cepat">
+        <h2>Quick overview</h2>
+        <p>Status API, performa, dan kemudahan akses.</p>
+        <div class="qo-grid">
+          <div class="qo-item"><b>24/7</b><span>Online nonstop, dijalankan di edge</span></div>
+          <div class="qo-item"><b>Free</b><span>Tanpa biaya, tier gratis tersedia</span></div>
+          <div class="qo-item"><b>JSON</b><span>Output siap pakai untuk project apa pun</span></div>
+          <div class="qo-item"><b>Fast</b><span>Respon stabil dari jaringan edge</span></div>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -265,28 +248,15 @@
 
 <script>
   (function () {
+    var btn = document.getElementById('themeBtn');
     var root = document.documentElement;
-    var themeBtn = document.getElementById('themeBtn');
     var saved = null;
     try { saved = localStorage.getItem('kb-theme'); } catch (e) {}
-    if (saved === 'light') { root.classList.add('light'); themeBtn.textContent = 'Gelap'; }
-    themeBtn.addEventListener('click', function () {
-      var light = root.classList.toggle('light');
-      themeBtn.textContent = light ? 'Gelap' : 'Terang';
-      try { localStorage.setItem('kb-theme', light ? 'light' : 'dark'); } catch (e) {}
-    });
-    var header = document.getElementById('siteHeader');
-    var burger = document.getElementById('burgerBtn');
-    var menu = document.getElementById('menuPanel');
-    burger.addEventListener('click', function () {
-      var open = header.classList.toggle('menu-open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    menu.addEventListener('click', function (e) {
-      if (e.target && e.target.tagName === 'A') {
-        header.classList.remove('menu-open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
+    if (saved === 'dark') { root.classList.add('dark'); btn.textContent = 'Terang'; }
+    btn.addEventListener('click', function () {
+      var dark = root.classList.toggle('dark');
+      btn.textContent = dark ? 'Terang' : 'Gelap';
+      try { localStorage.setItem('kb-theme', dark ? 'dark' : 'light'); } catch (e) {}
     });
   })();
 </script>
