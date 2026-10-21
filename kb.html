@@ -38,7 +38,7 @@
   .nav .m + .acts{margin-left:0}
   .login-link{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;min-height:44px;display:flex;align-items:center}
   .login-link:hover{color:var(--ink)}
-  .theme-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:44px;height:44px;padding:0;font-size:18px;cursor:pointer;display:grid;place-items:center}
+  .theme-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px}
   .burger{display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
   .menu{display:none;border-top:1px solid var(--line);padding:8px 24px 20px}
   header.menu-open .menu{display:block}
@@ -47,19 +47,19 @@
   .menu .btn{width:100%;margin-top:16px}
   /* ===== hero ===== */
   .hero{padding:72px 0 0}
-  .hero h1{font-size:clamp(38px,5.6vw,64px);line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:0;max-width:20em}
+  .hero h1{font-size:clamp(38px,5.4vw,60px);line-height:1.08;letter-spacing:-.02em;margin:0;max-width:20em}
   .hero .sub{font-size:17px;color:var(--ink2);max-width:36em;margin:18px 0 0}
-  .cta{display:flex;align-items:center;gap:12px;margin-top:32px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none}
+  .cta{display:flex;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none}
   .btn.solid{background:var(--btn-p-bg);color:var(--btn-p-c)}
   .btn.ghost{border:1px solid var(--btn-g-b);color:var(--btn-g-c);background:transparent}
-  .checks{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:32px;font-size:14px;color:var(--ink2)}
+  .checks{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:28px;font-size:14px;color:var(--ink2)}
   .checks span b{color:var(--ink);font-weight:600}
-  .stats{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
-  .stat{padding:28px 0}
-  
+  .stats{margin-top:56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:28px 24px 28px 0}
+  .stat + .stat{border-left:1px solid var(--line);padding-left:24px}
   .stat b{display:block;font-size:32px;font-weight:800;letter-spacing:-.02em}
-  .stat span{display:block;font-size:13px;color:var(--mut);margin-bottom:6px}
+  .stat span{font-size:13px;color:var(--mut)}
   /* ===== sections ===== */
   section.blok{padding:72px 0 0}
   .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -106,8 +106,11 @@
     .acts{margin-left:auto}
     .hero{padding:48px 0 0}
     .cta .btn{padding:10px 18px;font-size:14px}
-    .stats{grid-template-columns:1fr 1fr;gap:8px 24px}
+    .stats{grid-template-columns:1fr 1fr}
     .stat{padding:20px 0}
+    .stat:nth-child(2n){border-left:1px solid var(--line);padding-left:20px}
+    .stat:nth-child(n+3){border-top:1px solid var(--line)}
+    .stat:nth-child(3){border-left:none;padding-left:0}
     .feat-grid,.cards{grid-template-columns:1fr}
     section.blok{padding:56px 0 0}
     footer{margin-top:64px}
@@ -127,7 +130,7 @@
     <div class="acts">
       <a class="login-link d-only" href="https://api.atlys.my.id/login">Login</a>
       <a class="btn solid d-only" style="min-height:44px;padding:10px 20px" href="https://api.atlys.my.id/invite">Minta API Key</a>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Ganti tema">☀</button>
+      <button class="theme-btn" id="themeBtn" type="button">Terang</button>
       <button class="burger" id="burgerBtn" type="button" aria-label="Menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -154,10 +157,10 @@
       <span><b>✓</b> Satu key, semua endpoint</span>
     </div>
     <div class="stats">
-      <div class="stat"><span>Total endpoint</span><b>±100.000</b></div>
-      <div class="stat"><span>Endpoint komputasi</span><b>4.100</b></div>
-      <div class="stat"><span>Data wilayah</span><b>±95.900</b></div>
-      <div class="stat"><span>Kategori</span><b>10</b></div>
+      <div class="stat"><b>±100.000</b><span>Total endpoint</span></div>
+      <div class="stat"><b>4.100</b><span>Endpoint komputasi</span></div>
+      <div class="stat"><b>±95.900</b><span>Data wilayah</span></div>
+      <div class="stat"><b>10</b><span>Kategori</span></div>
     </div>
   </section>
 
@@ -266,10 +269,10 @@
     var themeBtn = document.getElementById('themeBtn');
     var saved = null;
     try { saved = localStorage.getItem('kb-theme'); } catch (e) {}
-    if (saved === 'light') { root.classList.add('light'); themeBtn.textContent = '☾'; }
+    if (saved === 'light') { root.classList.add('light'); themeBtn.textContent = 'Gelap'; }
     themeBtn.addEventListener('click', function () {
       var light = root.classList.toggle('light');
-      themeBtn.textContent = light ? '☾' : '☀';
+      themeBtn.textContent = light ? 'Gelap' : 'Terang';
       try { localStorage.setItem('kb-theme', light ? 'light' : 'dark'); } catch (e) {}
     });
     var header = document.getElementById('siteHeader');
