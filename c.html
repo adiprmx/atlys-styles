@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="light" />
-<meta name="theme-color" content="#fafaf9" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf9" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131316" />
 <title>Atlys — Data Publik, Satu API</title>
 <meta name="description" content="Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root{
-    color-scheme: light;
+    color-scheme: light dark;
     --ink:#111113; --ink2:#5a5a61; --ink3:#9a9aa1;
     --line:#ececea; --line2:#dddcd6; --soft:#f2f2ee; --code:#17181c; --dark1:#232329; --dark2:#131316; --track:#e8e8e2; --bar:#26262b;
     --sans:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -287,6 +288,99 @@
     .caret{animation:none}
     .p-resp pre .rl{transition:none}
     body.js .segbar i{transform:none;transition:none}
+  }
+
+  /* ===== varian gelap yang dirancang, bukan hasil konversi paksa ===== */
+  @media (prefers-color-scheme: dark){
+    body{background:#131316;color:#f2f2ee}
+    ::selection{background:#2c2c31}
+    a{color:#f2f2ee}
+    a:focus-visible,button:focus-visible{outline-color:#f2f2ee}
+    header.site{background:rgba(19,19,22,.85);border-bottom-color:#2c2c31}
+    .logo .mark{background:#f2f2ee;color:#131316}
+    .nav .m a{color:#a9a9b0}
+    .nav .m a:hover{color:#f2f2ee}
+    .nav .m a.btn.solid{color:#131316}
+    .nav .m a.btn.ghost{color:#f2f2ee}
+    .btn.solid{background:#f2f2ee;color:#131316;box-shadow:0 1px 2px rgba(0,0,0,.4),0 10px 24px rgba(0,0,0,.4)}
+    .btn.solid:hover{background:#fff}
+    .btn.ghost{border-color:#3a3a40;color:#f2f2ee}
+    .btn.ghost:hover{border-color:#f2f2ee}
+    .hero::before{background-image:radial-gradient(#2e2e34 1.1px,transparent 1.2px)}
+    .crumb{color:#7c7c85}
+    .crumb b{color:#f2f2ee}
+    h1 .grad{color:#f2f2ee}
+    .sub{color:#a9a9b0}
+    .statusline{background:#1d1d21;border-color:#2c2c31;color:#a9a9b0;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+    .statusline a{color:#f2f2ee;border-bottom-color:#f2f2ee}
+    .panel{background:#1d1d21;border-color:#2c2c31;box-shadow:0 2px 6px rgba(0,0,0,.4),0 28px 64px rgba(0,0,0,.5)}
+    .p-tabs{background:#17171a;border-bottom-color:#2c2c31}
+    .p-tabs .dots i{background:#3a3a40}
+    .p-tabs .dots i:nth-child(2){background:#33333a}
+    .p-tabs .dots i:nth-child(3){background:#2c2c31}
+    .p-tabs button{color:#a9a9b0;border-right-color:#2c2c31}
+    .p-tabs button.on{background:#1d1d21;color:#f2f2ee;box-shadow:inset 0 -2px 0 #f2f2ee}
+    .p-tabs .copy{border-left-color:#2c2c31;color:#a9a9b0}
+    .p-tabs .copy:hover{background:#232329;color:#f2f2ee}
+    .p-code{color:#a9a9b0}
+    .p-code .k{color:#f2f2ee}
+    .p-code .cm{color:#7c7c85}
+    .ticker{border-top-color:#2c2c31;border-bottom-color:#2c2c31}
+    .ttrack span{color:#7c7c85}
+    .eyebrow{color:#7c7c85}
+    .eyebrow::after{background:#3a3a40}
+    .band-soft::before{background:#1d1d21;border-top-color:#2c2c31;border-bottom-color:#2c2c31}
+    .blok .sub2{color:#a9a9b0}
+    .card{border-top-color:#3a3a40}
+    .card .nm{color:#a9a9b0}
+    .card:hover .nm{color:#f2f2ee}
+    .card .ex{color:#7c7c85}
+    .card .bar{background:#2c2c31}
+    .card .bar i{background:#e8e8e2}
+    .prop .ph .t{color:#a9a9b0}
+    .segbar .s1{background:#e8e8e2}
+    .segbar .s2{background:linear-gradient(90deg,#8b8b93,#6e6e76)}
+    .segbar .s3{background:linear-gradient(90deg,#3a3a40,#2c2c31)}
+    .seglabel div{color:#a9a9b0}
+    .seglabel div b{color:#f2f2ee}
+    .aman ol li{border-bottom-color:#2c2c31}
+    .aman ol li::before{color:#7c7c85}
+    .spek .row{border-bottom-color:#2c2c31}
+    .spek .row .k{color:#a9a9b0}
+    .bignum{-webkit-text-stroke-color:#2e2e34}
+    .pcol .cap{color:#7c7c85}
+    .arr{color:#7c7c85}
+    .node{background:#1d1d21;border-color:#2c2c31}
+    .node .ns{color:#a9a9b0}
+    .node.dark{background:#f2f2ee;border-color:#f2f2ee;color:#131316}
+    .node.dark .ns{color:#5a5a61}
+    .layer{background:#1d1d21;border-color:#2c2c31}
+    .layer .lv{color:#a9a9b0}
+    .note{color:#a9a9b0}
+    .note .sq{background:#f2f2ee}
+    .tier{border-top-color:#f2f2ee}
+    .tier .nm{color:#7c7c85}
+    .tier .q small{color:#a9a9b0}
+    .tier li{color:#a9a9b0}
+    .tier .qbar{background:#2c2c31}
+    .tier .qbar i{background:#e8e8e2}
+    .tier.dark{background:#f2f2ee;color:#131316;box-shadow:0 24px 48px rgba(0,0,0,.5)}
+    .tier.dark .nm{color:#5a5a61}
+    .tier.dark .q{color:#131316}
+    .tier.dark .q small{color:#5a5a61}
+    .tier.dark li{color:#4a4a51}
+    .tier.dark .btn{border-color:#131316}
+    .tier.dark .btn.solid{background:#131316;color:#f2f2ee}
+    .tier.dark .qbar{background:rgba(0,0,0,.12)}
+    .tier.dark .qbar i{background:linear-gradient(90deg,#26262b,#131316)}
+    .maker p{color:#a9a9b0}
+    .maker .msig{color:#7c7c85}
+    footer{border-top-color:#2c2c31}
+    .frow .l{color:#a9a9b0}
+    .frow .links a{color:#a9a9b0}
+    .frow .links a:hover{color:#f2f2ee}
+    .keatas{background:#f2f2ee;border-color:#f2f2ee;color:#131316;box-shadow:0 10px 24px rgba(0,0,0,.5)}
+    .caret{background:#f2f2ee}
   }
 </style>
 </head>
