@@ -37,6 +37,7 @@
   .nav .m a:hover{color:var(--ink)}
   .nav .m a.btn.solid{color:#fff}
   .nav-daftar{margin-left:14px}
+  .nav-login{margin-left:14px}
   .nav .m a.btn.ghost{color:var(--ink)}
   .btn{font-weight:600;font-size:14.5px;border-radius:12px;padding:11px 22px;border:1px solid var(--ink);display:inline-block;transition:background .18s ease,color .18s ease,transform .12s ease}
   .btn:active{transform:scale(.98)}
@@ -266,13 +267,13 @@
     .nav .logo{flex:none}
     .nav .m{order:3;width:100%;margin-left:0;gap:0;justify-content:space-between}
     .nav .m a{white-space:nowrap}
-    .nav-daftar{margin-left:auto;padding:8px 14px;font-size:13px}
+    .nav-login{order:1;margin-left:auto;padding:0;border:0;background:none;box-shadow:none;font-size:13px;font-weight:500;color:var(--ink)}
+    .nav-daftar{order:2;margin-left:0;padding:8px 14px;font-size:13px}
     section[id]{scroll-margin-top:108px}
     .nav .m{gap:9px}
     .nav .m a{font-size:13px}
     .statusline{font-size:13px;padding:8px 14px}
     .nav .m .btn{padding:8px 12px}
-    .nav .m a.btn.ghost{display:none}
     .nav .m a.opt{display:none}
     .nav .logo{font-size:16px}
     .nav .logo .mark{width:24px;height:24px}
@@ -422,8 +423,8 @@
       <a href="#keamanan">Keamanan</a>
       <a href="#akses">Tingkat Akses</a>
       <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
-      <a class="btn ghost" href="https://api.atlys.my.id/login">Login</a>
     </div>
+    <a class="btn ghost nav-login" href="https://api.atlys.my.id/login">Login</a>
     <a class="btn solid nav-daftar" href="https://api.atlys.my.id/register">Daftar</a>
   </div>
 </header>
