@@ -473,6 +473,26 @@
     .frow .links a{padding:12px 0}
   }
 
+  /* C26: butir halus, label pemakaian, panel menjorok, sorot hidup */
+  body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+  .tier{transition:background .25s ease}
+  .tier .fit{font-size:12px;color:var(--ink3);margin-top:6px}
+  .tier.dark .fit{color:#a9a9b0}
+  .card:hover .ex{color:var(--ink2)}
+  @media (hover:hover){
+    .tier:not(.dark):hover{background:var(--soft)}
+  }
+  @media (min-width:1021px){
+    .panel,.panel-actions{margin-left:96px}
+  }
+  @media (prefers-color-scheme: dark){
+    .tier .fit{color:#a9a9b0}
+    .card:hover .ex{color:#c2c2ca}
+  }
+  @media (prefers-reduced-motion: reduce){
+    body::after{display:none}
+  }
+
 </style>
 </head>
 <body>
@@ -485,6 +505,12 @@
 - tier jadi lajur, bukan tiga menara: tiga kolom sama adalah pola bawaan, lajur menaik menceritakan jalur guest ke trusted.
 - katalog hp: tools unggulan penuh ditambah sembilan kategori grid tiga kolom: hierarki dari isi, bukan kartu seragam.
 - font tetap inter dan ibm plex mono: keputusan eksplisit adip 2026-10-20, mengalahkan bawaan skill. -->
+<!-- C26, keputusan poles dan alasan satu baris:
+- butir halus seluruh halaman: permukaan digital yang terlalu rata terasa cetakan, butir tipis membuatnya terasa bahan.
+- label pemakaian di tiap tier: lajur yang hanya angka terasa katalog, satu baris pemakaian memberi rekomendasi seperti penjaga toko.
+- panel hero menjorok di desktop: teks selebar penuh lalu panel menjorok memberi komposisi asimetris editorial, bukan tumpukan simetris.
+- lajur tier berubah saat disorot: permukaan yang merespons sentuhan terasa dibuat tangan, bukan gambar diam.
+- warna tautan contoh kartu ikut menguat saat disorot: detail kecil yang menandakan kartu itu hidup. -->
 <header class="site">
   <div class="wrap nav">
     <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
@@ -641,7 +667,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
     </div>
     <div class="tiers">
       <div class="tier">
-        <div class="nm">GUEST</div>
+        <div class="tname"><div class="nm">GUEST</div><div class="fit">mencoba tanpa daftar</div></div>
         <div class="qq"><div class="q">20<small> request/hari</small></div><div class="qbar"><i style="width:2%"></i></div></div>
         <ul>
           <li>5 request per menit per alamat IP.</li>
@@ -650,7 +676,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
         <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba Endpoint Demo</a>
       </div>
       <div class="tier dark">
-        <div class="nm">FREE</div>
+        <div class="tname"><div class="nm">FREE</div><div class="fit">pemakaian harian</div></div>
         <div class="qq"><div class="q">200<small> request/hari</small></div><div class="qbar"><i style="width:20%"></i></div></div>
         <ul>
           <li>10 request per menit per key.</li>
@@ -660,7 +686,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
         <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
       </div>
       <div class="tier">
-        <div class="nm">TRUSTED</div>
+        <div class="tname"><div class="nm">TRUSTED</div><div class="fit">proyek produksi</div></div>
         <div class="qq"><div class="q">1.000<small> request/hari</small></div><div class="qbar"><i style="width:100%"></i></div></div>
         <ul>
           <li>30 request per menit per key.</li>
