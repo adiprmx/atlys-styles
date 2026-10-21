@@ -634,6 +634,52 @@
     section.blok{padding:80px 0 0}
     .stats{padding:24px 20px}
   }
+
+  /* ===== ML2 2026-10-21: 3 visual data nyata (angka dari halaman sendiri) ===== */
+  .chart{margin-top:56px}
+  .ch-head,.q-head{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3);margin-bottom:16px}
+  .ch-row{display:grid;grid-template-columns:110px 1fr 56px;gap:14px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+  .ch-row:last-of-type{border-bottom:1px solid var(--line)}
+  .ch-label{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+  .ch-track{display:block;height:22px;background:var(--soft);border-radius:6px;overflow:hidden}
+  .ch-fill{display:block;height:100%;background:var(--ink);border-radius:6px}
+  .ch-count{font-family:var(--mono);font-size:12px;font-weight:600;text-align:right}
+  .ch-note,.q-note{font-size:12.5px;color:var(--ink2);margin-top:12px}
+  .flowdiag{margin-top:8px;display:grid;grid-template-columns:1fr 40px 1.35fr 40px 1fr;align-items:stretch}
+  .fl-stage{border:1px solid var(--line);border-radius:20px;background:#fff;padding:20px;min-width:0}
+  .fl-cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3);margin-bottom:16px}
+  .fl-box{border:1px solid var(--line2);border-radius:14px;padding:14px 16px}
+  .fl-lk{display:block;font-weight:600;font-size:14px}
+  .fl-lv{display:block;font-size:12.5px;color:var(--ink2);margin-top:2px;line-height:1.5}
+  .fl-layer{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+  .fl-num{flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:600}
+  .fl-arr{display:grid;place-items:center;align-self:center;font-size:22px;color:var(--ink3)}
+  .fl-out{border:1px solid var(--line2);border-radius:14px;padding:14px 16px;margin-top:12px}
+  .fl-out.dark{margin-top:0;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;border:none}
+  .fl-out.dark .fl-lv{color:#c9c9cf}
+  .quotachart{margin-top:56px}
+  .q-row{display:grid;grid-template-columns:150px 1fr 84px;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .q-row:last-of-type{border-bottom:1px solid var(--line)}
+  .q-tier b{display:block;font-size:14px}
+  .q-tier span{display:block;font-size:12px;color:var(--ink2);margin-top:1px}
+  .q-track{display:block;height:26px;background:var(--soft);border-radius:6px;overflow:hidden}
+  .q-fill{display:block;height:100%;background:var(--ink);border-radius:6px}
+  .q-count{font-family:var(--mono);font-size:12px;font-weight:600;text-align:right}
+  @media (prefers-color-scheme: dark){
+    .ch-track,.q-track{background:#26262a}
+    .ch-fill,.q-fill{background:#f2f2ee}
+    .ch-label{color:#a9a9b0}
+    .fl-stage{background:#1d1d21;border-color:#2c2c31}
+    .fl-box,.fl-out{border-color:#2c2c31}
+    .fl-out:not(.dark){background:#232329}
+    .fl-layer{border-top-color:#2c2c31}
+  }
+  @media(max-width:860px){
+    .flowdiag{grid-template-columns:1fr}
+    .fl-arr{transform:rotate(90deg);padding:6px 0}
+    .ch-row{grid-template-columns:84px 1fr 48px;gap:10px}
+    .q-row{grid-template-columns:110px 1fr 72px;gap:10px}
+  }
 </style>
 </head>
 <body>
@@ -766,6 +812,20 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       </div>
     </div>
 
+    <div class="chart" role="img" aria-label="Sebaran 4.100 endpoint komputasi per kategori">
+      <div class="ch-head">SEBARAN 4.100 ENDPOINT KOMPUTASI</div>
+      <div class="ch-row"><span class="ch-label">Tools</span><span class="ch-track"><i class="ch-fill" style="width:100%"></i></span><span class="ch-count">1.319</span></div>
+      <div class="ch-row"><span class="ch-label">Math</span><span class="ch-track"><i class="ch-fill" style="width:58.9%"></i></span><span class="ch-count">777</span></div>
+      <div class="ch-row"><span class="ch-label">Indonesia</span><span class="ch-track"><i class="ch-fill" style="width:49.1%"></i></span><span class="ch-count">648</span></div>
+      <div class="ch-row"><span class="ch-label">Validasi</span><span class="ch-track"><i class="ch-fill" style="width:29.6%"></i></span><span class="ch-count">390</span></div>
+      <div class="ch-row"><span class="ch-label">Fun</span><span class="ch-track"><i class="ch-fill" style="width:19.3%"></i></span><span class="ch-count">255</span></div>
+      <div class="ch-row"><span class="ch-label">Data</span><span class="ch-track"><i class="ch-fill" style="width:14.9%"></i></span><span class="ch-count">196</span></div>
+      <div class="ch-row"><span class="ch-label">Info</span><span class="ch-track"><i class="ch-fill" style="width:12.2%"></i></span><span class="ch-count">161</span></div>
+      <div class="ch-row"><span class="ch-label">Generator</span><span class="ch-track"><i class="ch-fill" style="width:10.8%"></i></span><span class="ch-count">142</span></div>
+      <div class="ch-row"><span class="ch-label">Ragam</span><span class="ch-track"><i class="ch-fill" style="width:6.4%"></i></span><span class="ch-count">84</span></div>
+      <div class="ch-row"><span class="ch-label">Game</span><span class="ch-track"><i class="ch-fill" style="width:1.5%"></i></span><span class="ch-count">20</span></div>
+      <p class="ch-note">Batang proporsional terhadap kategori terbesar (Tools, 1.319). Angka sama dengan kartu di atas, divisualkan.</p>
+    </div>
     <div class="prop">
       <div class="ph"><span class="t">Endpoint Data Wilayah Indonesia</span><span class="n">±95.900</span></div>
       <div class="segbar"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
@@ -782,33 +842,19 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       <h2>Keamanan</h2>
       <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
     </div>
-    <div class="pipe">
-      <div class="pcol">
-        <div class="cap">PENDAFTARAN</div>
-        <div class="node grow1">
-          <div><div class="nt">Request Masuk</div><div class="ns">Dari halaman /invite:<br />nama, email, keperluan</div></div>
-        </div>
+    <div class="flowdiag" role="img" aria-label="Alur pendaftaran: request, enam lapis pemeriksaan, keputusan admin">
+      <div class="fl-stage"><div class="fl-cap">PENDAFTARAN</div><div class="fl-box"><span class="fl-lk">Request Masuk</span><span class="fl-lv">Dari halaman /invite: nama, email, keperluan</span></div></div>
+      <div class="fl-arr" aria-hidden="true">→</div>
+      <div class="fl-stage"><div class="fl-cap">ENAM LAPIS PEMERIKSAAN OTOMATIS</div>
+        <div class="fl-layer"><span class="fl-num">1</span><div><span class="fl-lk">POW CAPTCHA</span><span class="fl-lv">Difficulty 4, naik ke 5 untuk IP abusif</span></div></div>
+        <div class="fl-layer"><span class="fl-num">2</span><div><span class="fl-lk">EMAIL</span><span class="fl-lv">±2.000 domain sekali pakai ditolak, verifikasi MX</span></div></div>
+        <div class="fl-layer"><span class="fl-num">3</span><div><span class="fl-lk">BRUTE FORCE</span><span class="fl-lv">20 percobaan per menit, IP dikunci 5 menit</span></div></div>
+        <div class="fl-layer"><span class="fl-num">4</span><div><span class="fl-lk">SSRF GUARD</span><span class="fl-lv">8 lapis pemeriksaan pada setiap URL</span></div></div>
+        <div class="fl-layer"><span class="fl-num">5</span><div><span class="fl-lk">TANDA TANGAN</span><span class="fl-lv">HMAC-SHA256 per key, toleransi replay 5 menit</span></div></div>
+        <div class="fl-layer"><span class="fl-num">6</span><div><span class="fl-lk">AUDIT</span><span class="fl-lv">Log rantai hash, perubahan terdeteksi</span></div></div>
       </div>
-      <div class="arr"><span>→</span></div>
-      <div class="pcol">
-        <div class="cap">ENAM LAPIS PEMERIKSAAN OTOMATIS</div>
-        <div class="layers">
-          <div class="layer"><span class="lk">POW CAPTCHA</span><span class="lv">Difficulty 4, naik ke 5 untuk IP abusif</span></div>
-          <div class="layer"><span class="lk">EMAIL</span><span class="lv">±2.000 domain sekali pakai ditolak, verifikasi MX</span></div>
-          <div class="layer"><span class="lk">BRUTE FORCE</span><span class="lv">20 percobaan per menit, IP dikunci 5 menit</span></div>
-          <div class="layer"><span class="lk">SSRF GUARD</span><span class="lv">8 lapis pemeriksaan pada setiap URL</span></div>
-          <div class="layer"><span class="lk">TANDA TANGAN</span><span class="lv">HMAC-SHA256 per key, toleransi replay 5 menit</span></div>
-          <div class="layer"><span class="lk">AUDIT</span><span class="lv">Log rantai hash, perubahan terdeteksi</span></div>
-        </div>
-      </div>
-      <div class="arr"><span>→</span></div>
-      <div class="pcol">
-        <div class="cap">KEPUTUSAN ADMIN</div>
-        <div class="outc">
-          <div class="node dark grow2"><div><div class="nt">Key Diterbitkan</div><div class="ns">Setelah peninjauan manual</div></div></div>
-          <div class="node grow3"><div><div class="nt">Ditolak</div><div class="ns">Tanpa key, tanpa akses</div></div></div>
-        </div>
-      </div>
+      <div class="fl-arr" aria-hidden="true">→</div>
+      <div class="fl-stage"><div class="fl-cap">KEPUTUSAN ADMIN</div><div class="fl-out dark"><span class="fl-lk">Key Diterbitkan</span><span class="fl-lv">Setelah peninjauan manual</span></div><div class="fl-out"><span class="fl-lk">Ditolak</span><span class="fl-lv">Tanpa key, tanpa akses</span></div></div>
     </div>
     <div class="notes">
       <div class="note"><span class="sq"></span>API key hanya ditampilkan satu kali, saat diterbitkan. Sesudah itu sistem hanya menyimpan hash-nya.</div>
@@ -851,6 +897,13 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
         </ul>
         <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
       </div>
+    </div>
+    <div class="quotachart" role="img" aria-label="Perbandingan kuota harian guest, free, trusted">
+      <div class="q-head">PERBANDINGAN KUOTA HARIAN</div>
+      <div class="q-row"><div class="q-tier"><b>GUEST</b><span>mencoba tanpa daftar</span></div><span class="q-track"><i class="q-fill" style="width:2%"></i></span><span class="q-count">20/hari</span></div>
+      <div class="q-row"><div class="q-tier"><b>FREE</b><span>pemakaian harian</span></div><span class="q-track"><i class="q-fill" style="width:20%"></i></span><span class="q-count">200/hari</span></div>
+      <div class="q-row"><div class="q-tier"><b>TRUSTED</b><span>proyek produksi</span></div><span class="q-track"><i class="q-fill" style="width:100%"></i></span><span class="q-count">1.000/hari</span></div>
+      <p class="q-note">Skala linear terhadap trusted (1.000). Batang guest memang kecil, itu faktanya, bukan kesalahan gambar.</p>
     </div>
   </section>
   <section class="blok rv maker band-maker">
