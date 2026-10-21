@@ -509,6 +509,50 @@
     body::after{display:none}
   }
 
+
+  /* C28: perbaikan dari audit responsif terukur 2026-10-21 (7 halaman x 6 lebar).
+     - panel demo terpotong di hp: grid item min-width auto membuat kolom kode
+       selebar isi, lalu panel overflow hidden memotongnya. min-width 0 membuat
+       kolom mengecil ke lebar panel dan geser internalnya yang jalan.
+     - header hp menempel tepi: padding .nav menimpa padding .wrap pada elemen
+       yang sama (spesifisitas setara, aturan nav lebih akhir). kembalikan
+       padding header dengan selektor lebih spesifik.
+     - kolom stats timpang di hp kecil: min-width auto membuat kolom angka
+       panjang merebut lebar kolom lain. min-width 0 + clamp menjaga rata.
+     - judul hp 58px di layar 320: tiga baris raksasa, panel terdorong jauh.
+       clamp 44px di hp kecil mengembalikan proporsi.
+     - tombol dan tautan hp di bawah 44px: target sentuh dinaikkan ke 44px.
+     - kartu katalog 3 kolom di hp kecil: nama kategori satu kata meluber dari
+       kartu 82px. 2 kolom di bawah 380px memberi napas.
+     - aksi panel menumpuk di hp kecil: catatan + tombol berdampingan sempit,
+       tombol jadi selebar penuh di bawah catatan. */
+  .p-split>*{min-width:0}
+  .p-tabs{overflow-x:auto}
+  .p-tabs button{flex:none}
+  .stats>*{min-width:0}
+  .khead{isolation:isolate}
+  @media(max-width:760px){
+    header.site .wrap{padding-left:24px;padding-right:24px}
+    h1{font-size:clamp(44px,13vw,58px)}
+    .p-tabs button{padding:16px 14px}
+    .pa-run{padding:13px 28px}
+    .statline a{padding:12px 0}
+    .cta .clink{padding:12px 0}
+    .nav .m a{padding:13px 4px}
+    .nav .logo{padding:12px 0}
+    .stats .s .n{font-size:clamp(26px,8vw,34px)}
+  }
+  @media(max-width:400px){
+    .stats{gap:24px}
+    .panel-actions{flex-direction:column;align-items:stretch}
+    .pa-run{width:100%;text-align:center}
+  }
+  @media(max-width:380px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+
+  @media(max-width:370px){.p-tabs{flex-wrap:wrap}.p-tabs .copy{width:100%;margin-left:0;border-left:none;border-top:1px solid var(--line);text-align:center;padding:14px 14px}}
+  @media(prefers-color-scheme:dark) and (max-width:370px){.p-tabs .copy{border-top-color:#2c2c31}}
 </style>
 </head>
 <body>
@@ -521,6 +565,13 @@
 - tier jadi lajur, bukan tiga menara: tiga kolom sama adalah pola bawaan, lajur menaik menceritakan jalur guest ke trusted.
 - katalog hp: tools unggulan penuh ditambah sembilan kategori grid tiga kolom: hierarki dari isi, bukan kartu seragam.
 - font tetap inter dan ibm plex mono: keputusan eksplisit adip 2026-10-20, mengalahkan bawaan skill. -->
+<!-- C28, keputusan perbaikan dan alasan satu baris:
+- panel demo diperbaiki, bukan dihias: kode yang terpotong di hp adalah visual utama yang rusak, bukan soal selera.
+- header hp diberi padding kembali: logo menempel tepi kiri dan tombol menempel tepi kanan adalah padding yang berantakan, bukan gaya.
+- kolom stats diratakan: angka panjang tidak boleh merebut lebar kolom lain.
+- judul hp dikecilkan: 58px di layar 320 membuat hero tiga baris dan mendorong panel terlalu jauh.
+- target sentuh hp 44px: tautan 20px dan tombol 40px sulit disentuh, dinaikkan tanpa mengubah tampilan desktop.
+- nomor 01 katalog: penomoran editorial 02 dan 03 sudah ada, 01 melengkapinya. -->
 <!-- C27, keputusan poles dan alasan satu baris:
 - hero dan panel dirapatkan: panel produk adalah visual utama, makin cepat terlihat makin cepat dipercaya.
 - kartu katalog punya permukaan saat disorot: daftar garis saja terasa tabel, permukaan lunak terasa produk.
@@ -615,7 +666,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
 
   <section class="blok rv band-soft" id="katalog">
     <div class="kgrid">
-      <div class="khead">
+      <div class="khead"><span class="bignum" aria-hidden="true">01</span>
         <h2>Katalog Endpoint</h2>
         <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
       </div>
