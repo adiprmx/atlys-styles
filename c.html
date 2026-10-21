@@ -81,6 +81,12 @@
   .p-resp .rh .ok{color:#4ade80;font-weight:600}
   .p-resp pre{font-family:var(--mono);font-size:12.5px;line-height:1.8;padding:20px 22px;overflow-x:auto}
   .p-resp .k{color:#fff;font-weight:600}
+  .p-resp .rh .ex{color:#8b8b93}
+  .p-resp .rh .err{color:#e5484d;font-weight:600}
+  .panel-actions{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .pa-note{font-size:12.5px;color:var(--ink2);line-height:1.55;flex:1}
+  .pa-run{white-space:nowrap}
+  .pa-run:disabled{opacity:.55;cursor:wait}
   .p-resp .s{color:#c2c2ca}
   @media(max-width:860px){ .p-split{grid-template-columns:1fr} }
 
@@ -185,6 +191,9 @@
   }
 
   /* batang proporsi di kartu katalog dan tier */
+  .card .ic{display:block;width:28px;height:28px;color:var(--ink2);margin-bottom:12px}
+  .card .ic svg{width:100%;height:100%;display:block}
+  .card:hover .ic{color:var(--ink)}
   .card .bar{height:6px;border-radius:3px;background:var(--track);margin-top:14px;overflow:hidden}
   .card .bar i{display:block;height:100%;background:var(--bar);border-radius:2px}
   body.js .card .bar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.25s cubic-bezier(.22,.8,.24,1)}
@@ -398,6 +407,9 @@
     .frow .links a:hover{color:#f2f2ee}
     .keatas{background:#2e2e34;border-color:#3a3a40;color:#f2f2ee;box-shadow:0 10px 24px rgba(0,0,0,.5)}
     .caret{background:#f2f2ee}
+    .card .ic{color:#a9a9b0}
+    .card:hover .ic{color:#f2f2ee}
+    .pa-note{color:#a9a9b0}
   }
 </style>
 </head>
@@ -436,38 +448,41 @@
       <button class="copy" id="copyBtn" type="button">Salin Kode</button>
     </div>
     <div class="p-split">
-      <div class="p-code" data-pane="curl"><span class="cm"># Panggil endpoint pertama Anda</span>
-<span id="typer">curl https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir \
-  -H <span class="k">"X-API-Key: atlys_key_anda"</span></span><span class="caret" id="caret" hidden></span></div>
-      <div class="p-code" data-pane="js" hidden><span class="cm">// Panggil endpoint pertama Anda</span>
+      <div class="p-code" data-pane="curl"><span class="cm"># Endpoint demo publik, tanpa key</span>
+<span id="typer">curl https://api.atlys.my.id/v1/demo/info/news</span><span class="caret" id="caret" hidden></span></div>
+      <div class="p-code" data-pane="js" hidden><span class="cm">// Endpoint demo publik, tanpa key</span>
 const res = await fetch(
-  <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
-  { headers: { <span class="k">"X-API-Key"</span>: "atlys_key_anda" } }
+  <span class="k">"https://api.atlys.my.id/v1/demo/info/news"</span>
 );
 const data = await res.json();
-console.log(data.result.kodepos);</div>
-      <div class="p-code" data-pane="py" hidden><span class="cm"># Panggil endpoint pertama Anda</span>
+console.log(data.result.items[0].title);</div>
+      <div class="p-code" data-pane="py" hidden><span class="cm"># Endpoint demo publik, tanpa key</span>
 import requests
 
 r = requests.get(
-    <span class="k">"https://api.atlys.my.id/v1/data/kodepos/kecamatan/gambir"</span>,
-    headers={<span class="k">"X-API-Key"</span>: "atlys_key_anda"},
+    <span class="k">"https://api.atlys.my.id/v1/demo/info/news"</span>
 )
-print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>])</div>
+print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][0][<span class="k">"title"</span>])</div>
       <div class="p-resp">
-        <div class="rh"><span>RESPONS</span><span class="ok">200 OK · 12 ms</span></div>
+        <div class="rh"><span id="rhLabel">RESPONS</span><span class="ex" id="rhStatus">200 OK · CONTOH</span></div>
         <pre><span class="rl">{</span>
 <span class="rl">  <span class="k">"status"</span>: <span class="s">"ok"</span>,</span>
 <span class="rl">  <span class="k">"creator"</span>: <span class="s">"Atlys"</span>,</span>
 <span class="rl">  <span class="k">"result"</span>: {</span>
-<span class="rl">    <span class="k">"kodepos"</span>: <span class="s">"10110"</span>,</span>
-<span class="rl">    <span class="k">"kecamatan"</span>: <span class="s">"Gambir"</span>,</span>
-<span class="rl">    <span class="k">"kota"</span>: <span class="s">"Jakarta Pusat"</span></span>
+<span class="rl">    <span class="k">"items"</span>: [</span>
+<span class="rl">      { <span class="k">"id"</span>: <span class="s">"demo-n1"</span>, <span class="k">"source"</span>: <span class="s">"contoh"</span>,</span>
+<span class="rl">        <span class="k">"title"</span>: <span class="s">"Contoh Berita Satu: Judul Ilustratif Untuk Demo"</span>,</span>
+<span class="rl">        <span class="k">"link"</span>: <span class="s">"https://contoh.id/berita/satu"</span> }</span>
+<span class="rl">    ]</span>
 <span class="rl">  },</span>
-<span class="rl">  <span class="k">"meta"</span>: { <span class="k">"cached"</span>: false, <span class="k">"ms"</span>: 12 }</span>
+<span class="rl">  <span class="k">"meta"</span>: { <span class="k">"demo"</span>: true, <span class="k">"total"</span>: 3 }</span>
 <span class="rl">}</span></pre>
       </div>
     </div>
+  </div>
+  <div class="panel-actions">
+    <span class="pa-note">Contoh di atas statis (1 dari 3 item demo). Jalankan untuk respons live lengkap dari endpoint demo, tanpa key.</span>
+    <button class="btn solid pa-run" id="runBtn" type="button">Jalankan</button>
   </div>
 
   <div class="ticker" aria-hidden="true"><div class="ttrack"><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
@@ -487,16 +502,16 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
       </div>
       <div class="cards">
-      <a class="card feat" href="https://api.atlys.my.id/docs"><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="bar"><i style="width:59%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="bar"><i style="width:49%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="bar"><i style="width:30%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="bar"><i style="width:19%"></i></div><div class="ex">/v1/fun/pantun/acak</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="bar"><i style="width:15%"></i></div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="bar"><i style="width:12%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="bar"><i style="width:11%"></i></div><div class="ex">/v1/generator/uuid</div></a>
-      <a class="card" href="https://api.atlys.my.id/docs"><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="bar"><i style="width:6%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
-      <a class="card wide" href="https://api.atlys.my.id/docs"><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
+      <a class="card feat" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><circle cx="9" cy="6" r="2"/><path d="M4 12h16"/><circle cx="15" cy="12" r="2"/><path d="M4 18h16"/><circle cx="8" cy="18" r="2"/></svg></span><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14"/><path d="M9 13h.01M15 13h.01M9 17h.01M15 17h.01" stroke-width="2.5"/></svg></span><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="bar"><i style="width:59%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="bar"><i style="width:49%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 11.5l2 2 4-4"/></svg></span><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="bar"><i style="width:30%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14c1 1.5 2.5 2 3.5 2s2.5-.5 3.5-2"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.5"/></svg></span><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="bar"><i style="width:19%"></i></div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="bar"><i style="width:15%"></i></div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7h.01" stroke-width="2.5"/></svg></span><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="bar"><i style="width:12%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h.01M15 9h.01M12 12h.01M9 15h.01M15 15h.01" stroke-width="2.5"/></svg></span><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="bar"><i style="width:11%"></i></div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C10 3.5 7 3 4 3v16c3 0 6 .5 8 2 2-1.5 5-2 8-2V3c-3 0-6 .5-8 2z"/><path d="M12 5v16"/></svg></span><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="bar"><i style="width:6%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card wide" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10a5 5 0 0 1 5 5c0 2.5-2 4-4.5 4-1.5 0-2.5-.6-3.5-2h-4c-1 1.4-2 2-3.5 2C4 16 2 14.5 2 12a5 5 0 0 1 5-5z"/><path d="M7 10v4M5 12h4"/><path d="M16 11h.01M18 13h.01" stroke-width="2.5"/></svg></span><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
       </div>
     </div>
 
@@ -712,8 +727,10 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
       var baris = panel.querySelectorAll('.p-resp pre .rl');
       var timerDemo = [];
       var demoAktif = false;
+      var demoMati = false;
       function jadwal(fn, t) { timerDemo.push(setTimeout(fn, t)); }
       function hentikanDemo() {
+        demoMati = true;
         if (!demoAktif) return;
         demoAktif = false;
         timerDemo.forEach(clearTimeout); timerDemo = [];
@@ -747,7 +764,7 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         })();
       }
       function mulaiDemo() {
-        if (demoAktif) return;
+        if (demoMati || demoAktif) return;
         demoAktif = true; putaran(); ioPanel.disconnect();
       }
       var ioPanel = new IntersectionObserver(function (entries) {
@@ -758,6 +775,41 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"kodepos"</span>
         var r = panel.getBoundingClientRect();
         if (r.top < window.innerHeight && r.bottom > 0) mulaiDemo();
       }, 3000);
+
+      /* tombol jalankan: panggil endpoint demo live (tanpa key).
+         konten api dirender sebagai teks murni, bukan html, supaya aman. */
+      var runBtn = document.getElementById('runBtn');
+      if (runBtn) {
+        runBtn.addEventListener('click', async function () {
+          hentikanDemo();
+          var pre = panel.querySelector('.p-resp pre');
+          var rhLabel = document.getElementById('rhLabel');
+          var rhStatus = document.getElementById('rhStatus');
+          runBtn.disabled = true; runBtn.textContent = 'Memanggil…';
+          var mulai = performance.now();
+          try {
+            var res = await fetch('https://api.atlys.my.id/v1/demo/info/news');
+            var ms = Math.round(performance.now() - mulai);
+            var data = await res.json();
+            if (!res.ok) {
+              pre.textContent = 'Endpoint demo menolak permintaan (HTTP ' + res.status + '). Coba lagi nanti.';
+              if (rhLabel) rhLabel.textContent = 'RESPONS';
+              if (rhStatus) { rhStatus.className = 'err'; rhStatus.textContent = 'GAGAL ' + res.status; }
+            } else {
+              var teks = JSON.stringify(data, null, 2);
+              if (teks.length > 4000) teks = teks.slice(0, 4000) + '\n… (dipotong)';
+              pre.textContent = teks;
+              if (rhLabel) rhLabel.textContent = 'RESPONS · LIVE';
+              if (rhStatus) { rhStatus.className = 'ok'; rhStatus.textContent = '200 OK · ' + ms + ' ms'; }
+            }
+          } catch (e) {
+            pre.textContent = 'Gagal memanggil endpoint demo. Periksa koneksi lalu coba lagi.';
+            if (rhLabel) rhLabel.textContent = 'RESPONS';
+            if (rhStatus) { rhStatus.className = 'err'; rhStatus.textContent = 'GAGAL'; }
+          }
+          runBtn.disabled = false; runBtn.textContent = 'Jalankan';
+        });
+      }
     }
   })();
 </script>
