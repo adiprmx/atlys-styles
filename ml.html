@@ -764,6 +764,25 @@
      font-size 0 di pre mematikan baris kosong itu; .rl tetap 12,5px. */
   .p-resp pre{font-size:0}
   .p-resp pre .rl{font-size:12.5px}
+
+  /* ===== ML6 2026-10-21: peta ringkas di atas (paham tanpa scroll jauh) ===== */
+  .intisari{margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;scroll-margin-top:104px}
+  .int-cell{color:inherit;text-decoration:none;display:block}
+  .int-cell b{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+  .int-cell span{display:block;font-size:14px;line-height:1.55;margin-top:6px}
+  .int-cell:hover b{color:var(--ink)}
+  .int-cell:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+  @media (min-width:1021px){.intisari{grid-template-columns:repeat(4,1fr)}}
+
+  /* ===== ML6-fix 2026-10-21: baris nav hp bisa digeser =====
+     Tanpa ini, tautan nav hp meluber keluar pil (Dokumentasi tak
+     terlihat di 390, dokumen melebar ke 361 di 320). overflow-x:auto
+     bikin barisnya geser di dalam pil, bukan meluber. */
+  @media(max-width:760px){
+    .nav .m{overflow-x:auto;scrollbar-width:none}
+    .nav .m::-webkit-scrollbar{display:none}
+    .nav .m a{flex-shrink:0;white-space:nowrap}
+  }
 </style>
 </head>
 <body>
@@ -801,7 +820,7 @@
   <div class="wrap nav">
     <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
     <div class="m">
-      <a href="#katalog">Katalog</a>
+      <a href="#intisari">Ringkasan</a><a href="#katalog">Katalog</a>
       <a href="#keamanan">Keamanan</a>
       <a href="#akses">Tingkat Akses</a>
       <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
@@ -879,6 +898,12 @@ print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][
       </div>
       <div class="an-ex">Contoh lain, pola sama: <span>/v1/math/prima/cek/97</span> &middot; <span>/v1/indonesia/hari-libur/2026</span></div>
     </div>
+  <nav class="intisari" id="intisari" aria-label="Ringkasan isi situs">
+    <a class="int-cell" href="#katalog"><b>ISI</b><span>±100.000 endpoint: 10 kategori komputasi + data wilayah Indonesia.</span></a>
+    <a class="int-cell" href="#panelDemo"><b>CARA PAKAI</b><span>Satu pola path /v1/{kategori}/{endpoint}, demo bisa dicoba tanpa key.</span></a>
+    <a class="int-cell" href="#keamanan"><b>KEAMANAN</b><span>6 lapis pemeriksaan otomatis, lalu tinjauan admin sebelum key terbit.</span></a>
+    <a class="int-cell" href="#akses"><b>AKSES</b><span>3 tier gratis: guest 20, free 200, trusted 1.000 per hari. Key tampil satu kali.</span></a>
+  </nav>
   <div class="ticker" aria-hidden="true"><div class="ttrack"><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
 
   <div class="stats band-dark">
