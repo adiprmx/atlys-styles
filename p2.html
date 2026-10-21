@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf9" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131316" />
+<title>Atlys: Data Publik, Satu API</title>
+<meta name="description" content="Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    color-scheme: light dark;
+    --ink:#111113; --ink2:#5a5a61; --ink3:#9a9aa1;
+    --line:#ececea; --line2:#dddcd6; --soft:#f2f2ee; --code:#17181c; --dark1:#232329; --dark2:#131316; --track:#e8e8e2; --bar:#26262b;
+    --sans:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:84px}
+  body{font-family:var(--sans);background:#fafaf9;overflow-x:clip;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  a{color:var(--ink);text-decoration:none}
+  ::selection{background:#e9e9e2}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+  .panel,.cards>*,.tiers>*{min-width:0}
+
+  header.site{position:sticky;top:0;z-index:50;background:rgba(250,250,249,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:14px;height:64px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+  .logo .mark{width:27px;height:27px;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:800}
+  .nav .m{margin-left:auto;display:flex;align-items:center;gap:28px}
+  .nav .m a{font-size:14px;color:var(--ink2);font-weight:500}
+  .nav .m a:hover{color:var(--ink)}
+  .nav .m a.btn.solid{color:#fff}
+  .nav-daftar{margin-left:14px}
+  .nav-login{margin-left:14px}
+  .nav .m a.btn.ghost{color:var(--ink)}
+  .btn{font-weight:600;font-size:14.5px;border-radius:12px;padding:11px 22px;border:1px solid var(--ink);display:inline-block;transition:background .18s ease,color .18s ease,transform .12s ease}
+  .btn:active{transform:scale(.98)}
+  .btn.solid{background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;box-shadow:0 1px 2px rgba(20,20,25,.07),0 10px 24px rgba(20,20,25,.12)}
+  .btn.solid:hover{background:linear-gradient(180deg,#2d2d34,#17171a);box-shadow:0 2px 4px rgba(20,20,25,.08),0 16px 32px rgba(20,20,25,.16)}
+  .btn:hover:not(:active){transform:translateY(-1px)}
+  .btn.ghost{border-color:var(--line2);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--ink)}
+
+  .hero{text-align:left;padding:88px 0 0;position:relative;z-index:0}
+  .hero::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:-30px;height:600px;background-image:radial-gradient(#e1e1da 1.1px,transparent 1.2px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000 25%,transparent 92%);mask-image:linear-gradient(180deg,#000 25%,transparent 92%);z-index:-1;pointer-events:none}
+  .crumb{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-bottom:26px}
+  .crumb b{color:var(--ink);font-weight:600}
+  h1{font-size:clamp(58px,8vw,104px);font-weight:800;letter-spacing:-.045em;line-height:.99;margin-bottom:22px}
+  .sub{font-size:18px;color:var(--ink2);line-height:1.65;max-width:34em;margin:0 0 34px}
+  .cta{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap}
+  .cta .btn{padding:13px 28px;font-size:15px}
+  .cta .clink{font-weight:600;font-size:15px;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:2px;align-self:center}
+  .statline{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--ink2);display:flex;align-items:center;gap:8px;margin-bottom:22px}
+  .statline .dot{width:7px;height:7px;border-radius:50%;background:#1a9e54;flex:none}
+  .statline a{color:var(--ink);font-weight:600;border-bottom:1px solid var(--line2)}
+  h1 .grad{color:var(--ink)}
+
+  /* satu panel produk: contoh request dan respons */
+  .panel{margin:48px 0 0;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(23,23,28,.04),0 28px 64px rgba(23,23,28,.07);overflow:hidden;text-align:left}
+  .p-tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);background:var(--soft)}
+  .p-tabs button{font-family:var(--mono);font-size:12px;padding:12px 18px;color:var(--ink2);border:none;border-right:1px solid var(--line);background:transparent;cursor:pointer}
+  .p-tabs button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+  .p-tabs .copy{margin-left:auto;border-right:none;border-left:1px solid var(--line);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:12px 20px;color:var(--ink2);white-space:nowrap}
+  .p-tabs .copy:hover{background:#fff;color:var(--ink)}
+  .p-split{display:grid;grid-template-columns:1fr 1fr}
+  .p-code{font-family:var(--mono);font-size:12.5px;line-height:1.8;padding:24px 26px;overflow-x:auto;color:var(--ink2);white-space:pre;align-self:start}
+  .p-code[hidden]{display:none}
+  .p-code .k{color:var(--ink);font-weight:600}
+  .p-code .cm{color:var(--ink3)}
+  .p-resp{background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#d8d8dc;display:flex;flex-direction:column}
+  .p-resp .rh{display:flex;justify-content:space-between;padding:12px 22px;border-bottom:1px solid #26262a;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#8b8b93}
+  .p-resp .rh .ok{color:#4ade80;font-weight:600}
+  .p-resp pre{font-family:var(--mono);font-size:12.5px;line-height:1.8;padding:20px 22px;overflow-x:auto}
+  .p-resp .k{color:#fff;font-weight:600}
+  .p-resp .rh .ex{color:#8b8b93}
+  .p-resp .rh .err{color:#e5484d;font-weight:600}
+  .panel-actions{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .pa-note{font-size:12.5px;color:var(--ink2);line-height:1.55;flex:1}
+  .pa-run{white-space:nowrap}
+  .pa-run:disabled{opacity:.55;cursor:wait}
+  .p-resp .s{color:#c2c2ca}
+  @media(max-width:860px){ .p-split{grid-template-columns:1fr} }
+
+  .ticker{margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden}
+  .ttrack{display:flex;width:max-content;animation:tick 46s linear infinite}
+  .ttrack span{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:.03em;white-space:nowrap}
+  .ticker:hover .ttrack{animation-play-state:paused}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){ .ttrack{animation:none} }
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:72px;padding:48px 0 52px;position:relative;z-index:0}
+  .stats::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(180deg,var(--dark1),var(--dark2));z-index:-1}
+  .band-dark .s{border-top-color:rgba(255,255,255,.16)}
+  .band-dark .s .n{color:#fff}
+  .band-dark .s .l{color:#a3a3ab}
+  .stats .s{border-top:1px solid var(--line2);padding-top:18px}
+  .stats .s .n{font-size:34px;font-weight:800;letter-spacing:-.03em}
+  @media(min-width:761px){ .stats .s .n{font-size:40px} }
+  .stats .s .l{font-size:13px;color:var(--ink2);margin-top:2px}
+  @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} }
+
+  section.blok{padding:104px 0 0}
+  .band-soft{position:relative;z-index:0}
+  .band-soft::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:64px;bottom:-52px;background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);z-index:-1}
+  .blok h2{font-size:clamp(36px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-bottom:10px}
+  .blok .sub2{font-size:16px;color:var(--ink2);margin-bottom:44px}
+
+  /* katalog: daftar bersih, tanpa widget */
+  .kgrid{display:grid;grid-template-columns:320px 1fr;gap:72px;align-items:start}
+  .khead{position:sticky;top:96px}
+  .khead .sub2{margin-bottom:0}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px}
+  .card.feat{grid-column:span 2;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;border-top:none;padding:24px 20px 26px;box-shadow:0 20px 44px rgba(18,18,21,.18)}
+  .card.feat .nm{color:#a9a9b0}
+  .card.feat .ct{color:#fff}
+  .card.feat .ex{color:#7c7c85}
+  .card.feat .ic{color:#a9a9b0}
+  .card.feat .bar{background:rgba(255,255,255,.16)}
+  .card.feat .bar i{background:#fff}
+  @media (hover:hover){ .card.feat:hover{background:linear-gradient(180deg,#2d2d34,#17171a)} .card.feat:hover .nm{color:#fff} }
+  .card.feat .ct{font-size:52px}
+  .card.wide{grid-column:span 2}
+  @media(max-width:1020px){ .kgrid{grid-template-columns:1fr;gap:8px} .khead{position:static} }
+  .card{display:block;padding:20px 16px 24px;border-top:1px solid var(--line2);border-radius:16px;transition:transform .25s ease,background .25s ease,box-shadow .25s ease}
+  @media (hover:hover){ .card:hover{transform:translateY(-3px);background:var(--soft);box-shadow:0 10px 28px rgba(23,23,28,.07)} }
+  .card:hover .nm{color:var(--ink)}
+  .card .nm{font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--ink2)}
+  .card .ct{font-size:34px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
+  .card .ex{font-family:var(--mono);font-size:10.5px;color:var(--ink3);margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @media(max-width:760px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} .card.feat .ct{font-size:40px} }
+
+  .prop{margin-top:56px}
+  .prop .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+  .prop .ph .t{font-weight:600;font-size:15px;color:var(--ink2)}
+  .prop .ph .n{font-size:30px;font-weight:800;letter-spacing:-.03em}
+  .segbar{display:flex;height:44px;border-radius:11px;overflow:hidden;gap:2px}
+  .segbar i{display:block;height:100%}
+  .segbar .s1{flex:79999;background:var(--bar)}
+  .segbar .s2{flex:6890;background:linear-gradient(90deg,#a6a6ad,#8b8b93)}
+  .segbar .s3{flex:9011;background:linear-gradient(90deg,#e9e9e3,#d3d3ca)}
+  .seglabel{display:flex;gap:2px;margin-top:12px}
+  .seglabel div{font-size:12.5px;color:var(--ink2);line-height:1.5}
+  .seglabel div b{display:block;color:var(--ink);font-size:13.5px}
+  .seglabel .l1{flex:79999}.seglabel .l2{flex:6890}.seglabel .l3{flex:9011}
+  @media(max-width:760px){ .seglabel .l2{display:none} }
+
+  .aman{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .aman ol{list-style:none;counter-reset:a}
+  .aman ol li{counter-increment:a;display:flex;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-size:15.5px;font-weight:500;line-height:1.6}
+  .aman ol li:first-child{padding-top:2px}
+  .aman ol li::before{content:counter(a,decimal-leading-zero);font-family:var(--mono);font-size:12.5px;color:var(--ink3);padding-top:4px}
+  .spek{padding-top:2px}
+  .spek .row{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .spek .row:first-child{padding-top:2px}
+  .spek .row .k{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.05em;padding-top:2px;white-space:nowrap}
+  .spek .row .v{font-weight:600;text-align:right}
+  @media(max-width:1020px){ .aman{grid-template-columns:1fr;gap:36px} }
+
+  /* nomor bayangan editorial */
+  .hwrap{position:relative;isolation:isolate}
+  .bignum{position:absolute;right:-6px;top:-52px;font-size:170px;font-weight:800;letter-spacing:-.05em;line-height:1;color:transparent;-webkit-text-stroke:1.5px #deddd5;z-index:-1;user-select:none}
+  @media(max-width:760px){ .bignum{font-size:104px;top:-30px} }
+
+  /* keamanan sebagai diagram alur, bukan paragraf */
+  .pipe{display:grid;grid-template-columns:210px 28px 1fr 28px 210px;gap:6px;align-items:stretch}
+  .pcol{display:flex;flex-direction:column}
+  .pcol .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink3);margin-bottom:12px;font-weight:600}
+  .arr{display:grid;place-items:center;padding-top:30px}
+  .arr span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--dark1);color:#fff;font-size:15px}
+  .node{flex:1;border:1px solid var(--line2);border-radius:16px;background:#fff;display:grid;place-items:center;text-align:center;padding:20px 16px}
+  .node .nt{font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+  .node .ns{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.55}
+  .node.dark{background:linear-gradient(180deg,var(--dark1),var(--dark2));border-color:var(--dark2);color:#fff}
+  .node.dark .ns{color:#a9a9b0}
+  .outc{display:flex;flex-direction:column;gap:10px;flex:1}
+  .outc .node{flex:1}
+  .layers{display:flex;flex-direction:column;gap:8px;flex:1}
+  .layer{flex:1;display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px 16px}
+  .layer .lk{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.07em;white-space:nowrap}
+  .layer .lv{font-size:13px;color:var(--ink2);text-align:right}
+  .notes{display:grid;grid-template-columns:1fr 1fr;gap:14px 44px;margin-top:34px}
+  .note{display:flex;gap:11px;font-size:14px;color:var(--ink2);line-height:1.6;align-items:flex-start}
+  .note .sq{width:8px;height:8px;background:var(--ink);border-radius:2px;flex:none;margin-top:7px}
+  @media(max-width:1020px){
+    .pipe{grid-template-columns:1fr}
+    .arr{transform:rotate(90deg);padding:2px 0;justify-self:center}
+    .notes{grid-template-columns:1fr}
+    .node{min-height:104px}
+  }
+
+  /* batang proporsi di kartu katalog dan tier */
+  .card .ic{display:block;width:32px;height:32px;color:var(--ink2);margin-bottom:12px}
+  .card .ic svg{width:100%;height:100%;display:block}
+  .card:hover .ic{color:var(--ink)}
+  .card .bar{height:6px;border-radius:3px;background:var(--track);margin-top:14px;overflow:hidden}
+  .card .bar i{display:block;height:100%;background:var(--bar);border-radius:2px}
+  body.js .card .bar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.25s cubic-bezier(.22,.8,.24,1)}
+  body.js .blok.in .card .bar i{transform:none}
+  .card:nth-child(2) .bar i{transition-delay:.06s}.card:nth-child(3) .bar i{transition-delay:.12s}
+  .card:nth-child(4) .bar i{transition-delay:.18s}.card:nth-child(5) .bar i{transition-delay:.24s}
+  .card:nth-child(6) .bar i{transition-delay:.3s}.card:nth-child(7) .bar i{transition-delay:.36s}
+  .card:nth-child(8) .bar i{transition-delay:.42s}.card:nth-child(9) .bar i{transition-delay:.48s}
+  .card:nth-child(10) .bar i{transition-delay:.54s}
+  .tier .qbar{height:8px;border-radius:3px;background:var(--track);margin-top:16px;overflow:hidden}
+  .tier .qbar i{display:block;height:100%;background:var(--bar);border-radius:3px}
+  .tier.dark .qbar{background:rgba(255,255,255,.16)}
+  .tier.dark .qbar i{background:linear-gradient(90deg,#ffffff,#c6c6cf)}
+  body.js .tier .qbar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.3s cubic-bezier(.22,.8,.24,1) .1s}
+  body.js .blok.in .tier .qbar i{transform:none}
+  @media (prefers-reduced-motion: reduce){
+    body.js .card .bar i,body.js .tier .qbar i{transform:none;transition:none}
+  }
+
+  /* tingkat akses: tiga kolom sederhana */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
+  .tier{padding:28px 4px 4px;border-top:2px solid var(--ink);display:flex;flex-direction:column}
+  .tier.dark{background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;border-top:none;border-radius:20px;padding:28px;box-shadow:0 24px 48px rgba(18,18,21,.18)}
+  .tier .nm{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3)}
+  .tier.dark .nm{color:#a9a9b0}
+  .tier .q{font-size:38px;font-weight:800;letter-spacing:-.03em;margin-top:12px}
+  .tier .q small{font-size:14px;font-weight:500;color:var(--ink2)}
+  .tier.dark .q small{color:#a9a9b0}
+  .tier.dark .q{color:#fff}
+  .tier.dark .q small{color:#a9a9b0}
+  .tier ul{list-style:none;margin:16px 0 28px}
+  .tier li{font-size:14.5px;padding:7px 0;color:var(--ink2);line-height:1.55}
+  .tier.dark li{color:#c9c9cf}
+  .tier .btn{margin-top:auto;text-align:center}
+  .tier.dark .btn{border-color:#fff}
+  .tier.dark .btn.solid{background:#fff;color:var(--ink)}
+  @media(max-width:760px){ .tiers{grid-template-columns:1fr;gap:36px} }
+
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .rv{opacity:1;transform:none;transition:none}
+  }
+
+  .band-maker{position:relative;z-index:0;padding-bottom:72px}
+  .band-maker::before{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);top:0;bottom:0;background:linear-gradient(180deg,var(--dark1),var(--dark2));z-index:-1}
+  .band-maker .mh{color:#fff}
+  .band-maker p{color:#a9a9b0}
+  .band-maker .msig{color:#7c7c85}
+  .maker .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px 72px;align-items:start}
+  .maker .mh{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.15}
+  .maker p{font-size:15.5px;color:var(--ink2);line-height:1.75}
+  .maker .msig{font-family:var(--mono);font-size:12.5px;color:var(--ink3);margin-top:16px;letter-spacing:.04em}
+  @media(max-width:760px){ .maker .mgrid{grid-template-columns:1fr} }
+  footer{margin-top:110px;border-top:1px solid var(--line);padding:34px 0 40px}
+  .keatas{position:fixed;right:22px;bottom:22px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid #131316;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;font-size:18px;line-height:1;cursor:pointer;box-shadow:0 10px 24px rgba(18,18,21,.22);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+  .keatas.muncul{opacity:1;transform:none;pointer-events:auto}
+  @media (prefers-reduced-motion: reduce){ .keatas{transition:none} }
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .frow .l{font-size:13px;color:var(--ink2)}
+  .frow .links{display:flex;gap:24px;flex-wrap:wrap}
+  .frow .links a{font-size:13px;color:var(--ink2)}
+  .frow .links a:hover{color:var(--ink)}
+
+  @media(max-width:760px){
+    .nav{height:auto;flex-wrap:wrap;gap:10px 14px;padding:10px 0 12px}
+    .nav .logo{flex:none}
+    .nav .m{order:3;width:100%;margin-left:0;gap:0;justify-content:space-between}
+    .nav .m a{white-space:nowrap}
+    .nav-login{order:1;margin-left:auto;padding:0;border:0;background:none;box-shadow:none;font-size:13px;font-weight:500;color:var(--ink)}
+    .nav-daftar{order:2;margin-left:0;padding:8px 14px;font-size:13px}
+    section[id]{scroll-margin-top:108px}
+    .nav .m{gap:9px}
+    .nav .m a{font-size:13px}
+    .nav .m .btn{padding:8px 12px}
+    .nav .m a.opt{display:none}
+    .nav .logo{font-size:16px}
+    .nav .logo .mark{width:24px;height:24px}
+    section.blok{padding-top:104px}
+    .hero{padding-top:72px}
+    .p-code{font-size:11.5px}
+    .p-tabs button{padding:12px 12px}
+    .p-tabs .copy{padding:12px 14px}
+  }
+
+  /* koreksi kontras pita gelap (menang dari aturan dasar) */
+  .stats.band-dark .s{border-top-color:rgba(255,255,255,.18)}
+  .stats.band-dark .s .l{color:#a8a8b0}
+
+  /* ===== motion graphics: gerakan dengan tujuan, bukan dekorasi ===== */
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .hero .statline{animation:rise .7s ease both}
+  .hero h1{animation:rise .8s ease .08s both}
+  .hero .sub{animation:rise .8s ease .18s both}
+  .hero .cta{animation:rise .8s ease .28s both}
+  .panel{animation:rise .9s ease .3s both}
+
+  .caret{display:inline-block;width:7px;height:14px;background:var(--ink);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .p-resp pre .rl{display:block;transition:opacity .35s ease,transform .35s ease}
+  .panel.demo-on .p-resp pre .rl{opacity:0;transform:translateY(5px)}
+  .panel.demo-on .p-resp pre .rl.show{opacity:1;transform:none}
+
+  body.js .segbar i{transform:scaleX(0);transform-origin:left center;transition:transform 1.35s cubic-bezier(.22,.8,.24,1)}
+  body.js .segbar .s2{transition-delay:.15s}
+  body.js .segbar .s3{transition-delay:.3s}
+  body.js .prop.in .segbar i{transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero .statline,.hero h1,.hero .sub,.hero .cta,.panel{animation:none}
+    .caret{animation:none}
+    .p-resp pre .rl{transition:none}
+    body.js .segbar i{transform:none;transition:none}
+  }
+
+  /* ===== varian gelap yang dirancang, bukan hasil konversi paksa ===== */
+  @media (prefers-color-scheme: dark){
+    body{background:#131316;color:#f2f2ee}
+    ::selection{background:#2c2c31}
+    a{color:#f2f2ee}
+    a:focus-visible,button:focus-visible{outline-color:#f2f2ee}
+    header.site{background:rgba(19,19,22,.85);border-bottom-color:#2c2c31}
+    .logo .mark{background:#f2f2ee;color:#131316}
+    .nav .m a{color:#a9a9b0}
+    .nav .m a:hover{color:#f2f2ee}
+    .nav .m a.btn.solid{color:#f2f2ee}
+    .nav .m a.btn.ghost{color:#f2f2ee}
+    .btn.solid{background:#2e2e34;color:#f2f2ee;border-color:#3a3a40;box-shadow:0 1px 2px rgba(0,0,0,.4),0 10px 24px rgba(0,0,0,.4)}
+    .btn.solid:hover{background:#2e2e34;border-color:#f2f2ee}
+    .btn.ghost{border-color:#3a3a40;color:#f2f2ee}
+    .btn.ghost:hover{border-color:#f2f2ee}
+    .hero::before{background-image:radial-gradient(#2e2e34 1.1px,transparent 1.2px)}
+    .crumb{color:#7c7c85}
+    .crumb b{color:#f2f2ee}
+    h1 .grad{color:#f2f2ee}
+    .sub{color:#a9a9b0}
+    .statline{color:#a9a9b0}
+    .statline a{color:#f2f2ee;border-bottom-color:#3a3a40}
+    .cta .clink{color:#f2f2ee;border-bottom-color:#f2f2ee}
+    .panel{background:#1d1d21;border-color:#2c2c31;box-shadow:0 2px 6px rgba(0,0,0,.4),0 28px 64px rgba(0,0,0,.5)}
+    .p-tabs{background:#17171a;border-bottom-color:#2c2c31}
+    .p-tabs button{color:#a9a9b0;border-right-color:#2c2c31}
+    .p-tabs button.on{background:#1d1d21;color:#f2f2ee;box-shadow:inset 0 -2px 0 #f2f2ee}
+    .p-tabs .copy{border-left-color:#2c2c31;color:#a9a9b0}
+    .p-tabs .copy:hover{background:#232329;color:#f2f2ee}
+    .p-code{color:#a9a9b0}
+    .p-code .k{color:#f2f2ee}
+    .p-code .cm{color:#7c7c85}
+    .ticker{border-top-color:#2c2c31;border-bottom-color:#2c2c31}
+    .ttrack span{color:#7c7c85}
+    .band-soft::before{background:#1d1d21;border-top-color:#2c2c31;border-bottom-color:#2c2c31}
+    .blok .sub2{color:#a9a9b0}
+    .card{border-top-color:#3a3a40}
+    .card .nm{color:#a9a9b0}
+    .card:hover .nm{color:#f2f2ee}
+    .card .ex{color:#7c7c85}
+    .card .bar{background:#2c2c31}
+    .card .bar i{background:#e8e8e2}
+    .prop .ph .t{color:#a9a9b0}
+    .segbar .s1{background:#6e6e76}
+    .segbar .s2{background:linear-gradient(90deg,#55555e,#4a4a52)}
+    .segbar .s3{background:linear-gradient(90deg,#3a3a40,#2c2c31)}
+    .seglabel div{color:#a9a9b0}
+    .seglabel div b{color:#f2f2ee}
+    .aman ol li{border-bottom-color:#2c2c31}
+    .aman ol li::before{color:#7c7c85}
+    .spek .row{border-bottom-color:#2c2c31}
+    .spek .row .k{color:#a9a9b0}
+    .bignum{-webkit-text-stroke-color:#2e2e34}
+    .pcol .cap{color:#7c7c85}
+    .arr{color:#7c7c85}
+    .node{background:#1d1d21;border-color:#2c2c31}
+    .node .ns{color:#a9a9b0}
+    .node.dark{background:linear-gradient(180deg,#232329,#1d1d21);border-color:#f2f2ee;color:#f2f2ee}
+    .node.dark .ns{color:#a9a9b0}
+    .layer{background:#1d1d21;border-color:#2c2c31}
+    .layer .lv{color:#a9a9b0}
+    .note{color:#a9a9b0}
+    .note .sq{background:#f2f2ee}
+    .tier{border-top-color:#f2f2ee}
+    .tier .nm{color:#7c7c85}
+    .tier .q small{color:#a9a9b0}
+    .tier li{color:#a9a9b0}
+    .tier .qbar{background:#2c2c31}
+    .tier .qbar i{background:#e8e8e2}
+    .tier.dark{background:linear-gradient(180deg,#232329,#1d1d21);color:#f2f2ee;border:1px solid #3a3a40;box-shadow:0 24px 48px rgba(0,0,0,.5)}
+    .tier.dark .nm{color:#a9a9b0}
+    .tier.dark .q{color:#f2f2ee}
+    .tier.dark .q small{color:#a9a9b0}
+    .tier.dark li{color:#a9a9b0}
+    .tier.dark .btn{border-color:#3a3a40}
+    .tier.dark .btn.solid{background:#2e2e34;color:#f2f2ee;border-color:#3a3a40}
+    .tier.dark .btn.solid:hover{background:#2e2e34;border-color:#f2f2ee}
+    .tier.dark .qbar{background:#2c2c31}
+    .tier.dark .qbar i{background:#e8e8e2}
+    .maker p{color:#a9a9b0}
+    .maker .msig{color:#7c7c85}
+    footer{border-top-color:#2c2c31}
+    .frow .l{color:#a9a9b0}
+    .frow .links a{color:#a9a9b0}
+    .frow .links a:hover{color:#f2f2ee}
+    .keatas{background:#2e2e34;border-color:#3a3a40;color:#f2f2ee;box-shadow:0 10px 24px rgba(0,0,0,.5)}
+    .caret{background:#f2f2ee}
+    .card .ic{color:#a9a9b0}
+    .card.feat{background:linear-gradient(180deg,#232329,#1d1d21);border:1px solid #3a3a40;box-shadow:0 20px 44px rgba(0,0,0,.5)}
+    .card.feat .bar{background:#2c2c31}
+    .card.feat .bar i{background:#e8e8e2}
+    .arr span{background:#f2f2ee;color:#131316}
+    .card:hover .ic{color:#f2f2ee}
+    .pa-note{color:#a9a9b0}
+  }
+  /* C24b: putaran kedua — fitur tier jadi grid 2 kolom, padding pita rapat */
+  @media(max-width:760px){
+    .blok h2{font-size:30px}
+    .stats{padding:32px 0 36px}
+    .layer{padding:10px 14px}
+  }
+
+  /* C24: layout hp ringkas — potong scroll tanpa buang isi.
+     Yang dipangkas: ruang kosong antar bagian, path contoh di kartu hp
+     (lengkapnya ada di docs), dan kerapatan ubin. Yang dipertahankan:
+     ikon, angka, batang proporsi, diagram, demo live. */
+  @media(max-width:760px){
+    section.blok{padding-top:56px}
+    .blok .sub2{margin-bottom:28px}
+    .hero{padding-top:56px}
+    .ticker{margin-top:40px}
+    .stats{margin-top:48px}
+    .cards{gap:12px}
+    .card.feat,.card.wide{grid-column:auto}
+    .card{padding:16px 2px 18px}
+    .card .ic{width:24px;height:24px;margin-bottom:8px}
+    .card .nm{font-size:14px}
+    .card .ct{font-size:26px}
+    .card.feat .ct{font-size:26px}
+    .card .bar{margin-top:10px}
+    .card .ex{display:none}
+    .prop{margin-top:36px}
+    .segbar{height:32px}
+    .seglabel{margin-top:8px}
+    .layers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .layer{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 14px}
+    .layer .lv{text-align:left;font-size:12px}
+    .node{min-height:0;padding:16px 12px}
+    .node .nt{font-size:14px}
+    .outc{flex-direction:row;gap:12px}
+    .notes{margin-top:20px}
+    .tiers{gap:24px}
+    .tier{padding-top:20px}
+    .tier.dark{padding-top:20px}
+    .tier .q{font-size:32px}
+    .tier .qbar{margin-top:12px}
+    .tier ul{margin:12px 0 20px}
+    .tier li{padding:5px 0}
+    .band-maker{padding-bottom:48px}
+    footer{margin-top:56px;padding:24px 0 32px}
+  }
+
+  /* C25: tier jadi lajur, bukan tiga menara */
+  .tiers{display:flex;flex-direction:column;gap:0}
+  .tier{display:grid;grid-template-columns:150px 190px 1fr 170px;gap:28px;align-items:center;padding:26px 0;border-top:1px solid var(--line2)}
+  .tier .btn{margin-top:0}
+  .tier ul{margin:0}
+  .tier .qbar{margin-top:10px}
+  .tier.dark{border-top:none;border-radius:20px;padding:26px 28px;margin:14px 0}
+  @media(max-width:900px){
+    .tier{grid-template-columns:1fr;gap:8px}
+  }
+  @media(max-width:760px){
+    .tiers{gap:0}
+    .tier{padding:22px 0}
+    .tier.dark{padding:22px 20px;margin:12px 0}
+    .tier ul{margin:6px 0 16px}
+    .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card.feat{grid-column:1/-1}
+    .card.feat .ct{font-size:32px}
+    .card.feat .ex{display:block}
+    .card .ic{width:22px;height:22px}
+    .card .nm{font-size:13px}
+    .card .ct{font-size:22px}
+    .nav{padding:8px 0 10px}
+    .nav .m a{padding:12px 4px}
+    .nav .logo{padding:8px 0}
+    .nav-login{padding:12px 0}
+    .nav-daftar{padding:12px 18px}
+    section[id]{scroll-margin-top:130px}
+    .frow .links a{padding:12px 0}
+  }
+
+  /* C26: butir halus, label pemakaian, panel menjorok, sorot hidup */
+  body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+  .tier{transition:background .25s ease}
+  .tier .fit{font-size:12px;color:var(--ink3);margin-top:6px}
+  .tier.dark .fit{color:#a9a9b0}
+  .card:hover .ex{color:var(--ink2)}
+  @media (hover:hover){
+    .tier:not(.dark):hover{background:var(--soft)}
+    .tier.dark:hover{transform:translateY(-2px);box-shadow:0 28px 56px rgba(18,18,21,.24)}
+  }
+  .tier.dark{transition:transform .25s ease,box-shadow .25s ease}
+  @media (min-width:1021px){
+    .panel,.panel-actions{margin-left:96px}
+  }
+  @media (prefers-color-scheme: dark){
+    .tier .fit{color:#a9a9b0}
+    .card:hover .ex{color:#c2c2ca}
+  }
+  @media (prefers-reduced-motion: reduce){
+    body::after{display:none}
+  }
+
+
+  /* C28: perbaikan dari audit responsif terukur 2026-10-21 (7 halaman x 6 lebar).
+     - panel demo terpotong di hp: grid item min-width auto membuat kolom kode
+       selebar isi, lalu panel overflow hidden memotongnya. min-width 0 membuat
+       kolom mengecil ke lebar panel dan geser internalnya yang jalan.
+     - header hp menempel tepi: padding .nav menimpa padding .wrap pada elemen
+       yang sama (spesifisitas setara, aturan nav lebih akhir). kembalikan
+       padding header dengan selektor lebih spesifik.
+     - kolom stats timpang di hp kecil: min-width auto membuat kolom angka
+       panjang merebut lebar kolom lain. min-width 0 + clamp menjaga rata.
+     - judul hp 58px di layar 320: tiga baris raksasa, panel terdorong jauh.
+       clamp 44px di hp kecil mengembalikan proporsi.
+     - tombol dan tautan hp di bawah 44px: target sentuh dinaikkan ke 44px.
+     - kartu katalog 3 kolom di hp kecil: nama kategori satu kata meluber dari
+       kartu 82px. 2 kolom di bawah 380px memberi napas.
+     - aksi panel menumpuk di hp kecil: catatan + tombol berdampingan sempit,
+       tombol jadi selebar penuh di bawah catatan. */
+  .p-split>*{min-width:0}
+  .p-tabs{overflow-x:auto}
+  .p-tabs button{flex:none}
+  .stats>*{min-width:0}
+  .khead{isolation:isolate}
+  @media(max-width:760px){
+    header.site .wrap{padding-left:24px;padding-right:24px}
+    h1{font-size:clamp(44px,13vw,58px)}
+    .p-tabs button{padding:16px 14px}
+    .pa-run{padding:13px 28px}
+    .statline a{padding:12px 0}
+    .cta .clink{padding:12px 0}
+    .nav .m a{padding:13px 4px}
+    .nav .logo{padding:12px 0}
+    .stats .s .n{font-size:clamp(26px,8vw,34px)}
+  }
+  @media(max-width:400px){
+    .stats{gap:24px}
+    .panel-actions{flex-direction:column;align-items:stretch}
+    .pa-run{width:100%;text-align:center}
+  }
+  @media(max-width:380px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+
+  @media(max-width:370px){.p-tabs{flex-wrap:wrap}.p-tabs .copy{width:100%;margin-left:0;border-left:none;border-top:1px solid var(--line);text-align:center;padding:14px 14px}}
+  @media(prefers-color-scheme:dark) and (max-width:370px){.p-tabs .copy{border-top-color:#2c2c31}}
+
+  /* VARIAN V2 dokumen premium: satu variabel dari c28, navigasi bagian.
+     Alasan: halaman c28 sepanjang 5200px tanpa penanda posisi, pembaca
+     tersesat di tengah dokumen. V2 menambah rel navigasi bagian yang
+     lengket di desktop dan jadi pil geser di hp, tanpa mengubah isi,
+     copy, token, atau susunan hero. Vonis membandingkan orientasi,
+     bukan isi. */
+  @media(min-width:1021px){
+    .docgrid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px;align-items:start}
+    .docnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px}
+    .docnav a{font-family:var(--mono);font-size:12.5px;padding:10px 12px;color:var(--ink2);border-left:2px solid var(--line);text-decoration:none}
+    .docnav a:hover{color:var(--ink);border-left-color:var(--ink)}
+    .docmain{min-width:0}
+  }
+  @media(max-width:1020px){
+    .docnav{display:flex;gap:8px;overflow-x:auto;padding:2px 0 16px}
+    .docnav a{flex:none;font-family:var(--mono);font-size:12px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;color:var(--ink2);text-decoration:none}
+  }
+  /* Perbaikan bleed: band full viewport di c28 berasumsi section selebar
+     viewport. Di dalam kolom docmain yang bergeser kanan, bleed itu
+     meluber 128px ke kanan dan membuat scroll horizontal desktop.
+     Di sini band dibatasi ke kotak section, bukan viewport. */
+  .docmain .band-soft::before{left:0;right:0}
+  .docmain .band-maker::before{left:0;right:0}
+  @media(prefers-color-scheme:dark){
+    .docnav a{color:#a9a9b0;border-left-color:#2c2c31}
+    .docnav a:hover{color:#f2f2ee;border-left-color:#f2f2ee}
+  }
+  @media(prefers-color-scheme:dark) and (max-width:1020px){
+    .docnav a{border-color:#3a3a40;color:#a9a9b0}
+  }
+
+</style>
+</head>
+<body>
+<!-- C25, keputusan desain dan alasan satu baris:
+- panel tanpa titik lampu: jendela terminal palsu adalah kostum, panel ini alat asli yang jalan live.
+- demo ketik sekali jalan: gerak tanpa henti adalah kebisingan, bukan tujuan.
+- status jadi baris polos di atas judul: titik menandai keadaan nyata tanpa denyut tanpa henti, satu label kecil di hero bukan pil di bawah tombol.
+- tanpa eyebrow di tiap bagian: satu label kecil per tiga bagian, judul dan nomor bayangan sudah cukup.
+- tombol kedua hero jadi tautan teks: dua tombol berdampingan adalah template, tautan tenang mengurangi kebisingan.
+- tier jadi lajur, bukan tiga menara: tiga kolom sama adalah pola bawaan, lajur menaik menceritakan jalur guest ke trusted.
+- katalog hp: tools unggulan penuh ditambah sembilan kategori grid tiga kolom: hierarki dari isi, bukan kartu seragam.
+- font tetap inter dan ibm plex mono: keputusan eksplisit adip 2026-10-20, mengalahkan bawaan skill. -->
+<!-- VARIAN V2 dokumen premium (dari c28, satu variabel: navigasi bagian):
+- rel navigasi bagian lengket di desktop, pil geser di hp, pembaca tidak tersesat di halaman panjang.
+- copy, token, dan susunan hero tidak berubah, jadi vonis membandingkan orientasi, bukan isi. -->
+<!-- C28, keputusan perbaikan dan alasan satu baris:
+- panel demo diperbaiki, bukan dihias: kode yang terpotong di hp adalah visual utama yang rusak, bukan soal selera.
+- header hp diberi padding kembali: logo menempel tepi kiri dan tombol menempel tepi kanan adalah padding yang berantakan, bukan gaya.
+- kolom stats diratakan: angka panjang tidak boleh merebut lebar kolom lain.
+- judul hp dikecilkan: 58px di layar 320 membuat hero tiga baris dan mendorong panel terlalu jauh.
+- target sentuh hp 44px: tautan 20px dan tombol 40px sulit disentuh, dinaikkan tanpa mengubah tampilan desktop.
+- nomor 01 katalog: penomoran editorial 02 dan 03 sudah ada, 01 melengkapinya. -->
+<!-- C27, keputusan poles dan alasan satu baris:
+- hero dan panel dirapatkan: panel produk adalah visual utama, makin cepat terlihat makin cepat dipercaya.
+- kartu katalog punya permukaan saat disorot: daftar garis saja terasa tabel, permukaan lunak terasa produk.
+- kartu tools unggulan jadi gelap: satu jangkar visual memecah katalog yang seragam tanpa warna baru.
+- panah keamanan jadi lingkaran gelap: alur tiga langkah terbaca sebagai urutan, bukan teks mengambang.
+- batang tier lebih tebal dan kartu trusted naik saat disorot: angka kuota adalah isi, bukan hiasan tipis.
+- tanpa foto stok dan tanpa warna baru: visualnya panel live, ticker endpoint asli, dan batang proporsi nyata. -->
+<!-- C26, keputusan poles dan alasan satu baris:
+- butir halus seluruh halaman: permukaan digital yang terlalu rata terasa cetakan, butir tipis membuatnya terasa bahan.
+- label pemakaian di tiap tier: lajur yang hanya angka terasa katalog, satu baris pemakaian memberi rekomendasi seperti penjaga toko.
+- panel hero menjorok di desktop: teks selebar penuh lalu panel menjorok memberi komposisi asimetris editorial, bukan tumpukan simetris.
+- lajur tier berubah saat disorot: permukaan yang merespons sentuhan terasa dibuat tangan, bukan gambar diam.
+- warna tautan contoh kartu ikut menguat saat disorot: detail kecil yang menandakan kartu itu hidup. -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="/"><span class="mark">A</span>Atlys</a>
+    <div class="m">
+      <a href="#katalog">Katalog</a>
+      <a href="#keamanan">Keamanan</a>
+      <a href="#akses">Tingkat Akses</a>
+      <a class="opt" href="https://api.atlys.my.id/docs">Dokumentasi</a>
+    </div>
+    <a class="btn ghost nav-login" href="https://api.atlys.my.id/login">Login</a>
+    <a class="btn solid nav-daftar" href="https://api.atlys.my.id/register">Daftar</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="statline"><span class="dot"></span><a href="https://api.atlys.my.id/status">Live · v0.2.0 operasional penuh</a></div>
+    <h1>Data publik,<br /><span class="grad">satu API.</span></h1>
+    <p class="sub">Berita terkini, konten media sosial, dan utilitas web dalam satu REST API. Satu key, dokumentasi lengkap, gratis.</p>
+    <div class="cta">
+      <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
+      <a class="clink" href="#katalog">Jelajahi Katalog</a>
+    </div>
+  </div>
+
+  <div class="panel" id="panelDemo">
+    <div class="p-tabs" role="tablist" aria-label="Contoh kode">
+      <button class="on" data-tab="curl" role="tab" aria-selected="true">curl</button>
+      <button data-tab="js" role="tab" aria-selected="false">javascript</button>
+      <button data-tab="py" role="tab" aria-selected="false">python</button>
+      <button class="copy" id="copyBtn" type="button">Salin Kode</button>
+    </div>
+    <div class="p-split">
+      <div class="p-code" data-pane="curl"><span class="cm"># Endpoint demo publik, tanpa key</span>
+<span id="typer">curl https://api.atlys.my.id/v1/demo/info/news</span><span class="caret" id="caret" hidden></span></div>
+      <div class="p-code" data-pane="js" hidden><span class="cm">// Endpoint demo publik, tanpa key</span>
+const res = await fetch(
+  <span class="k">"https://api.atlys.my.id/v1/demo/info/news"</span>
+);
+const data = await res.json();
+console.log(data.result.items[0].title);</div>
+      <div class="p-code" data-pane="py" hidden><span class="cm"># Endpoint demo publik, tanpa key</span>
+import requests
+
+r = requests.get(
+    <span class="k">"https://api.atlys.my.id/v1/demo/info/news"</span>
+)
+print(r.json()[<span class="k">"result"</span>][<span class="k">"items"</span>][0][<span class="k">"title"</span>])</div>
+      <div class="p-resp">
+        <div class="rh"><span id="rhLabel">RESPONS</span><span class="ex" id="rhStatus">200 OK · CONTOH</span></div>
+        <pre><span class="rl">{</span>
+<span class="rl">  <span class="k">"status"</span>: <span class="s">"ok"</span>,</span>
+<span class="rl">  <span class="k">"creator"</span>: <span class="s">"Atlys"</span>,</span>
+<span class="rl">  <span class="k">"result"</span>: {</span>
+<span class="rl">    <span class="k">"items"</span>: [</span>
+<span class="rl">      { <span class="k">"id"</span>: <span class="s">"demo-n1"</span>, <span class="k">"source"</span>: <span class="s">"contoh"</span>,</span>
+<span class="rl">        <span class="k">"title"</span>: <span class="s">"Contoh Berita Satu: Judul Ilustratif Untuk Demo"</span>,</span>
+<span class="rl">        <span class="k">"link"</span>: <span class="s">"https://contoh.id/berita/satu"</span> }</span>
+<span class="rl">    ]</span>
+<span class="rl">  },</span>
+<span class="rl">  <span class="k">"meta"</span>: { <span class="k">"demo"</span>: true, <span class="k">"total"</span>: 3 }</span>
+<span class="rl">}</span></pre>
+      </div>
+    </div>
+  </div>
+  <div class="panel-actions">
+    <span class="pa-note">Contoh di atas statis (1 dari 3 item demo). Jalankan untuk respons live lengkap dari endpoint demo, tanpa key.</span>
+    <button class="btn solid pa-run" id="runBtn" type="button">Jalankan</button>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><div class="ttrack"><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span><span>/v1/tools/base64/encode&nbsp;&nbsp;·&nbsp;&nbsp;/v1/math/prima/cek/97&nbsp;&nbsp;·&nbsp;&nbsp;/v1/data/kodepos/kecamatan/gambir&nbsp;&nbsp;·&nbsp;&nbsp;/v1/indonesia/hari-libur/2026&nbsp;&nbsp;·&nbsp;&nbsp;/v1/validasi/nik&nbsp;&nbsp;·&nbsp;&nbsp;/v1/fun/pantun/acak&nbsp;&nbsp;·&nbsp;&nbsp;/v1/info/cuaca/jakarta&nbsp;&nbsp;·&nbsp;&nbsp;/v1/generator/uuid&nbsp;&nbsp;·&nbsp;&nbsp;/v1/ragam/kbbi/halo&nbsp;&nbsp;·&nbsp;&nbsp;/v1/game/tebak-angka&nbsp;&nbsp;·&nbsp;&nbsp;</span></div></div>
+
+  <div class="stats band-dark">
+    <div class="s"><div class="n" data-count="100000" data-prefix="±">±100.000</div><div class="l">Total endpoint</div></div>
+    <div class="s"><div class="n" data-count="4100">4.100</div><div class="l">Endpoint komputasi</div></div>
+    <div class="s"><div class="n" data-count="95900" data-prefix="±">±95.900</div><div class="l">Endpoint data wilayah</div></div>
+    <div class="s"><div class="n">Rp0</div><div class="l">Biaya penggunaan</div></div>
+  </div>
+
+  <div class="docgrid"><nav class="docnav" aria-label="Bagian halaman"><a href="#katalog">01 katalog</a><a href="#keamanan">02 keamanan</a><a href="#akses">03 tingkat akses</a><a href="#pembuat">pembuat</a></nav><div class="docmain">
+  <section class="blok rv band-soft" id="katalog">
+    <div class="kgrid">
+      <div class="khead"><span class="bignum" aria-hidden="true">01</span>
+        <h2>Katalog Endpoint</h2>
+        <p class="sub2">4.100 endpoint komputasi dalam sepuluh kategori, satu pola path: /v1/{kategori}/{endpoint}.</p>
+      </div>
+      <div class="cards">
+      <a class="card feat" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><circle cx="9" cy="6" r="2"/><path d="M4 12h16"/><circle cx="15" cy="12" r="2"/><path d="M4 18h16"/><circle cx="8" cy="18" r="2"/></svg></span><div class="nm">Tools</div><div class="ct" data-count="1319">1.319</div><div class="bar"><i style="width:100%"></i></div><div class="ex">/v1/tools/base64/encode</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14"/><path d="M9 13h.01M15 13h.01M9 17h.01M15 17h.01" stroke-width="2.5"/></svg></span><div class="nm">Math</div><div class="ct" data-count="777">777</div><div class="bar"><i style="width:59%"></i></div><div class="ex">/v1/math/prima/cek/97</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div class="nm">Indonesia</div><div class="ct" data-count="648">648</div><div class="bar"><i style="width:49%"></i></div><div class="ex">/v1/indonesia/hari-libur/2026</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 11.5l2 2 4-4"/></svg></span><div class="nm">Validasi</div><div class="ct" data-count="390">390</div><div class="bar"><i style="width:30%"></i></div><div class="ex">/v1/validasi/nik/...</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14c1 1.5 2.5 2 3.5 2s2.5-.5 3.5-2"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.5"/></svg></span><div class="nm">Fun</div><div class="ct" data-count="255">255</div><div class="bar"><i style="width:19%"></i></div><div class="ex">/v1/fun/pantun/acak</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><div class="nm">Data</div><div class="ct" data-count="196">196</div><div class="bar"><i style="width:15%"></i></div><div class="ex">/v1/data/kodepos/kecamatan/gambir</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7h.01" stroke-width="2.5"/></svg></span><div class="nm">Info</div><div class="ct" data-count="161">161</div><div class="bar"><i style="width:12%"></i></div><div class="ex">/v1/info/cuaca/jakarta</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h.01M15 9h.01M12 12h.01M9 15h.01M15 15h.01" stroke-width="2.5"/></svg></span><div class="nm">Generator</div><div class="ct" data-count="142">142</div><div class="bar"><i style="width:11%"></i></div><div class="ex">/v1/generator/uuid</div></a>
+      <a class="card" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5C10 3.5 7 3 4 3v16c3 0 6 .5 8 2 2-1.5 5-2 8-2V3c-3 0-6 .5-8 2z"/><path d="M12 5v16"/></svg></span><div class="nm">Ragam</div><div class="ct" data-count="84">84</div><div class="bar"><i style="width:6%"></i></div><div class="ex">/v1/ragam/kbbi/halo</div></a>
+      <a class="card wide" href="https://api.atlys.my.id/docs"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10a5 5 0 0 1 5 5c0 2.5-2 4-4.5 4-1.5 0-2.5-.6-3.5-2h-4c-1 1.4-2 2-3.5 2C4 16 2 14.5 2 12a5 5 0 0 1 5-5z"/><path d="M7 10v4M5 12h4"/><path d="M16 11h.01M18 13h.01" stroke-width="2.5"/></svg></span><div class="nm">Game</div><div class="ct" data-count="20">20</div><div class="bar"><i style="width:2%"></i></div><div class="ex">/v1/game/tebak-angka</div></a>
+      </div>
+    </div>
+
+    <div class="prop">
+      <div class="ph"><span class="t">Endpoint Data Wilayah Indonesia</span><span class="n">±95.900</span></div>
+      <div class="segbar"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
+      <div class="seglabel">
+        <div class="l1"><b>79.999 endpoint</b>Kodepos per kelurahan</div>
+        <div class="l2"><b>6.890 endpoint</b>Kodepos per kecamatan</div>
+        <div class="l3"><b>9.011 endpoint</b>Endpoint wilayah lainnya</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok rv" id="keamanan">
+    <div class="hwrap"><span class="bignum" aria-hidden="true">02</span>
+      <h2>Keamanan</h2>
+      <p class="sub2">Setiap pendaftaran melewati enam lapis pemeriksaan otomatis, lalu ditinjau admin, sebelum key diterbitkan.</p>
+    </div>
+    <div class="pipe">
+      <div class="pcol">
+        <div class="cap">PENDAFTARAN</div>
+        <div class="node grow1">
+          <div><div class="nt">Request Masuk</div><div class="ns">Dari halaman /invite:<br />nama, email, keperluan</div></div>
+        </div>
+      </div>
+      <div class="arr"><span>→</span></div>
+      <div class="pcol">
+        <div class="cap">ENAM LAPIS PEMERIKSAAN OTOMATIS</div>
+        <div class="layers">
+          <div class="layer"><span class="lk">POW CAPTCHA</span><span class="lv">Difficulty 4, naik ke 5 untuk IP abusif</span></div>
+          <div class="layer"><span class="lk">EMAIL</span><span class="lv">±2.000 domain sekali pakai ditolak, verifikasi MX</span></div>
+          <div class="layer"><span class="lk">BRUTE FORCE</span><span class="lv">20 percobaan per menit, IP dikunci 5 menit</span></div>
+          <div class="layer"><span class="lk">SSRF GUARD</span><span class="lv">8 lapis pemeriksaan pada setiap URL</span></div>
+          <div class="layer"><span class="lk">TANDA TANGAN</span><span class="lv">HMAC-SHA256 per key, toleransi replay 5 menit</span></div>
+          <div class="layer"><span class="lk">AUDIT</span><span class="lv">Log rantai hash, perubahan terdeteksi</span></div>
+        </div>
+      </div>
+      <div class="arr"><span>→</span></div>
+      <div class="pcol">
+        <div class="cap">KEPUTUSAN ADMIN</div>
+        <div class="outc">
+          <div class="node dark grow2"><div><div class="nt">Key Diterbitkan</div><div class="ns">Setelah peninjauan manual</div></div></div>
+          <div class="node grow3"><div><div class="nt">Ditolak</div><div class="ns">Tanpa key, tanpa akses</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note"><span class="sq"></span>API key hanya ditampilkan satu kali, saat diterbitkan. Sesudah itu sistem hanya menyimpan hash-nya.</div>
+      <div class="note"><span class="sq"></span>Key yang bocor dicabut dari panel admin dan berhenti berlaku pada saat itu juga.</div>
+    </div>
+  </section>
+
+  <section class="blok rv" id="akses">
+    <div class="hwrap"><span class="bignum" aria-hidden="true">03</span>
+      <h2>Tingkat Akses</h2>
+      <p class="sub2">Seluruh tingkat gratis. Perbedaannya hanya pada batas pemakaian.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tname"><div class="nm">GUEST</div><div class="fit">mencoba tanpa daftar</div></div>
+        <div class="qq"><div class="q">20<small> request/hari</small></div><div class="qbar"><i style="width:2%"></i></div></div>
+        <ul>
+          <li>5 request per menit per alamat IP.</li>
+          <li>Endpoint demo publik, tanpa pendaftaran.</li>
+        </ul>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Coba Endpoint Demo</a>
+      </div>
+      <div class="tier dark">
+        <div class="tname"><div class="nm">FREE</div><div class="fit">pemakaian harian</div></div>
+        <div class="qq"><div class="q">200<small> request/hari</small></div><div class="qbar"><i style="width:20%"></i></div></div>
+        <ul>
+          <li>10 request per menit per key.</li>
+          <li>Seluruh 4.100 endpoint komputasi.</li>
+          <li>Kode undangan dan peninjauan manual.</li>
+        </ul>
+        <a class="btn solid" href="https://api.atlys.my.id/register">Minta API Key</a>
+      </div>
+      <div class="tier">
+        <div class="tname"><div class="nm">TRUSTED</div><div class="fit">proyek produksi</div></div>
+        <div class="qq"><div class="q">1.000<small> request/hari</small></div><div class="qbar"><i style="width:100%"></i></div></div>
+        <ul>
+          <li>30 request per menit per key.</li>
+          <li>Seluruh 4.100 endpoint komputasi.</li>
+          <li>Undangan admin, proyek terverifikasi.</li>
+        </ul>
+        <a class="btn ghost" href="https://api.atlys.my.id/docs">Baca Ketentuan</a>
+      </div>
+    </div>
+  </section>
+  <section class="blok rv maker band-maker" id="pembuat">
+    <div class="mgrid">
+      <h2 class="mh">Dibangun dan dirawat oleh developer independen.</h2>
+      <div>
+        <p>Atlys dirancang, dibangun, dan dirawat secara mandiri dari Indonesia, tanpa tim besar dan tanpa pendanaan dari luar. Prinsipnya sederhana: data yang memang publik seharusnya mudah diakses, terdokumentasi dengan baik, dan gratis. Seluruh infrastruktur layanan ini berjalan di free tier dan dirawat setiap hari.</p>
+        <p class="msig">Adip, Pengelola Atlys · adipmusic.my.id</p>
+      </div>
+    </div>
+  </section>
+</div></div>
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <span class="l">© 2026 Atlys · Data publik, satu API.</span>
+    <div class="links">
+      <a href="https://api.atlys.my.id/login">Login</a>
+      <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
+      <a href="https://api.atlys.my.id/status">Status</a>
+      <a href="https://api.atlys.my.id/changelog">Changelog</a>
+      <a href="https://api.atlys.my.id/privacy">Privasi</a>
+      <a href="https://api.atlys.my.id/tos">Ketentuan</a>
+    </div>
+  </div>
+</footer>
+
+<button class="keatas" id="keAtas" type="button" aria-label="Kembali ke atas">↑</button>
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.p-tabs [data-tab]');
+    var panes = document.querySelectorAll('[data-pane]');
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        tabs.forEach(function (b) { b.classList.remove('on'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('on'); btn.setAttribute('aria-selected', 'true');
+        panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== btn.getAttribute('data-tab'); });
+      });
+    });
+    var copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var active = document.querySelector('[data-pane]:not([hidden])');
+        if (!active) return;
+        function selesai() {
+          copyBtn.textContent = 'Tersalin';
+          setTimeout(function () { copyBtn.textContent = 'Salin Kode'; }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(active.innerText).then(selesai).catch(selesai);
+        } else { selesai(); }
+      });
+    }
+    var els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); }
+    else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.06 });
+      els.forEach(function (e) { io.observe(e); });
+      setTimeout(function () { els.forEach(function (e) { e.classList.add('in'); }); }, 3500);
+    }
+
+    /* tombol kembali ke atas */
+    var tombolAtas = document.getElementById('keAtas');
+    if (tombolAtas) {
+      var kurangi = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.addEventListener('scroll', function () {
+        tombolAtas.classList.toggle('muncul', window.scrollY > 700);
+      }, { passive: true });
+      tombolAtas.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: kurangi ? 'auto' : 'smooth' });
+      });
+    }
+
+    /* ===== motion graphics ===== */
+    document.body.classList.add('js');
+    var kurangiGerak = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (kurangiGerak || !('IntersectionObserver' in window)) return;
+
+    function formatID(n) { return n.toLocaleString('id-ID'); }
+
+    /* angka menghitung naik saat terlihat */
+    var sudahHitung = new WeakSet();
+    function hitungNaik(el) {
+      if (sudahHitung.has(el)) return; sudahHitung.add(el);
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var prefix = el.getAttribute('data-prefix') || '';
+      var durasi = 1600, mulai = null;
+      function langkah(ts) {
+        if (!mulai) mulai = ts;
+        var p = Math.min((ts - mulai) / durasi, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + formatID(Math.round(target * ease));
+        if (p < 1) requestAnimationFrame(langkah);
+      }
+      requestAnimationFrame(langkah);
+    }
+    var ioHitung = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { hitungNaik(en.target); ioHitung.unobserve(en.target); } });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { ioHitung.observe(el); });
+
+    /* batang proporsi tumbuh saat terlihat */
+    var prop = document.querySelector('.prop');
+    if (prop) {
+      var ioProp = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { prop.classList.add('in'); ioProp.disconnect(); } });
+      }, { threshold: 0.35 });
+      ioProp.observe(prop);
+    }
+
+    /* panel demo: request diketik sendiri, respons muncul baris demi baris, lalu berulang.
+       interaksi apa pun dari pengguna menghentikan demo secara permanen. */
+    var panel = document.getElementById('panelDemo');
+    var typer = document.getElementById('typer');
+    var caret = document.getElementById('caret');
+    if (panel && typer) {
+      var snapshotHTML = typer.innerHTML;
+      var teksPenuh = typer.textContent;
+      var baris = panel.querySelectorAll('.p-resp pre .rl');
+      var timerDemo = [];
+      var demoAktif = false;
+      var demoMati = false;
+      function jadwal(fn, t) { timerDemo.push(setTimeout(fn, t)); }
+      function hentikanDemo() {
+        demoMati = true;
+        if (!demoAktif) return;
+        demoAktif = false;
+        timerDemo.forEach(clearTimeout); timerDemo = [];
+        panel.classList.remove('demo-on');
+        typer.innerHTML = snapshotHTML;
+        if (caret) caret.hidden = true;
+        baris.forEach(function (l) { l.classList.add('show'); });
+      }
+      document.querySelectorAll('.p-tabs button').forEach(function (b) {
+        b.addEventListener('click', hentikanDemo);
+      });
+      function putaran() {
+        if (!demoAktif) return;
+        panel.classList.add('demo-on');
+        baris.forEach(function (l) { l.classList.remove('show'); });
+        typer.textContent = '';
+        if (caret) caret.hidden = false;
+        var i = 0;
+        (function ketik() {
+          if (!demoAktif) return;
+          i++;
+          typer.textContent = teksPenuh.slice(0, i);
+          if (i < teksPenuh.length) { jadwal(ketik, 30); return; }
+          jadwal(function () {
+            if (!demoAktif) return;
+            typer.innerHTML = snapshotHTML;
+            if (caret) caret.hidden = true;
+            baris.forEach(function (l, idx) { jadwal(function () { l.classList.add('show'); }, idx * 130); });
+          }, 550);
+        })();
+      }
+      function mulaiDemo() {
+        if (demoMati || demoAktif) return;
+        demoAktif = true; putaran(); ioPanel.disconnect();
+      }
+      var ioPanel = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) mulaiDemo(); });
+      }, { threshold: 0.12 });
+      ioPanel.observe(panel);
+      setTimeout(function () {
+        var r = panel.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) mulaiDemo();
+      }, 3000);
+
+      /* tombol jalankan: panggil endpoint demo live (tanpa key).
+         konten api dirender sebagai teks murni, bukan html, supaya aman. */
+      var runBtn = document.getElementById('runBtn');
+      if (runBtn) {
+        runBtn.addEventListener('click', async function () {
+          hentikanDemo();
+          var pre = panel.querySelector('.p-resp pre');
+          var rhLabel = document.getElementById('rhLabel');
+          var rhStatus = document.getElementById('rhStatus');
+          runBtn.disabled = true; runBtn.textContent = 'Memanggil…';
+          var mulai = performance.now();
+          try {
+            var res = await fetch('https://api.atlys.my.id/v1/demo/info/news');
+            var ms = Math.round(performance.now() - mulai);
+            var data = await res.json();
+            if (!res.ok) {
+              pre.textContent = 'Endpoint demo menolak permintaan (HTTP ' + res.status + '). Coba lagi nanti.';
+              if (rhLabel) rhLabel.textContent = 'RESPONS';
+              if (rhStatus) { rhStatus.className = 'err'; rhStatus.textContent = 'GAGAL ' + res.status; }
+            } else {
+              var teks = JSON.stringify(data, null, 2);
+              if (teks.length > 4000) teks = teks.slice(0, 4000) + '\n… (dipotong)';
+              pre.textContent = teks;
+              if (rhLabel) rhLabel.textContent = 'RESPONS · LIVE';
+              if (rhStatus) { rhStatus.className = 'ok'; rhStatus.textContent = '200 OK · ' + ms + ' ms'; }
+            }
+          } catch (e) {
+            pre.textContent = 'Gagal memanggil endpoint demo. Periksa koneksi lalu coba lagi.';
+            if (rhLabel) rhLabel.textContent = 'RESPONS';
+            if (rhStatus) { rhStatus.className = 'err'; rhStatus.textContent = 'GAGAL'; }
+          }
+          runBtn.disabled = false; runBtn.textContent = 'Jalankan';
+        });
+      }
+    }
+  })();
+</script>
+</body>
+</html>
