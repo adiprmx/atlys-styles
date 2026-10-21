@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -118,7 +118,7 @@
       <a href="https://api.atlys.my.id/docs">Dokumentasi</a>
       <a href="#tentang">Tentang</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" type="button">Gelap</button>
+    <button class="theme-btn" id="themeBtn" type="button">Terang</button>
   </div>
 </header>
 
@@ -252,7 +252,7 @@
     var root = document.documentElement;
     var saved = null;
     try { saved = localStorage.getItem('kb-theme'); } catch (e) {}
-    if (saved === 'dark') { root.classList.add('dark'); btn.textContent = 'Terang'; }
+    if (saved === 'light') { root.classList.remove('dark'); btn.textContent = 'Gelap'; }
     btn.addEventListener('click', function () {
       var dark = root.classList.toggle('dark');
       btn.textContent = dark ? 'Terang' : 'Gelap';
