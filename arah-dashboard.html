@@ -52,28 +52,36 @@ section[id]{scroll-margin-top:76px}
 .menu-panel a{display:block;min-height:44px;line-height:44px;color:var(--text);font-size:15px;font-weight:600;border-bottom:1px solid var(--border)}
 .menu-panel a:last-child{border-bottom:0}
 .menu-panel button{width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;font-weight:600;min-height:44px;padding:0}
-.head{padding:44px 0 20px}
+.head{padding:48px 0 16px}
 h1{margin:0;font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
 .h1-acc{color:var(--accent)}
 .sub{margin:14px 0 0;max-width:64ch;font-size:17px;color:var(--muted)}
-.cta-row{display:flex;gap:20px;align-items:center;margin-top:20px;flex-wrap:wrap}
-.stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0 14px;margin-top:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cta-row{display:flex;gap:16px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 0 16px;margin-top:24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .stat{padding:0 16px;border-left:1px solid var(--border)}
 .stat:first-child{padding-left:0;border-left:0}
 .stat .num{font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.1;font-variant-numeric:tabular-nums;min-height:1.2em}
+.stat:first-child .num{font-size:clamp(2rem,5vw,3rem)}
 #statEp.ok{color:var(--accent-deep)}
 .stat .lbl{color:var(--muted);font-size:13px;margin-top:2px}
-.update{grid-column:1/-1;margin:4px 0 0;color:var(--muted);font-size:13px}
-.panel{margin-top:28px;border:1px solid var(--border);border-radius:16px;background:var(--bg);box-shadow:var(--shadow);overflow:hidden}
-.panel-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:18px 20px 0}
+.update{grid-column:1/-1;margin:8px 0 0;color:var(--muted);font-size:13px}
+.panel{margin-top:32px;border:1px solid var(--border);border-radius:16px;background:var(--bg);box-shadow:var(--shadow);overflow:hidden}
+#koleksi{margin-top:40px;background:var(--tint);border-color:transparent}
+#koleksi .donut-wrap{background:var(--bg)}
+#koleksi .chip{background:var(--bg)}
+#koleksi .badge{background:var(--bg)}
+#koleksi .row:hover{background:var(--bg)}
+#koleksi .row.flag{background:var(--surface)}
+#koleksi .row.flag .slug,#koleksi .row.flag .cnt{font-weight:800}
+.panel-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:16px 20px 0}
 .panel-head h2{margin:0;font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,1.9rem);line-height:1.15;letter-spacing:-.02em}
 .panel-sub{margin:6px 0 0;color:var(--muted);font-size:14px;max-width:62ch}
 .badge{flex:none;min-height:32px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:13px;font-weight:600}
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding:16px 20px 0}
 .chip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:14px;font-weight:600}
 .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.count-line{margin:12px 20px 0;color:var(--muted);font-size:13px}
-.explorer{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;padding:20px}
+.count-line{margin:16px 20px 0;color:var(--muted);font-size:13px}
+.explorer{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;padding:24px 20px}
 .donut-wrap{text-align:center;background:var(--tint);border-radius:14px;padding:16px;align-self:start}
 .donut-wrap svg{width:120px;height:120px;transform:rotate(-90deg)}
 .donut-wrap .bg{fill:none;stroke:var(--surface2);stroke-width:12}
@@ -105,17 +113,18 @@ h1{margin:0;font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;fon
 .resp-status{font-family:"IBM Plex Mono",monospace}
 .copy-btn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #334155;background:transparent;color:#dbe4f0;font-size:14px;font-weight:600}
 .copy-btn:hover{background:#1e293b;color:#fff}
-.note{margin:14px 20px 20px;color:#94a3b8;font-size:13px}
-.tiers{margin-top:28px}
-.tiers h2{margin:0 0 16px;font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-.02em}
-.tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.note{margin:16px 20px 20px;color:#94a3b8;font-size:13px}
+.tiers{margin-top:48px}
+.tiers h2{margin:0 0 8px;font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-.02em}
+.tier-sub{margin:0 0 20px;color:var(--muted);font-size:15px;max-width:62ch}
+.tier-grid{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:16px}
 .tier{border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
 .tier.featured{border:2px solid var(--accent);background:var(--tint);box-shadow:var(--shadow)}
 .tier h3{margin:0;font-size:18px;font-weight:800}
 .tier ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:6px}
 .tier .cta{margin-top:auto}
 .tier .cta .btn-primary,.tier .cta .btn-outline,.tier .cta .btn-text{width:100%}
-footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
+footer{margin-top:40px;border-top:1px solid var(--border);padding:24px 0 40px}
 .foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:24px}
 .foot-brand p{color:var(--muted);font-size:14px;margin:8px 0 0;max-width:36ch}
 .foot-grid h3{margin:0 0 10px;font-size:14px}
@@ -173,8 +182,8 @@ footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
     <span class="live" id="livePill" aria-live="polite"><span class="dot" id="liveDot"></span><span id="liveText">Memuat status</span></span>
     <nav class="top-links" aria-label="Navigasi utama">
       <a href="#konsol">Konsol</a>
-      <a href="#koleksi">Koleksi</a>
       <a href="#demo">Demo</a>
+      <a href="#koleksi">Koleksi</a>
       <a href="#tier">Tier</a>
       <a href="https://api.atlys.my.id/login">Masuk</a>
     </nav>
@@ -187,8 +196,8 @@ footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
   </div>
   <div class="menu-panel" id="menuPanel">
     <a href="#konsol">Konsol</a>
-    <a href="#koleksi">Koleksi</a>
     <a href="#demo">Demo</a>
+    <a href="#koleksi">Koleksi</a>
     <a href="#tier">Tier</a>
     <a href="https://api.atlys.my.id/login">Masuk</a>
     <a href="https://api.atlys.my.id/invite">Minta API Key</a>
@@ -211,6 +220,25 @@ footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
     <div class="stat"><div class="num" data-count="257830">0</div><div class="lbl">Item</div></div>
     <div class="stat"><div class="num">Tiap jam</div><div class="lbl">Pembaruan</div></div>
     <p class="update" id="updateLine">Pembaruan terakhir: memuat</p>
+  </section>
+
+  <section class="panel dark" id="demo" data-reveal>
+    <div class="panel-head">
+      <div>
+        <h2>Konsol demo</h2>
+        <p class="panel-sub">Coba endpoint demo publik ini. Kode di bawah bisa Anda salin dan jalankan sendiri, dan responsnya jawaban nyata dari server.</p>
+      </div>
+      <button class="copy-btn" id="copyBtn">Salin</button>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Bahasa contoh">
+      <button class="tab active" data-tab="curl">curl</button>
+      <button class="tab" data-tab="python">Python</button>
+      <button class="tab" data-tab="js">JavaScript</button>
+    </div>
+    <pre class="code" id="reqCode"></pre>
+    <div class="resp-head"><span>Respons</span><span class="resp-status" id="respStatus" aria-live="polite">Memuat</span></div>
+    <pre class="code" id="respCode">Memuat respons demo</pre>
+    <p class="note">Respons di bawah dipangkas supaya ringkas. Ini data demo, bukan data asli. Data asli terbuka setelah Anda masuk dan memakai API key.</p>
   </section>
 
   <section class="panel" id="koleksi" data-reveal>
@@ -240,7 +268,7 @@ footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
         <p class="donut-cap">28.174 dari 257.830 item katalog ada di 6 koleksi unggulan ini.</p>
       </div>
       <div class="rows" id="rows">
-        <div class="row" data-cat="Obat"><span class="slug">bpom-produk</span><span class="tag">Obat</span><div class="bar"><i style="--w:100%"></i></div><span class="cnt">24.599</span></div>
+        <div class="row flag" data-cat="Obat"><span class="slug">bpom-produk</span><span class="tag">Obat</span><div class="bar"><i style="--w:100%"></i></div><span class="cnt">24.599</span></div>
         <div class="row" data-cat="Rumah sakit"><span class="slug">siranap-tt</span><span class="tag">Rumah sakit</span><div class="bar"><i style="--w:14%"></i></div><span class="cnt">3.433</span></div>
         <div class="row" data-cat="Transportasi"><span class="slug">krl-stasiun</span><span class="tag">Transportasi</span><div class="bar"><i style="--w:2%"></i></div><span class="cnt">110</span></div>
         <div class="row" data-cat="Transportasi"><span class="slug">mrt-jakarta</span><span class="tag">Transportasi</span><div class="bar"><i style="--w:2%"></i></div><span class="cnt">13</span></div>
@@ -250,27 +278,9 @@ footer{margin-top:28px;border-top:1px solid var(--border);padding:24px 0 40px}
     </div>
   </section>
 
-  <section class="panel dark" id="demo" data-reveal>
-    <div class="panel-head">
-      <div>
-        <h2>Konsol demo</h2>
-        <p class="panel-sub">Coba endpoint demo publik ini. Kode di bawah bisa Anda salin dan jalankan sendiri, dan responsnya jawaban nyata dari server.</p>
-      </div>
-      <button class="copy-btn" id="copyBtn">Salin</button>
-    </div>
-    <div class="tabs" role="tablist" aria-label="Bahasa contoh">
-      <button class="tab active" data-tab="curl">curl</button>
-      <button class="tab" data-tab="python">Python</button>
-      <button class="tab" data-tab="js">JavaScript</button>
-    </div>
-    <pre class="code" id="reqCode"></pre>
-    <div class="resp-head"><span>Respons</span><span class="resp-status" id="respStatus">Memuat</span></div>
-    <pre class="code" id="respCode">Memuat respons demo</pre>
-    <p class="note">Respons di bawah dipangkas supaya ringkas. Ini data demo, bukan data asli. Data asli terbuka setelah Anda masuk dan memakai API key.</p>
-  </section>
-
   <section class="tiers" id="tier" data-reveal>
     <h2>Tier</h2>
+    <p class="tier-sub">Guest jalan tanpa API key. Free dan Trusted memakai API key dengan kuota lebih besar.</p>
     <div class="tier-grid">
       <article class="tier">
         <h3>Guest</h3>
