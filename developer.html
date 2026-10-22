@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Atlys API, data publik, satu API</title>
+<meta name="description" content="REST API untuk data publik, hasil scrape otomatis tiap jam, gratis, tanpa kartu kredit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0e12; --surface:#13161c; --surface2:#1a1e26; --ink:#e8e8e6; --muted:#9a9aa0;
+  --line:#23262e; --accent:#6ee7b7; --accent-ink:#0c0e12;
+  --head-bg:rgba(12,14,18,.9);
+}
+[data-theme="light"]{
+  --bg:#f4f4f2; --surface:#ffffff; --surface2:#ecece8; --ink:#101014; --muted:#5a5a60;
+  --line:#e2e2de; --accent:#0e7a5c; --accent-ink:#ffffff;
+  --head-bg:rgba(244,244,242,.9);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--bg);padding:12px 16px;z-index:100}
+.skip:focus{left:16px;top:16px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header.site{position:sticky;top:0;z-index:50;background:var(--head-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:8px;min-height:64px;flex-wrap:wrap}
+.brand{font-weight:700;font-size:16px;color:var(--ink);text-decoration:none;padding:12px 0;font-family:'IBM Plex Mono',monospace}
+.brand:hover{text-decoration:none}
+.nav .m{margin-left:auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav-link{font-weight:600;font-size:15px;color:var(--ink);text-decoration:none;padding:12px 12px;min-height:44px;display:inline-flex;align-items:center;border-radius:8px}
+.nav-link:hover{background:var(--surface2);text-decoration:none}
+.theme-btn{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;min-height:44px;cursor:pointer}
+section{padding:64px 0}
+h1{font-size:clamp(2.25rem,5vw,3.5rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 16px}
+h2{font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:.02em;margin:0 0 16px;color:var(--ink)}
+h2 span{color:var(--accent)}
+.sub{font-size:18px;color:var(--muted);margin:0 0 28px;max-width:56ch}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:start}
+.cta-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:12px 22px;border-radius:8px;font-weight:700;font-size:15px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:transform .12s ease}
+.btn:hover{transform:translateY(-1px);text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.55;cursor:wait}
+.tlink{padding:12px 4px;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.console{background:#0a0c10;color:#e8e8e6;border:1px solid #23262e;border-radius:8px;padding:24px}
+.console .req{font-family:'IBM Plex Mono',monospace;font-size:14px;color:#6ee7b7;overflow-wrap:anywhere;margin:0}
+.console .note{color:#9a9aa0;font-size:14px}
+.console label{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9a9aa0;margin:16px 0 6px}
+.console input{display:block;width:100%;max-width:480px;padding:12px 14px;border:1px solid #2c2f38;border-radius:8px;background:#13161c;color:#e8e8e6;font-size:15px;box-sizing:border-box;min-height:44px;font-family:inherit}
+.pstatus{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:#9a9aa0;margin:16px 0 0}
+.out{font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;background:#060708;border:1px solid #23262e;border-radius:8px;padding:16px;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;min-height:96px;margin:12px 0;color:#e8e8e6}
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;font-family:'IBM Plex Mono',monospace;font-size:14px}
+.strip .num{color:var(--accent);font-weight:600;font-size:18px}
+.strip .src{color:var(--muted);font-size:13px}
+.defrow{padding:18px 0;border-bottom:1px solid var(--line)}
+.defrow:first-of-type{border-top:1px solid var(--line)}
+.defrow p{margin:4px 0 0;color:var(--muted)}
+.defrow p b{color:var(--ink)}
+.flowp p{padding:16px 0;border-bottom:1px solid var(--line);margin:0}
+.flowp p:first-of-type{border-top:1px solid var(--line)}
+.flowp p b{color:var(--ink)}
+.specline{display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:14px}
+.specline:first-of-type{border-top:1px solid var(--line)}
+.specline .sname{font-weight:600;color:var(--accent)}
+.specline p{margin:0;font-family:'Inter',system-ui,sans-serif;color:var(--muted)}
+.collrow{padding:14px 0;border-bottom:1px solid var(--line)}
+.collrow:first-of-type{border-top:1px solid var(--line)}
+.collrow .path{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--accent)}
+.collrow p{margin:2px 0 0;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 0 44px}
+footer .flinks{display:flex;gap:20px;flex-wrap:wrap}
+footer .flinks a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;padding:12px 0;min-height:44px;display:inline-flex;align-items:center}
+footer .flinks a:hover{color:var(--ink)}
+footer p{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);margin:16px 0 0}
+@media(max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .specline{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  section{padding:40px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<script>
+(function(){try{var q=new URLSearchParams(location.search).get('theme');var s=null;try{s=localStorage.getItem('atlys-theme')}catch(e){}var t=(q==='dark'||q==='light')?q:((s==='dark'||s==='light')?s:'dark');document.documentElement.setAttribute('data-theme',t)}catch(e){document.documentElement.setAttribute('data-theme','dark')}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi</a>
+<header class="site"><div class="wrap"><nav class="nav" aria-label="Navigasi utama">
+<a class="brand" href="https://api.atlys.my.id/">atlys api</a>
+<div class="m">
+<a class="nav-link" href="https://api.atlys.my.id/docs">Dokumentasi</a>
+<a class="nav-link" href="https://api.atlys.my.id/invite">Minta API Key</a>
+<button id="themeToggle" class="theme-btn" type="button" aria-label="Ganti tema"><span id="themeLabel">Gelap</span></button>
+</div></nav></div></header>
+<main id="isi">
+<section><div class="wrap"><div class="hero">
+<div>
+<h1>Data publik, satu API.</h1>
+<p class="sub">REST API untuk data publik, hasil scrape otomatis tiap jam, gratis, tanpa kartu kredit.</p>
+<div class="cta-row">
+<a class="btn" href="https://api.atlys.my.id/invite">Minta API Key</a>
+<a class="tlink" href="#demo">Lihat demo</a>
+</div>
+</div>
+<div class="console" id="demo">
+<p class="req" id="d_req">GET /v1/demo/info/news?limit=2</p>
+<p class="note">Ini data demo, bukan data asli. Data asli tersedia setelah Anda masuk dan memakai API key.</p>
+<label for="d_limit">limit</label>
+<input id="d_limit" type="number" value="2" min="1" max="5">
+<p><button class="btn" id="d_run" type="button">Jalankan demo</button>
+<a class="tlink" href="https://api.atlys.my.id/login" style="color:#6ee7b7">Coba data asli</a></p>
+<div class="pstatus" id="d_st" aria-live="polite"></div>
+<pre class="out" id="d_out">Klik jalankan demo untuk melihat respons.</pre>
+</div>
+</div></div></section>
+<section style="padding-top:0"><div class="wrap"><div class="strip">
+endpoint aktif: <span class="num" id="st_ep">memuat...</span><br>
+<span class="src">Angka ini diambil langsung dari /status setiap kali halaman dibuka.</span>
+</div></div></section>
+<section><div class="wrap">
+<h2><span>01</span> Apa yang Anda pakai</h2>
+<div>
+<div class="defrow"><p><b>Satu key untuk semua endpoint.</b> Semua endpoint versi 1 mengikuti pola /v1/&lt;kategori&gt;/&lt;endpoint&gt;. Anda mengirim header x-api-key di setiap request, dan setiap respons sukses memakai amplop yang sama: status, creator, result, dan meta.</p></div>
+<div class="defrow"><p><b>Data diambil dari sumber publik.</b> Atlys mengumpulkan data dari sumber publik dan memperbaruinya tiap jam. Anda tidak perlu membangun scraper sendiri untuk data yang sama.</p></div>
+<div class="defrow"><p><b>Gratis, tanpa kartu kredit.</b> Tier guest berjalan tanpa key dan dibatasi per IP. Tier free dan trusted memakai key dengan kuota harian yang jelas.</p></div>
+</div>
+</div></section>
+<section><div class="wrap">
+<h2><span>02</span> Mendapatkan key</h2>
+<div class="flowp">
+<p><b>Minta kode undangan di <a href="https://api.atlys.my.id/invite">/invite</a>.</b> Browser Anda menyelesaikan proof-of-work ringan sebagai ganti captcha, lalu admin meninjau permintaan Anda secara manual.</p>
+<p><b>Terima kode undangan lewat email</b> setelah admin menyetujuinya.</p>
+<p><b>Daftar di <a href="https://api.atlys.my.id/register">/register</a></b> dengan kode undangan tersebut.</p>
+<p><b>Key tampil satu kali.</b> Salin key tersebut, simpan di tempat aman, dan pakai di <a href="https://api.atlys.my.id/app">/app</a> serta di setiap request melalui header x-api-key.</p>
+</div>
+</div></section>
+<section><div class="wrap">
+<h2><span>03</span> Tier dan kuota</h2>
+<p style="color:var(--muted)">Kuota dihitung 24 jam bergulir, bukan reset tengah malam.</p>
+<div>
+<div class="specline"><div class="sname">guest</div><p>20 request per hari, 5 per menit, per IP, tanpa key.</p><a class="tlink" href="#demo">Lihat demo</a></div>
+<div class="specline"><div class="sname">free</div><p>200 request per hari, 10 per menit, per key.</p><a class="btn" href="https://api.atlys.my.id/invite">Minta API Key</a></div>
+<div class="specline"><div class="sname">trusted</div><p>1000 request per hari, 30 per menit, per key, tier diatur admin.</p><a class="btn" href="https://api.atlys.my.id/invite">Minta API Key</a></div>
+</div>
+</div></section>
+<section><div class="wrap">
+<h2><span>04</span> Contoh koleksi</h2>
+<p style="color:var(--muted)">Enam koleksi ini contoh dari pola /v1/data/&lt;koleksi&gt;. Akses penuh memakai API key, coba di <a href="https://api.atlys.my.id/app">/app</a> setelah Anda masuk.</p>
+<div>
+<div class="collrow"><span class="path">/v1/data/pangan-jakarta</span><p>Harga pangan Jakarta per komoditas.</p></div>
+<div class="collrow"><span class="path">/v1/data/siranap-tt</span><p>Ketersediaan tempat tidur rumah sakit per kelas.</p></div>
+<div class="collrow"><span class="path">/v1/data/bpom-produk</span><p>Produk obat terdaftar beserta nomor registrasi.</p></div>
+<div class="collrow"><span class="path">/v1/data/krl-stasiun</span><p>Direktori stasiun KAI Commuter.</p></div>
+<div class="collrow"><span class="path">/v1/data/mrt-jakarta</span><p>Stasiun MRT Jakarta fase 1.</p></div>
+<div class="collrow"><span class="path">/v1/data/pddikti</span><p>Data pendidikan tinggi dari PDDikti.</p></div>
+</div>
+</div></section>
+</main>
+<footer><div class="wrap"><div class="flinks">
+<a href="https://api.atlys.my.id/docs">Dokumentasi</a>
+<a href="https://api.atlys.my.id/tos">Syarat layanan</a>
+<a href="https://api.atlys.my.id/privacy">Privasi</a>
+<a href="https://api.atlys.my.id/takedown">Takedown</a>
+<a href="https://api.atlys.my.id/status">Status API</a>
+</div>
+<p>Atlys API, data publik, satu API.</p></div></footer>
+<script>
+(function(){
+  function label(t){var l=document.getElementById('themeLabel');if(l)l.textContent=(t==='dark'?'Gelap':'Terang');}
+  function apply(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('atlys-theme',t)}catch(e){}label(t);}
+  var tg=document.getElementById('themeToggle');
+  if(tg)tg.addEventListener('click',function(){var c=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';apply(c==='dark'?'light':'dark');});
+  label(document.documentElement.getAttribute('data-theme')||'dark');
+  function syncReq(){var lim=document.getElementById('d_limit').value||2;var r=document.getElementById('d_req');if(r)r.textContent='GET /v1/demo/info/news?limit='+lim;}
+  var li=document.getElementById('d_limit');
+  if(li)li.addEventListener('input',syncReq);
+  syncReq();
+  async function loadStats(){
+    var el=document.getElementById('st_ep');if(!el)return;
+    try{
+      var r=await fetch('https://api.atlys.my.id/status');
+      var j=await r.json();
+      var n=j&&j.result&&j.result.endpoint_aktif;
+      el.textContent=(typeof n==='number')?n.toLocaleString('id-ID'):'data tidak tersedia';
+    }catch(e){el.textContent='data tidak tersedia';}
+  }
+  loadStats();
+  async function runDemo(){
+    var lim=document.getElementById('d_limit').value||2;
+    var b=document.getElementById('d_run'),st=document.getElementById('d_st'),out=document.getElementById('d_out');
+    var t0=performance.now();
+    b.disabled=true;st.textContent='memuat...';out.textContent='';
+    try{
+      var r=await fetch('https://api.atlys.my.id/v1/demo/info/news?limit='+encodeURIComponent(lim));
+      var t=await r.text();
+      st.textContent='HTTP '+r.status+' · '+Math.round(performance.now()-t0)+' ms';
+      out.textContent=t;
+    }catch(err){st.textContent='gagal: '+err.message;out.textContent='';}
+    b.disabled=false;
+  }
+  var rb=document.getElementById('d_run');
+  if(rb)rb.addEventListener('click',runDemo);
+})();
+</script>
+</body>
+</html>
