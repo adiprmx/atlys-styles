@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlys API: Data publik, satu API.</title>
+<meta name="description" content="REST API untuk data publik, hasil scrape otomatis tiap jam, gratis, tanpa kartu kredit.">
+<script>
+(function(){try{var p=new URLSearchParams(location.search).get('theme');var t=p||localStorage.getItem('atlys-theme')||'light';if(t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--paper:#ffffff;--paper2:#f6f4ff;--ink:#10101c;--muted:#5c5c6e;--line:#e8e6f3;--indigo:#4f46e5;--indigo-d:#3730a3;--deep:#1e1b4b;--tint:#efedff;--num:#dddafe;--code-bg:#12121f;--code-ink:#e9e9ff;--shadow:0 24px 60px rgba(30,27,75,.14);--shadow-sm:0 10px 30px rgba(30,27,75,.10)}
+[data-theme="dark"]{--paper:#0c0c16;--paper2:#151528;--ink:#f4f4ff;--muted:#a7a7c2;--line:#2a2a52;--indigo:#818cf8;--indigo-d:#a5b4fc;--deep:#312e81;--tint:#1d1c48;--num:#2a2a52;--code-bg:#000000;--code-ink:#e9e9ff;--shadow:0 24px 60px rgba(0,0,0,.5);--shadow-sm:0 10px 30px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-weight:500;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--indigo)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--indigo);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.bleed{width:100vw;margin-left:calc(50% - 50vw)}
+h1,h2{font-family:"Plus Jakarta Sans",Inter,sans-serif;line-height:1.02;letter-spacing:-.03em;margin:0}
+p{margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,box-shadow .2s ease,background .2s ease}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--indigo);color:#fff}
+.btn-p:hover{box-shadow:0 12px 28px rgba(79,70,229,.35)}
+.btn-g{border-color:var(--line);color:var(--ink);background:transparent}
+.btn-w{background:#fff;color:var(--indigo-d)}
+.muted{color:var(--muted)}
+.mono{font-family:"IBM Plex Mono",monospace}
+/* masthead */
+.mast{border-top:4px solid var(--indigo);border-bottom:1px solid var(--line)}
+.mast-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 0}
+.brand{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.brand b{color:var(--indigo);font-weight:800}
+.mast-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.mast-nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;min-height:44px;display:inline-flex;align-items:center;padding:0 12px;border-radius:8px}
+.mast-nav a:hover{color:var(--indigo)}
+.mast-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.theme-btn{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:14px;cursor:pointer}
+.mast-meta{border-top:1px solid var(--line);padding:10px 0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:52px 0 10px}
+.hero-num{position:absolute;right:-14px;top:-34px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(170px,26vw,360px);line-height:1;color:transparent;-webkit-text-stroke:2px rgba(79,70,229,.16);z-index:0;pointer-events:none;user-select:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(12,1fr);gap:20px 24px;align-items:start}
+.kicker{grid-column:1/10;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo);font-weight:700}
+.hero h1{grid-column:1/10;font-size:clamp(2.9rem,9vw,6.5rem);font-weight:800}
+.hero h1 span{color:var(--indigo)}
+.hero-panel{grid-column:8/13;grid-row:2/5;margin-top:88px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px;position:relative;z-index:1}
+.hp-big .n{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:clamp(2.3rem,5vw,3.3rem);line-height:1;letter-spacing:-.02em}
+.hp-big .l,.hp-cell .l{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.hp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.hp-cell .n{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:23px;line-height:1.1}
+.hp-update{border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:13px;color:var(--muted)}
+.hero-sub{grid-column:1/8;font-size:18px;color:var(--muted);max-width:560px}
+.hero-cta{grid-column:1/8;display:flex;gap:12px;flex-wrap:wrap}
+/* band katalog full bleed */
+.band{background:var(--paper2);padding:52px 0;margin-top:44px}
+.band-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.band-head{grid-column:1/5}
+.secnum{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:56px;line-height:1;color:var(--num)}
+.band-head h2,.sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;margin-top:6px}
+.band-head p{color:var(--muted);margin-top:10px;font-size:15px}
+.donut-wrap{grid-column:5/8;text-align:left}
+.donut{position:relative;width:150px;height:150px}
+.donut svg{transform:rotate(-90deg)}
+.donut .dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut .dc b{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:30px;line-height:1}
+.donut .dc span{font-size:12px;color:var(--muted)}
+.donut-cap{font-size:13px;color:var(--muted);margin-top:12px;max-width:220px}
+.bars{grid-column:8/13;display:grid;gap:14px}
+.bar-row{display:grid;grid-template-columns:118px 1fr 56px;gap:12px;align-items:center}
+.bar-row .sl{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-row .tr{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar-row .fl{height:100%;width:0;background:linear-gradient(90deg,var(--indigo),#818cf8);border-radius:99px;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.bar-row .vl{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;text-align:right}
+/* sections */
+.sec{padding:56px 0}
+.sec-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:26px}
+.sec-head h2{margin-top:2px}
+.sec-head p{color:var(--muted);margin-top:8px;max-width:560px}
+.cards{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--paper);text-decoration:none;color:var(--ink);display:block;transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.card .chip{display:inline-block;background:var(--tint);color:var(--indigo);font-size:12px;font-weight:700;border-radius:6px;padding:3px 8px}
+.card .slug{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;margin-top:10px}
+.card .num{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:28px;line-height:1.1;margin-top:6px}
+.card .num small{font-size:14px;font-weight:700;color:var(--muted)}
+.card .mini{height:8px;background:var(--line);border-radius:99px;margin-top:12px;overflow:hidden}
+.card .mini i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--indigo),#818cf8);border-radius:99px;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.card.feat{background:var(--tint)}
+.card.feat .num{font-size:40px}
+.span8{grid-column:span 8}.span4{grid-column:span 4}.span3{grid-column:span 3}
+.jut{margin-top:22px}
+/* demo */
+.demo-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.demo-left{grid-column:1/6}
+.demo-left p{color:var(--muted);margin-top:10px}
+.demo-right{grid-column:6/13;margin-top:-20px}
+pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.65}
+.pre-light{background:var(--tint);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px;color:var(--ink)}
+.pre-dark{background:var(--code-bg);color:var(--code-ink);border-radius:14px;padding:18px}
+.demo-note{font-size:13px;color:var(--muted);margin-top:12px}
+/* tier rows */
+.tier-row{display:grid;grid-template-columns:210px 1fr auto;gap:20px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;background:var(--paper)}
+.tier-row .tn{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:24px}
+.tier-row .tp{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:14px}
+.tier-row .tp span{white-space:nowrap}
+.tier-row.feat{background:var(--tint);border:2px solid var(--indigo);margin-left:40px}
+/* finale */
+.finale{background:var(--deep);color:#fff;padding:64px 0}
+.finale h2{font-size:clamp(2.1rem,5vw,3.6rem);font-weight:800;color:#fff}
+.finale p{color:rgba(255,255,255,.8);margin-top:12px;font-size:17px}
+.finale .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:24px}
+.finale .proof{color:rgba(255,255,255,.7);font-size:14px}
+/* footer */
+.foot{padding:36px 0 48px;border-top:1px solid var(--line)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+.foot .brand{font-size:20px}
+.foot p{color:var(--muted);font-size:14px;margin-top:8px;max-width:320px}
+.foot h3{font-size:14px;margin:0 0 10px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.foot ul a{color:var(--muted);text-decoration:none;font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+.foot ul a:hover{color:var(--indigo)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;color:var(--muted);font-size:13px}
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.inview{opacity:1;transform:none}
+.rv[data-d="1"]{transition-delay:.1s}.rv[data-d="2"]{transition-delay:.2s}.rv[data-d="3"]{transition-delay:.3s}
+@media (max-width:1024px){
+  .band-head{grid-column:1/7}.donut-wrap{grid-column:7/13}.bars{grid-column:1/13}
+  .demo-left{grid-column:1/13}.demo-right{grid-column:1/13;margin-top:0}
+  .span8{grid-column:span 12}.span4{grid-column:span 6}.span3{grid-column:span 6}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .hero{padding:36px 0 0}
+  .hero-grid{display:block}
+  .hero h1{font-size:clamp(2.6rem,13vw,3.4rem)}
+  .hero-panel{margin-top:20px;width:100%}
+  .hero-sub{margin-top:18px;font-size:16px}
+  .hero-cta{margin-top:18px}
+  .band{padding:36px 0;margin-top:32px}
+  .band-grid{display:block}
+  .donut-wrap{margin-top:22px}
+  .bars{margin-top:22px}
+  .bar-row{grid-template-columns:104px 1fr 48px}
+  .sec{padding:36px 0}
+  .sec-head{display:block}
+  .sec-head .secnum{font-size:40px}
+  .cards{display:block}
+  .card{margin-bottom:12px}
+  .card.feat .num{font-size:34px}
+  .jut{margin-top:0}
+  .demo-grid{display:block}
+  .demo-right{margin-top:18px}
+  .tier-row{grid-template-columns:1fr}
+  .tier-row.feat{margin-left:0}
+  .finale{padding:44px 0}
+  .foot-grid{grid-template-columns:1fr}
+  .mast-nav{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important;transition:none!important}
+  .btn,.card,.bar-row .fl,.card .mini i{transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="mast-row">
+      <a class="brand" href="https://api.atlys.my.id/">Atlys <b>API</b></a>
+      <nav class="mast-nav" aria-label="Navigasi utama">
+        <a href="#koleksi">Koleksi</a>
+        <a href="#demo">Demo</a>
+        <a href="#tier">Tier</a>
+        <a href="https://api.atlys.my.id/login">Masuk</a>
+      </nav>
+      <div class="mast-actions">
+        <button class="theme-btn" id="themeBtn" type="button" aria-label="Ganti tema">Terang</button>
+        <a class="btn btn-p" href="https://api.atlys.my.id/invite">Minta API Key</a>
+      </div>
+    </div>
+    <div class="mast-meta">Edisi data publik · Pembaruan tiap jam · 22 Okt 2026</div>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-num" aria-hidden="true">01</div>
+    <div class="wrap hero-grid">
+      <p class="kicker rv">API publik untuk data publik</p>
+      <h1 class="rv" data-d="1">Data publik,<br><span>satu API.</span></h1>
+      <aside class="hero-panel rv" data-d="2" aria-label="Bukti katalog">
+        <div class="hp-big"><span class="n"><span data-count="100000">0</span></span><span class="l">Endpoint aktif</span></div>
+        <div class="hp-grid">
+          <div class="hp-cell"><span class="n"><span data-count="20">0</span></span><span class="l">Koleksi</span></div>
+          <div class="hp-cell"><span class="n"><span data-count="257830">0</span></span><span class="l">Item</span></div>
+          <div class="hp-cell"><span class="n">Tiap jam</span><span class="l">Pembaruan</span></div>
+        </div>
+        <p class="hp-update">Pembaruan terakhir: 22 Okt 2026, 19.00. Angka di halaman ini adalah nilai nyata per tanggal tersebut.</p>
+      </aside>
+      <p class="hero-sub rv" data-d="2">REST API untuk data publik, hasil scrape otomatis tiap jam, gratis, tanpa kartu kredit. Satu pola endpoint untuk semua koleksi.</p>
+      <div class="hero-cta rv" data-d="3">
+        <a class="btn btn-p" href="https://api.atlys.my.id/invite">→ Minta API Key</a>
+        <a class="btn btn-g" href="#demo">Lihat demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band bleed" aria-label="Ringkasan katalog">
+    <div class="wrap band-grid">
+      <div class="band-head rv">
+        <div class="secnum">02</div>
+        <h2>Katalog dalam satu pandang</h2>
+        <p>Sebagian besar item katalog berada di 6 koleksi unggulan. Proporsi dihitung dari jumlah nyata, bukan ilustrasi.</p>
+      </div>
+      <div class="donut-wrap rv" data-d="1">
+        <div class="donut">
+          <svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true">
+            <circle cx="75" cy="75" r="52" fill="none" stroke="var(--line)" stroke-width="14"></circle>
+            <circle id="donutFg" cx="75" cy="75" r="52" fill="none" stroke="#4f46e5" stroke-width="14" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73"></circle>
+          </svg>
+          <div class="dc"><b><span data-count-dec="10.9">0,0</span>%</b><span>dari katalog</span></div>
+        </div>
+        <p class="donut-cap">10,9% dari katalog ada di 6 koleksi unggulan: 28.174 dari 257.830 item.</p>
+      </div>
+      <div class="bars rv" data-d="2">
+        <div class="bar-row"><span class="sl">bpom-produk</span><span class="tr"><i class="fl" data-w="100"></i></span><span class="vl">24.599</span></div>
+        <div class="bar-row"><span class="sl">siranap-tt</span><span class="tr"><i class="fl" data-w="14"></i></span><span class="vl">3.433</span></div>
+        <div class="bar-row"><span class="sl">krl-stasiun</span><span class="tr"><i class="fl" data-w="2"></i></span><span class="vl">110</span></div>
+        <div class="bar-row"><span class="sl">mrt-jakarta</span><span class="tr"><i class="fl" data-w="2"></i></span><span class="vl">13</span></div>
+        <div class="bar-row"><span class="sl">pangan-jakarta</span><span class="tr"><i class="fl" data-w="2"></i></span><span class="vl">12</span></div>
+        <div class="bar-row"><span class="sl">pddikti</span><span class="tr"><i class="fl" data-w="2"></i></span><span class="vl">7</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="koleksi">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="secnum">03</div>
+        <div>
+          <h2>Koleksi</h2>
+          <p>Enam koleksi unggulan, tersaji lewat pola /v1/data/&lt;koleksi&gt;. Kartu besar berarti koleksi besar, sesuai jumlah itemnya.</p>
+        </div>
+      </div>
+      <div class="cards">
+        <a class="card feat span8 rv" href="https://api.atlys.my.id/docs">
+          <span class="chip">Obat</span>
+          <div class="slug">bpom-produk</div>
+          <div class="num">24.599 <small>item</small></div>
+          <div class="mini"><i data-w="100"></i></div>
+        </a>
+        <a class="card span4 rv" data-d="1" href="https://api.atlys.my.id/docs">
+          <span class="chip">Rumah sakit</span>
+          <div class="slug">siranap-tt</div>
+          <div class="num">3.433 <small>item</small></div>
+          <div class="mini"><i data-w="14"></i></div>
+        </a>
+        <a class="card span3 rv" href="https://api.atlys.my.id/docs">
+          <span class="chip">Transportasi</span>
+          <div class="slug">krl-stasiun</div>
+          <div class="num">110 <small>item</small></div>
+          <div class="mini"><i data-w="2"></i></div>
+        </a>
+        <a class="card span3 rv" data-d="1" href="https://api.atlys.my.id/docs">
+          <span class="chip">Transportasi</span>
+          <div class="slug">mrt-jakarta</div>
+          <div class="num">13 <small>item</small></div>
+          <div class="mini"><i data-w="2"></i></div>
+        </a>
+        <a class="card span3 jut rv" data-d="2" href="https://api.atlys.my.id/docs">
+          <span class="chip">Harga</span>
+          <div class="slug">pangan-jakarta</div>
+          <div class="num">12 <small>item</small></div>
+          <div class="mini"><i data-w="2"></i></div>
+        </a>
+        <a class="card span3 rv" data-d="3" href="https://api.atlys.my.id/docs">
+          <span class="chip">Pendidikan</span>
+          <div class="slug">pddikti</div>
+          <div class="num">7 <small>item</small></div>
+          <div class="mini"><i data-w="2"></i></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="demo" style="padding-top:8px">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="secnum">04</div>
+        <div>
+          <h2>Coba tanpa daftar</h2>
+          <p>Demo publik memakai satu endpoint contoh. Respons di samping dipangkas agar ringkas.</p>
+        </div>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-left rv">
+          <p>GET /v1/demo/info/news adalah satu-satunya demo publik. Hasilnya berbentuk envelope yang sama dengan endpoint data: status, creator, result, meta.</p>
+          <pre class="pre-light">curl "https://api.atlys.my.id/v1/demo/info/news?limit=2"</pre>
+          <p style="margin-top:14px"><a class="btn btn-g" href="https://api.atlys.my.id/docs">Buka dokumentasi</a></p>
+        </div>
+        <div class="demo-right rv" data-d="1">
+          <pre class="pre-dark">{
+  "status": "ok",
+  "creator": "Atlys",
+  "result": {
+    "items": [
+      {
+        "id": "demo-n1",
+        "title": "Contoh Berita Satu: Judul Ilustratif Untuk Demo"
+      }
+    ]
+  }
+}</pre>
+          <p class="demo-note">Respons dipangkas untuk tampil ringkas. Ini data demo, bukan data asli. Data asli tersedia setelah Anda masuk dan memakai API key.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="tier" style="padding-top:8px">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="secnum">05</div>
+        <div>
+          <h2>Tier</h2>
+          <p>Kuota harian per tier, sesuai kebijakan yang berlaku. Guest tidak memakai key, Free dan Trusted memakai key.</p>
+        </div>
+      </div>
+      <div class="tier-row rv">
+        <div class="tn">Guest</div>
+        <div class="tp"><span>20 permintaan per hari</span><span>5 permintaan per menit</span><span>Tanpa API key</span></div>
+        <a class="btn btn-g" href="#demo">Lihat demo</a>
+      </div>
+      <div class="tier-row feat rv" data-d="1">
+        <div class="tn">Free</div>
+        <div class="tp"><span>200 permintaan per hari</span><span>10 permintaan per menit</span><span>API key pribadi</span></div>
+        <a class="btn btn-p" href="https://api.atlys.my.id/invite">Minta API Key</a>
+      </div>
+      <div class="tier-row rv" data-d="2">
+        <div class="tn">Trusted</div>
+        <div class="tp"><span>1.000 permintaan per hari</span><span>30 permintaan per menit</span><span>Kuota tertinggi</span></div>
+        <a class="btn btn-g" href="https://api.atlys.my.id/invite">Hubungi admin</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale bleed">
+    <div class="wrap">
+      <h2 class="rv">Siap memakai data publik?</h2>
+      <p class="rv" data-d="1">Dari undangan sampai API key dalam satu alur: minta undangan, lewati review, terima kode lewat email, daftar, lalu pakai key.</p>
+      <div class="row rv" data-d="2">
+        <a class="btn btn-w" href="https://api.atlys.my.id/invite">Minta API Key</a>
+        <span class="proof">100.000 endpoint · 20 koleksi · gratis, tanpa kartu kredit</span>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="https://api.atlys.my.id/">Atlys <b>API</b></a>
+        <p>REST API untuk data publik, hasil scrape otomatis tiap jam. Data publik, satu API.</p>
+      </div>
+      <div>
+        <h3>Produk</h3>
+        <ul>
+          <li><a href="https://api.atlys.my.id/docs">Dokumentasi</a></li>
+          <li><a href="https://api.atlys.my.id/status">Status</a></li>
+          <li><a href="https://api.atlys.my.id/app">Aplikasi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Akun dan legal</h3>
+        <ul>
+          <li><a href="https://api.atlys.my.id/login">Masuk</a></li>
+          <li><a href="https://api.atlys.my.id/tos">Syarat layanan</a></li>
+          <li><a href="https://api.atlys.my.id/privacy">Privasi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Rilis terbaru: Batch 2, 22 Okt 2026, 4 koleksi, 28.341 item.</span>
+      <span>© 2026 Atlys</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeBtn');
+  function label(){btn.textContent=(root.getAttribute('data-theme')==='dark')?'Gelap':'Terang';}
+  label();
+  btn.addEventListener('click',function(){
+    var next=(root.getAttribute('data-theme')==='dark')?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('atlys-theme',next);}catch(e){}
+    label();
+  });
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmtId(n){return n.toLocaleString('id-ID');}
+  function fmtDec(n){return n.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});}
+  function easeOut(t){return 1-Math.pow(1-t,3);}
+  function runCount(el){
+    var target=parseFloat(el.getAttribute('data-count'));
+    if(isNaN(target)){return;}
+    if(reduced){el.textContent=fmtId(target);return;}
+    var start=null;
+    function step(ts){
+      if(!start){start=ts;}
+      var p=Math.min((ts-start)/1200,1);
+      el.textContent=fmtId(Math.round(target*easeOut(p)));
+      if(p<1){requestAnimationFrame(step);}
+    }
+    requestAnimationFrame(step);
+  }
+  function runDec(el){
+    var target=parseFloat(el.getAttribute('data-count-dec'));
+    if(isNaN(target)){return;}
+    if(reduced){el.textContent=fmtDec(target);return;}
+    var start=null;
+    function step(ts){
+      if(!start){start=ts;}
+      var p=Math.min((ts-start)/1000,1);
+      el.textContent=fmtDec(target*easeOut(p));
+      if(p<1){requestAnimationFrame(step);}
+    }
+    requestAnimationFrame(step);
+  }
+  function runBars(scope){
+    var fills=scope.querySelectorAll('[data-w]');
+    fills.forEach(function(f){
+      var w=f.getAttribute('data-w');
+      if(reduced){f.style.width=w;return;}
+      requestAnimationFrame(function(){f.style.width=w;});
+    });
+  }
+  function runDonut(){
+    var fg=document.getElementById('donutFg');
+    if(!fg){return;}
+    var c=326.73, off=c*(1-0.109);
+    if(reduced){fg.style.strokeDashoffset=off;return;}
+    var start=null;
+    function step(ts){
+      if(!start){start=ts;}
+      var p=Math.min((ts-start)/1000,1);
+      fg.style.strokeDashoffset=c-(c-off)*easeOut(p);
+      if(p<1){requestAnimationFrame(step);}
+    }
+    requestAnimationFrame(step);
+  }
+  function activate(scope){
+    scope.querySelectorAll('[data-count]').forEach(runCount);
+    scope.querySelectorAll('[data-count-dec]').forEach(runDec);
+    runBars(scope);
+    if(scope.querySelector('#donutFg')){runDonut();}
+  }
+  if(reduced){
+    document.querySelectorAll('.rv').forEach(function(el){el.classList.add('inview');});
+    activate(document);
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('inview');
+        activate(en.target);
+        io.unobserve(en.target);
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
