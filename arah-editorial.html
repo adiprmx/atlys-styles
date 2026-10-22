@@ -437,7 +437,7 @@ pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:"IBM Plex M
   function runBars(scope){
     var fills=scope.querySelectorAll('[data-w]');
     fills.forEach(function(f){
-      var w=f.getAttribute('data-w');
+      var w=f.getAttribute('data-w')+'%';
       if(reduced){f.style.width=w;return;}
       requestAnimationFrame(function(){f.style.width=w;});
     });
